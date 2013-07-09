@@ -12,18 +12,28 @@
 package de.weltraumschaf.groundzero;
 
 import java.io.IOException;
+import org.apache.commons.lang3.Validate;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
+ * Process a single Checkstyle report file.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class ReportProcessor {
 
+    /**
+     * Process the file given as file name.
+     *
+     * @param fileName file name of the report, must not be {@code null} or empty
+     * @throws SAXException if XML parse errors occurs
+     * @throws IOException if file I/O errors occurs
+     */
     public void process(final String fileName) throws SAXException, IOException {
+        Validate.notEmpty(fileName);
         final CheckStyleSaxHandler handler = new CheckStyleSaxHandler();
         final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         xmlReader.setContentHandler(handler);

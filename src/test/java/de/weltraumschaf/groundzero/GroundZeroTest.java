@@ -49,65 +49,72 @@ public class GroundZeroTest {
     }
 
     @Test
-    public void showHelpMessage_withShortOption() throws SAXException, IOException {
-        final GroundZero sut = createSut(new String[] {"-v"});
-        assertThat(out.getCapturedOutput(), is(equalTo("")));
+    public void showHelpMessage_withShortOption() throws Exception {
+        final GroundZero sut = createSut(new String[] {"-h"});
+        sut.execute();
+        assertThat(out.getCapturedOutput(),
+                is(equalTo(String.format("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]%n"))));
         verify(processorSpy, never()).process(anyString());
         verify(sut, never()).showVersionMessage();
     }
 
     @Test
-    public void showHelpMessage_withLongOption() throws SAXException, IOException {
-        verify(processorSpy, never()).process(anyString());
+    public void showHelpMessage_withLongOption() throws Exception {
         final GroundZero sut = createSut(new String[] {"--help"});
-        assertThat(out.getCapturedOutput(), is(equalTo("")));
+        sut.execute();
+        verify(processorSpy, never()).process(anyString());
+        assertThat(out.getCapturedOutput(),
+                is(equalTo(String.format("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]%n"))));
         verify(sut, never()).showVersionMessage();
     }
 
     @Test
-    public void showHelpVersion_withShortOption() throws SAXException, IOException {
+    public void showVersionMessage_withShortOption() throws Exception {
         final GroundZero sut = createSut(new String[] {"-v"});
-        assertThat(out.getCapturedOutput(), is(equalTo("")));
+        sut.execute();
+        verify(sut, times(1)).initializeVersionInformation();
+        assertThat(out.getCapturedOutput(), is(equalTo(String.format("Version: TEST%n"))));
         verify(processorSpy, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
     }
 
     @Test
-    public void showHelpVersion_withLongOption() throws SAXException, IOException {
+    public void showVersionMessage_withLongOption() throws Exception {
         final GroundZero sut = createSut(new String[] {"--version"});
-        assertThat(out.getCapturedOutput(), is(equalTo("")));
+        sut.execute();
+        verify(sut, times(1)).initializeVersionInformation();
+        assertThat(out.getCapturedOutput(), is(equalTo(String.format("Version: TEST%n"))));
         verify(processorSpy, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
     }
 
     @Test
-    public void doNothingIfNoReportFilesGiven() throws SAXException, IOException {
+    public void doNothingIfNoReportFilesGiven() throws Exception {
         final GroundZero sut = createSut();
+        sut.execute();
         verify(processorSpy, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
         verify(sut, never()).showVersionMessage();
     }
 
     @Test @Ignore
-    public void processOneFile() throws SAXException, IOException {
-        final ReportProcessor spy = spy(new ReportProcessor());
+    public void processOneFile() throws Exception {
         final String fileName = "/one/file/name";
         final GroundZero sut = createSut(new String[] {fileName});
-        sut.setProcessor(spy);
-        verify(spy, times(1)).process(fileName);
+        sut.execute();
+        verify(processorSpy, times(1)).process(fileName);
     }
 
     @Test @Ignore
-    public void processMultipleFile() throws SAXException, IOException {
-        final ReportProcessor spy = spy(new ReportProcessor());
+    public void processMultipleFile() throws Exception {
         final String fileName1 = "/one/file/name1";
         final String fileName2 = "one/file/name2";
         final String fileName3 = "/one/file3";
         final GroundZero sut = createSut(new String[] {fileName1, fileName2, fileName3});
-        sut.setProcessor(spy);
-        verify(spy, times(1)).process(fileName1);
-        verify(spy, times(1)).process(fileName2);
-        verify(spy, times(1)).process(fileName3);
+        sut.execute();
+        verify(processorSpy, times(1)).process(fileName1);
+        verify(processorSpy, times(1)).process(fileName2);
+        verify(processorSpy, times(1)).process(fileName3);
     }
 
 }

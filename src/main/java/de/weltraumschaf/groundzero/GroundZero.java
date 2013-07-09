@@ -26,6 +26,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class GroundZero extends InvokableAdapter {
 
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
+    private static final String USAGE = "Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]";
     private final Set<String> reportFiles = Sets.newHashSet();
     private ReportProcessor processor = new ReportProcessor();
     private Version version;
@@ -47,10 +48,12 @@ public class GroundZero extends InvokableAdapter {
 
         if (showHelp) {
             showHelpMessage();
+            return;
         }
 
         if (showVersion) {
             showVersionMessage();
+            return;
         }
 
         processReports();
@@ -68,15 +71,21 @@ public class GroundZero extends InvokableAdapter {
         }
     }
 
+    /**
+     * Prints help and usage information on STDOUT.
+     */
     void showHelpMessage() {
-        getIoStreams().println("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]");
+        getIoStreams().println(USAGE);
     }
 
+    /**
+     * Prints version information on STDOUT.
+     */
     void showVersionMessage() {
         getIoStreams().println(String.format("Version: %s", version.getVersion()));
     }
 
-    private void initializeVersionInformation() throws IOException {
+    void initializeVersionInformation() throws IOException {
         version = new Version(VERSION_FILE);
         version.load();
     }
