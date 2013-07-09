@@ -14,11 +14,16 @@ import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
 import java.util.Set;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public final class GroundZero extends InvokableAdapter {
+
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     private final Set<String> reportFiles = Sets.newHashSet();
     private Version version;
@@ -33,7 +38,6 @@ public final class GroundZero extends InvokableAdapter {
         InvokableAdapter.main(new GroundZero(args));
     }
 
-
     @Override
     public void execute() throws Exception {
         initializeVersionInformation();
@@ -47,26 +51,8 @@ public final class GroundZero extends InvokableAdapter {
             showVersionMessage();
         }
 
-//        try {
-//            final CheckStyleSaxHandler handler = new CheckStyleSaxHandler();
-//            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-//            xmlReader.setContentHandler(handler);
-//            xmlReader.setErrorHandler(handler);
-//            final InputSource input = new InputSource();
-//            xmlReader.parse(input);
-//            handler.getViolations();
-//        } catch (SAXException ex) {
-//            getIoStreams()
-//                    .errorln(String.format("ERROR: Excpetion thrown while parsing input XMl! %s", ex.getMessage()));
-//            exit(1);
-//        } catch (IOException ex) {
-//            getIoStreams()
-//                    .errorln(String.format("ERROR: Excpetion thrown while reading input file! %s", ex.getMessage()));
-//            exit(2);
-//        }
+        processReports();
     }
-
-
 
     private void examineCommandLineOptions() {
         for (final String option : getArgs()) {
@@ -91,5 +77,38 @@ public final class GroundZero extends InvokableAdapter {
     private void initializeVersionInformation() throws IOException {
         version = new Version(VERSION_FILE);
         version.load();
+    }
+
+    private void processReports() {
+        if (reportFiles.isEmpty()) {
+            getIoStreams().println("Nothing to do.");
+            return;
+        }
+
+        for (final String reportFile : reportFiles) {
+            processReport(reportFile);
+        }
+
+        getIoStreams().println(String.format("All reports %d proccesed.", reportFiles.size()));
+    }
+
+    private void processReport(final String reportFile) {
+        try {
+            final CheckStyleSaxHandler handler = new CheckStyleSaxHandler();
+            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+            xmlReader.setContentHandler(handler);
+            xmlReader.setErrorHandler(handler);
+            final InputSource input = new InputSource();
+            xmlReader.parse(input);
+            handler.getViolations();
+        } catch (SAXException ex) {
+            getIoStreams()
+                    .errorln(String.format("ERROR: Excpetion thrown while parsing input XMl! %s", ex.getMessage()));
+            exit(1);
+        } catch (IOException ex) {
+            getIoStreams()
+                    .errorln(String.format("ERROR: Excpetion thrown while reading input file! %s", ex.getMessage()));
+            exit(2);
+        }
     }
 }
