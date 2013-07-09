@@ -11,6 +11,7 @@ package de.weltraumschaf.groundzero;
 
 import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
+import de.weltraumschaf.commons.ShutDownHook;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
 import java.util.Set;
@@ -22,10 +23,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
-public final class GroundZero extends InvokableAdapter {
+public class GroundZero extends InvokableAdapter {
 
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     private final Set<String> reportFiles = Sets.newHashSet();
+    private ReportProcessor processor = new ReportProcessor();
     private Version version;
     private boolean showHelp;
     private boolean showVersion;
@@ -66,11 +68,11 @@ public final class GroundZero extends InvokableAdapter {
         }
     }
 
-    private void showHelpMessage() {
+    void showHelpMessage() {
         getIoStreams().println("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]");
     }
 
-    private void showVersionMessage() {
+    void showVersionMessage() {
         getIoStreams().println(String.format("Version: %s", version.getVersion()));
     }
 
@@ -92,15 +94,17 @@ public final class GroundZero extends InvokableAdapter {
         getIoStreams().println(String.format("All reports %d proccesed.", reportFiles.size()));
     }
 
+    public void setProcessor(ReportProcessor processor) {
+        this.processor = processor;
+    }
+
+    public ReportProcessor getProcessor() {
+        return processor;
+    }
+
     private void processReport(final String reportFile) {
         try {
-            final CheckStyleSaxHandler handler = new CheckStyleSaxHandler();
-            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-            xmlReader.setContentHandler(handler);
-            xmlReader.setErrorHandler(handler);
-            final InputSource input = new InputSource();
-            xmlReader.parse(input);
-            handler.getViolations();
+            processor.process(reportFile);
         } catch (SAXException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while parsing input XMl! %s", ex.getMessage()));
