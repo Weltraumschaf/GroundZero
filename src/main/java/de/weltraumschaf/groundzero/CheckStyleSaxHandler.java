@@ -12,7 +12,20 @@ package de.weltraumschaf.groundzero;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- *
+ * SAX based parser for Checkstyle log files.
+ * 
+ * Format of log:
+ * <pre>
+ *      &lt;checkstyle version="5.4"&gt;
+ *          &lt;file name="..."&gt;
+ *              &lt;error line="2" column="22" severity="error" message="Line contains a tab character." 
+ *                  source="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck"/&gt;
+ *              ...
+ *          &lt;/file&gt;
+ *          ...
+ *      &lt;/checkstyle&gt;
+ * </pre>
+ * 
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public class CheckStyleSaxHandler extends DefaultHandler {
