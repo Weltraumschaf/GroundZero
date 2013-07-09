@@ -34,12 +34,12 @@ public class ReportProcessor {
      */
     public void process(final String fileName) throws SAXException, IOException {
         Validate.notEmpty(fileName);
-        final CheckStyleSaxHandler handler = new CheckStyleSaxHandler();
+        final CheckstyleSaxHandler handler = new CheckstyleSaxHandler();
         final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         xmlReader.setContentHandler(handler);
         xmlReader.setErrorHandler(handler);
         final InputSource input = new InputSource();
         xmlReader.parse(input);
-        handler.getViolations();
+        handler.getReport();
     }
 }

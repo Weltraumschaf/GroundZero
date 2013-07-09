@@ -13,6 +13,7 @@
 package de.weltraumschaf.groundzero.model;
 
 import com.google.common.collect.Sets;
+import com.google.common.base.Objects;
 import java.util.Set;
 
 /**
@@ -24,9 +25,41 @@ import java.util.Set;
  */
 public class CheckstyleReport {
 
+    private final String version;
+
+    public CheckstyleReport(String version) {
+        this.version = version;
+    }
+    
     /**
      * Checked files with violations.
      */
     private final Set<CheckstyleFile> files = Sets.newHashSet();
+
+    public void addFile(final CheckstyleFile file) {
+        files.add(file);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(files);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof CheckstyleReport)) {
+            return false;
+        }
+
+        final CheckstyleReport other = (CheckstyleReport) obj;
+        return Objects.equal(obj, other);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this).add("files", files).toString();
+    }
+
+
 
 }

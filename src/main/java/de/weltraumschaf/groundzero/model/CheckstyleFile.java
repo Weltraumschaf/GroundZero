@@ -78,5 +78,14 @@ public final class CheckstyleFile {
                 && Objects.equal(other.violations, other.violations);
     }
 
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this).add("fileName", fileName).add("violations", violations).toString();
+    }
+
+    public void addViolation(final CheckstyleViolation violation) {
+        violations.add(violation);
+    }
+
 
 }
