@@ -9,17 +9,21 @@
  */
 package de.weltraumschaf.groundzero;
 
+import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
+import de.weltraumschaf.commons.Version;
 import java.io.IOException;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
+import java.util.Set;
 
 /**
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public final class GroundZero extends InvokableAdapter {
+    private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
+    private final Set<String> reportFiles = Sets.newHashSet();
+    private Version version;
+    private boolean showHelp;
+    private boolean showVersion;
 
     public GroundZero(String[] args) {
         super(args);
@@ -29,10 +33,20 @@ public final class GroundZero extends InvokableAdapter {
         InvokableAdapter.main(new GroundZero(args));
     }
 
+
     @Override
     public void execute() throws Exception {
-        getIoStreams().println("helo");
-    
+        initializeVersionInformation();
+        examineCommandLineOptions();
+
+        if (showHelp) {
+            showHelpMessage();
+        }
+
+        if (showVersion) {
+            showVersionMessage();
+        }
+
 //        try {
 //            final CheckStyleSaxHandler handler = new CheckStyleSaxHandler();
 //            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
@@ -50,5 +64,32 @@ public final class GroundZero extends InvokableAdapter {
 //                    .errorln(String.format("ERROR: Excpetion thrown while reading input file! %s", ex.getMessage()));
 //            exit(2);
 //        }
+    }
+
+
+
+    private void examineCommandLineOptions() {
+        for (final String option : getArgs()) {
+            if ("-h".equals(option) || "--help".equals(option)) {
+                showHelp = true;
+            } else if ("-v".equals(option) || "--version".equals(option)) {
+                showVersion = true;
+            } else {
+                reportFiles.add(option);
+            }
+        }
+    }
+
+    private void showHelpMessage() {
+        getIoStreams().println("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]");
+    }
+
+    private void showVersionMessage() {
+        getIoStreams().println(String.format("Version: %s", version.getVersion()));
+    }
+
+    private void initializeVersionInformation() throws IOException {
+        version = new Version(VERSION_FILE);
+        version.load();
     }
 }
