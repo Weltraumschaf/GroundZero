@@ -15,6 +15,7 @@ package de.weltraumschaf.groundzero;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
 
 /**
  * Tests for {@link SupressionGenerator}.
@@ -23,10 +24,36 @@ import static org.hamcrest.Matchers.*;
  */
 public class SupressionGeneratorTest {
 
+    private final SupressionGenerator sut = new SupressionGenerator();
+
     @Test
     public void escapeFileName() {
-        final SupressionGenerator sut = new SupressionGenerator();
         assertThat(sut.escapeFileName("foo/bar.java"), is(equalTo("foo/bar\\.java")));
+    }
+
+    @Test @Ignore
+    public void generateEmpty() {
+
+    }
+
+    @Test @Ignore
+    public void generateOneFileOneError() {
+
+    }
+
+    @Test @Ignore
+    public void generateOneFileThreeError() {
+
+    }
+
+    @Test @Ignore
+    public void generateThreeFileOneError() {
+
+    }
+
+    @Test @Ignore
+    public void generateThreeFileThreeError() {
+
     }
 
 }

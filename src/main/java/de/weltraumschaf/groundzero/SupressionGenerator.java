@@ -28,7 +28,7 @@ public class SupressionGenerator {
      * Format of a suppression tag.
      */
     private static final String SUPRESS_FORMAT =
-            "    <suppress files=\"%s\" line=\"%s\" column=\"%s\" checks=\"%s\"/>\n";
+            "    <suppress files=\"%s\" lines=\"%s\" columns=\"%s\" checks=\"%s\"/>\n";
 
     /**
      * Generates the report string.
