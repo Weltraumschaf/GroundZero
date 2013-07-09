@@ -7,30 +7,58 @@
  * this stuff. If we meet some day, and you think this stuff is worth it,
  * you can buy me a beer in return.
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.model;
 
-import com.google.common.collect.Lists;
-import java.util.List;
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
+import java.util.Collection;
+import java.util.Set;
+import org.apache.commons.lang3.Validate;
 
 /**
+ * Represents a source code file checked by Checkstyle which has {@link CheckstyleViolation violations}.
+ *
+ * A file must belong to a {@link CheckstyleReport report}.
  *
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public final class CheckstyleFile {
 
+    /**
+     * Name of checked file.
+     */
     private final String fileName;
-    private final List<CheckstyleError> violations = Lists.newArrayList();
+    /**
+     * Set of found violations.
+     */
+    private final Set<CheckstyleViolation> violations = Sets.newHashSet();
 
+    /**
+     * Dedicated constructor.
+     *
+     * @param fileName must not be {@code null} or empty.
+     */
     public CheckstyleFile(final String fileName) {
+        super();
+        Validate.notEmpty(fileName);
         this.fileName = fileName;
     }
 
+    /**
+     * Get the file name.
+     *
+     * @return never {@code null} or empty.
+     */
     public String getFileName() {
         return fileName;
     }
 
-    public List<CheckstyleError> getViolations() {
+    /**
+     * Get the violations.
+     *
+     * @return never {@code nul}, maybe empty collection.
+     */
+    public Collection<CheckstyleViolation> getViolations() {
         return violations;
     }
 
@@ -44,11 +72,11 @@ public final class CheckstyleFile {
         if (!(obj instanceof CheckstyleFile)) {
             return false;
         }
-        
+
         final CheckstyleFile other = (CheckstyleFile) obj;
         return Objects.equal(other.fileName, other.fileName)
                 && Objects.equal(other.violations, other.violations);
     }
 
-    
+
 }

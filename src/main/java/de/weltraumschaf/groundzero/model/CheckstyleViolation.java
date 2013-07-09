@@ -7,27 +7,52 @@
  * this stuff. If we meet some day, and you think this stuff is worth it,
  * you can buy me a beer in return.
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.model;
 
 import com.google.common.base.Objects;
+import org.apache.commons.lang3.Validate;
 
 /**
+ * Represents a violation found in a file.
+ *
+ * A violation must belong to a {@link CheckstyleFile file}.
  *
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
-public final class CheckstyleError {
+public final class CheckstyleViolation {
 
+    /**
+     * Line of occurrence in source code file.
+     */
     private int line;
+    /**
+     * Column of occurrence in source code file.
+     */
     private int column;
+    /**
+     * Severity of violation.
+     */
     private CheckstyleSeverity severity;
+    /**
+     * Human readable message which describes the violation.
+     */
     private String message;
+    /**
+     * Full qualified class name of the Checkstyle checker which found the violation.
+     */
     private String source;
 
     public int getLine() {
         return line;
     }
 
-    public void setLine(int line) {
+    /**
+     * Set the line.
+     *
+     * @param line must not be less than 1
+     */
+    public void setLine(final int line) {
+        Validate.isTrue(line > 0, "Line must not be less than 1! Was %d.", line);
         this.line = line;
     }
 
@@ -35,7 +60,13 @@ public final class CheckstyleError {
         return column;
     }
 
-    public void setColumn(int column) {
+    /**
+     * Set the column.
+     *
+     * @param column must not be less than 1
+     */
+    public void setColumn(final int column) {
+        Validate.isTrue(column > 0, "Column must not be less than 1! Was %d.", column);
         this.column = column;
     }
 
@@ -43,7 +74,13 @@ public final class CheckstyleError {
         return severity;
     }
 
-    public void setSeverity(CheckstyleSeverity severity) {
+    /**
+     * Set the severity.
+     *
+     * @param severity must not be {@code null}
+     */
+    public void setSeverity(final CheckstyleSeverity severity) {
+        Validate.notNull(severity);
         this.severity = severity;
     }
 
@@ -51,7 +88,13 @@ public final class CheckstyleError {
         return message;
     }
 
-    public void setMessage(String message) {
+    /**
+     * Set the  message.
+     *
+     * @param message must not be {@code null} or empty
+     */
+    public void setMessage(final String message) {
+        Validate.notEmpty(message);
         this.message = message;
     }
 
@@ -59,7 +102,13 @@ public final class CheckstyleError {
         return source;
     }
 
-    public void setSource(String source) {
+    /**
+     * Set the source.
+     *
+     * @param source must not be {@code null} or empty
+     */
+    public void setSource(final String source) {
+        Validate.notEmpty(source);
         this.source = source;
     }
 
@@ -70,11 +119,11 @@ public final class CheckstyleError {
 
     @Override
     public boolean equals(final Object obj) {
-        if (!(obj instanceof CheckstyleError)) {
+        if (!(obj instanceof CheckstyleViolation)) {
             return false;
         }
 
-        final CheckstyleError other = (CheckstyleError) obj;
+        final CheckstyleViolation other = (CheckstyleViolation) obj;
         return Objects.equal(other.line, other.line)
                 && Objects.equal(other.column, other.column)
                 && Objects.equal(other.severity, other.severity)

@@ -10,7 +10,7 @@
     <name>Ground Zero</name>
     <description>TBD</description>
     <url>http://weltraumschaf.github.com/GroundZero/</url>
-    
+
     <developers>
         <developer>
             <id>Weltraumschaf</id>
@@ -18,7 +18,7 @@
             <email>ich@weltraumschaf.de</email>
         </developer>
     </developers>
-    
+
     <licenses>
         <license>
             <name>THE BEER-WARE LICENSE</name>
@@ -35,7 +35,7 @@
             </comments>
         </license>
     </licenses>
-    
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/Weltraumschaf/GroundZero/issues</url>
@@ -58,7 +58,7 @@
         <system>jenkins</system>
         <url>http://www.weltraumschaf.de:8080/job/GroundZero/</url>
     </ciManagement>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -71,6 +71,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>14.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -103,10 +108,10 @@
             </exclusions>
         </dependency>
     </dependencies>
-    
+
     <build>
         <finalName>${project.artifactId}</finalName>
-        
+
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -115,8 +120,8 @@
                         <phase>install</phase>
                         <configuration>
                             <tasks>
-                                <copy file="${project.build.directory}/${project.artifactId}.jar" 
-                                      tofile="${basedir}/bin/${project.artifactId}.jar" 
+                                <copy file="${project.build.directory}/${project.artifactId}.jar"
+                                      tofile="${basedir}/bin/${project.artifactId}.jar"
                                       overwrite="true" />
                             </tasks>
                         </configuration>
