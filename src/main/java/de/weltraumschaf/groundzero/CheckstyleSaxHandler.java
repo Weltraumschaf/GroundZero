@@ -47,9 +47,20 @@ public class CheckstyleSaxHandler extends DefaultHandler {
      * The current parsed tag.
      */
     private ReportTags currentTag;
+    /**
+     * Current parsed report.
+     */
     private CheckstyleReport currentReport;
+    /**
+     * Current parsed file tag data.
+     */
     private CheckstyleFile currentFile;
 
+    /**
+     * Get the current parsed report.
+     *
+     * @return may return {@code null}, if nothing parsed
+     */
     public CheckstyleReport getReport() {
         return currentReport;
     }
@@ -64,16 +75,20 @@ public class CheckstyleSaxHandler extends DefaultHandler {
         }
     }
 
+    private boolean isCurrentTag(final ReportTags tag) {
+        return currentTag == tag;
+    }
+
     @Override
     public void startElement(final String uri, final String name, final String qName, final Attributes atts) {
         recognizeTag(qName);
 
-        if (ReportTags.CHECKSTYLE == currentTag) {
+        if (isCurrentTag(ReportTags.CHECKSTYLE)) {
             currentReport = new CheckstyleReport(atts.getValue(CheckstyleTagAttribute.VERSION.getName()));
-        } else if (ReportTags.FILE == currentTag) {
+        } else if (isCurrentTag(ReportTags.FILE)) {
             final String fileName = atts.getValue(FileTagAttribute.NAME.getName());
             currentFile = new CheckstyleFile(fileName);
-        } else if (ReportTags.ERROR == currentTag) {
+        } else if (isCurrentTag(ReportTags.ERROR)) {
             final CheckstyleViolation currentViolation = new CheckstyleViolation();
             final String line = atts.getValue(ErrorTagAttribute.LINE.getName());
             currentViolation.setLine(Integer.valueOf(line));
@@ -91,7 +106,7 @@ public class CheckstyleSaxHandler extends DefaultHandler {
     public void endElement(final String uri, final String name, final String qName) {
         recognizeTag(qName);
 
-        if (ReportTags.FILE == currentTag) {
+        if (isCurrentTag(ReportTags.FILE)) {
             currentReport.addFile(currentFile);
         }
     }
@@ -167,7 +182,11 @@ public class CheckstyleSaxHandler extends DefaultHandler {
      */
     private enum CheckstyleTagAttribute {
 
+        /**
+         * Version attribute of {@link ReportTags#CHECKSTYLE}.
+         */
         VERSION("version");
+
         /**
          * Name of the attribute.
          */
@@ -198,7 +217,11 @@ public class CheckstyleSaxHandler extends DefaultHandler {
      */
     private enum FileTagAttribute {
 
+        /**
+         * Name attribute of {@link ReportTags#FILE}.
+         */
         NAME("name");
+
         /**
          * Name of the attribute.
          */
@@ -229,10 +252,25 @@ public class CheckstyleSaxHandler extends DefaultHandler {
      */
     private enum ErrorTagAttribute {
 
+        /**
+         * Line attribute of {@link ReportTags#ERROR}.
+         */
         LINE("line"),
+        /**
+         * Column attribute of {@link ReportTags#ERROR}.
+         */
         COLUMN("column"),
+        /**
+         * Severity attribute of {@link ReportTags#ERROR}.
+         */
         SEVERITY("severity"),
-        MESSAGE("mesage"),
+        /**
+         * Message attribute of {@link ReportTags#ERROR}.
+         */
+        MESSAGE("message"),
+        /**
+         * Source attribute of {@link ReportTags#ERROR}.
+         */
         SOURCE("source");
         /**
          * Name of the attribute.

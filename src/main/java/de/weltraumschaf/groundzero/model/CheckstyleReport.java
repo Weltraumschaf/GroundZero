@@ -30,7 +30,7 @@ public class CheckstyleReport {
     public CheckstyleReport(String version) {
         this.version = version;
     }
-    
+
     /**
      * Checked files with violations.
      */
@@ -42,7 +42,7 @@ public class CheckstyleReport {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(files);
+        return Objects.hashCode(files, version);
     }
 
     @Override
@@ -52,12 +52,12 @@ public class CheckstyleReport {
         }
 
         final CheckstyleReport other = (CheckstyleReport) obj;
-        return Objects.equal(obj, other);
+        return Objects.equal(files, other.files) && Objects.equal(version, other.version);
     }
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("files", files).toString();
+        return Objects.toStringHelper(this).add("files", files).add("version", version).toString();
     }
 
 
