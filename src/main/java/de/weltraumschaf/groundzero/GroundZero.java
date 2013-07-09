@@ -90,10 +90,11 @@ public class GroundZero extends InvokableAdapter {
             return;
         }
 
-        final Collection<CheckstyleReport> reports = processReports();
         final SupressionGenerator generator = new SupressionGenerator();
-        for (final CheckstyleReport report : reports) {
-            getIoStreams().println(generator.generate(report));
+        for (final CheckstyleReport report : processReports()) {
+            if (null != report) { // FIXME must not be null!
+                getIoStreams().println(generator.generate(report));
+            }
         }
     }
 
@@ -128,7 +129,7 @@ public class GroundZero extends InvokableAdapter {
         version.load();
     }
 
-    private Collection<CheckstyleReport> processReports() {
+    Collection<CheckstyleReport> processReports() {
         if (reportFiles.isEmpty()) {
             getIoStreams().println("Nothing to do.");
             return Collections.<CheckstyleReport>emptySet();
