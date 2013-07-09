@@ -1,0 +1,6 @@
+#!/bin/bash
+
+currentWorkDir=$( cd -P -- "$(dirname -- "${0}")" && printf '%s\n' "$(pwd -P)/$(basename -- "${0}")" ) || exit 1
+currentWorkDir=`dirname "${currentWorkDir}"`
+
+java -jar  "${currentWorkDir}/groundzero.jar" $*
