@@ -1,4 +1,4 @@
-package de.weltraumschaf;
+package de.weltraumschaf.groundzero;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
