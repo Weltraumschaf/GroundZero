@@ -15,13 +15,11 @@ package de.weltraumschaf.groundzero;
 import de.weltraumschaf.commons.CapturingOutputStream;
 import de.weltraumschaf.commons.IOStreams;
 import de.weltraumschaf.commons.system.NullExiter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import org.junit.Ignore;
 import static org.mockito.Mockito.*;
 import org.xml.sax.SAXException;
 
@@ -38,11 +36,15 @@ public class GroundZeroTest {
     private final IOStreams io = new IOStreams(in, new PrintStream(out), new PrintStream(err));
     private final ReportProcessor processorSpy = spy(new ReportProcessor());
 
-    private GroundZero createSut() {
+    public GroundZeroTest() throws SAXException {
+        super();
+    }
+
+    private GroundZero createSut() throws SAXException {
         return createSut(new String[] {});
     }
 
-    private GroundZero createSut(final String[] args) {
+    private GroundZero createSut(final String[] args) throws SAXException {
         final GroundZero sut = new GroundZero(args);
         sut.setIoStreams(io);
         sut.setProcessor(processorSpy);

@@ -11,33 +11,67 @@ package de.weltraumschaf.groundzero;
 
 import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
-import de.weltraumschaf.commons.ShutDownHook;
 import de.weltraumschaf.commons.Version;
+import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
+ * Main application class.
+ *
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public class GroundZero extends InvokableAdapter {
 
+    /**
+     * JAR relative path to version property file.
+     */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
+    /**
+     * Usage string.
+     */
     private static final String USAGE = "Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]";
+    /**
+     * Holds the set of report files to process from CLI arguments.
+     */
     private final Set<String> reportFiles = Sets.newHashSet();
+    /**
+     * Processes the report files.
+     */
     private ReportProcessor processor = new ReportProcessor();
+    /**
+     * Version of the application.
+     */
     private Version version;
+    /**
+     * Whether to help version message.
+     */
     private boolean showHelp;
+    /**
+     * Whether to show version message.
+     */
     private boolean showVersion;
 
-    public GroundZero(String[] args) {
+    /**
+     * Dedicated constructor.
+     *
+     * @param args command line arguments provided by JVM
+     * @throws SAXException if SAX exception occurs on {@link #processor} instantiation
+     */
+    public GroundZero(final String[] args) throws SAXException {
         super(args);
     }
 
-    public static void main(final String[] args) {
+    /**
+     * Main entry point of application invoked by JVM.
+     *
+     * @param args command line arguments provided by JVM
+     * @throws SAXException if SAX exception occurs on {@link #processor} instantiation
+     */
+    public static void main(final String[] args) throws SAXException {
         InvokableAdapter.main(new GroundZero(args));
     }
 
@@ -56,7 +90,11 @@ public class GroundZero extends InvokableAdapter {
             return;
         }
 
-        processReports();
+        final Collection<CheckstyleReport> reports = processReports();
+        final SupressionGenerator generator = new SupressionGenerator();
+        for (final CheckstyleReport report : reports) {
+            getIoStreams().println(generator.generate(report));
+        }
     }
 
     private void examineCommandLineOptions() {
@@ -90,17 +128,20 @@ public class GroundZero extends InvokableAdapter {
         version.load();
     }
 
-    private void processReports() {
+    private Collection<CheckstyleReport> processReports() {
         if (reportFiles.isEmpty()) {
             getIoStreams().println("Nothing to do.");
-            return;
+            return Collections.<CheckstyleReport>emptySet();
         }
 
+        final Set<CheckstyleReport> reports = Sets.newHashSet();
+
         for (final String reportFile : reportFiles) {
-            processReport(reportFile);
+            reports.add(processReport(reportFile));
         }
 
         getIoStreams().println(String.format("All reports %d proccesed.", reportFiles.size()));
+        return reports;
     }
 
     public void setProcessor(ReportProcessor processor) {
@@ -111,17 +152,19 @@ public class GroundZero extends InvokableAdapter {
         return processor;
     }
 
-    private void processReport(final String reportFile) {
+    private CheckstyleReport processReport(final String reportFile) {
         try {
-            processor.process(reportFile);
+            return processor.process(reportFile);
         } catch (SAXException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while parsing input XMl! %s", ex.getMessage()));
             exit(1);
+            return null;
         } catch (IOException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while reading input file! %s", ex.getMessage()));
             exit(2);
+            return null;
         }
     }
 }

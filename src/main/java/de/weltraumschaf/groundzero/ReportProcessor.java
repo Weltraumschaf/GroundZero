@@ -11,7 +11,13 @@
  */
 package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import org.apache.commons.lang3.Validate;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -24,6 +30,22 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class ReportProcessor {
+    private static final String ENCODING = "UTF-8";
+
+    /**
+     * Handler to intercept SAX parser events.
+     */
+    private final CheckstyleSaxHandler handler = new CheckstyleSaxHandler();
+    /**
+     * XML reader.
+     */
+    private final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+
+    public ReportProcessor() throws SAXException {
+        super();
+        xmlReader.setContentHandler(handler);
+        xmlReader.setErrorHandler(handler);
+    }
 
     /**
      * Process the file given as file name.
@@ -32,14 +54,14 @@ public class ReportProcessor {
      * @throws SAXException if XML parse errors occurs
      * @throws IOException if file I/O errors occurs
      */
-    public void process(final String fileName) throws SAXException, IOException {
+    public CheckstyleReport process(final String fileName) throws SAXException, IOException {
         Validate.notEmpty(fileName);
-        final CheckstyleSaxHandler handler = new CheckstyleSaxHandler();
-        final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-        xmlReader.setContentHandler(handler);
-        xmlReader.setErrorHandler(handler);
-        final InputSource input = new InputSource();
-        xmlReader.parse(input);
-        handler.getReport();
+
+        try (final InputStream inputStream = new FileInputStream(new File(fileName))) {
+            final Reader reader = new InputStreamReader(inputStream, ENCODING);
+            xmlReader.parse(new InputSource(reader));
+        }
+
+        return handler.getReport();
     }
 }
