@@ -14,6 +14,7 @@ package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.commons.CapturingOutputStream;
 import de.weltraumschaf.commons.IOStreams;
+import de.weltraumschaf.commons.system.NullExiter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -45,6 +46,7 @@ public class GroundZeroTest {
         final GroundZero sut = new GroundZero(args);
         sut.setIoStreams(io);
         sut.setProcessor(processorSpy);
+        sut.setExiter(new NullExiter());
         return spy(sut);
     }
 
@@ -97,21 +99,25 @@ public class GroundZeroTest {
         verify(sut, never()).showVersionMessage();
     }
 
-    @Test @Ignore
+    @Test
     public void processOneFile() throws Exception {
         final String fileName = "/one/file/name";
         final GroundZero sut = createSut(new String[] {fileName});
         sut.execute();
+        verify(sut, never()).showHelpMessage();
+        verify(sut, never()).showVersionMessage();
         verify(processorSpy, times(1)).process(fileName);
     }
 
-    @Test @Ignore
+    @Test
     public void processMultipleFile() throws Exception {
         final String fileName1 = "/one/file/name1";
         final String fileName2 = "one/file/name2";
         final String fileName3 = "/one/file3";
         final GroundZero sut = createSut(new String[] {fileName1, fileName2, fileName3});
         sut.execute();
+        verify(sut, never()).showHelpMessage();
+        verify(sut, never()).showVersionMessage();
         verify(processorSpy, times(1)).process(fileName1);
         verify(processorSpy, times(1)).process(fileName2);
         verify(processorSpy, times(1)).process(fileName3);
