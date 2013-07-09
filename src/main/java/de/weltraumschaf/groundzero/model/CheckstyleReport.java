@@ -15,6 +15,7 @@ package de.weltraumschaf.groundzero.model;
 import com.google.common.collect.Sets;
 import com.google.common.base.Objects;
 import java.util.Set;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Represents the generated Checkstyle reports.
@@ -25,19 +26,38 @@ import java.util.Set;
  */
 public class CheckstyleReport {
 
+    /**
+     * Version of Checkstyle which created the report.
+     */
     private final String version;
-
-    public CheckstyleReport(String version) {
-        this.version = version;
-    }
 
     /**
      * Checked files with violations.
      */
     private final Set<CheckstyleFile> files = Sets.newHashSet();
 
+    public CheckstyleReport(final String version) {
+        super();
+        this.version = version;
+    }
+
+    /**
+     * Add reported file.
+     *
+     * @param file must no be {@code null}
+     */
     public void addFile(final CheckstyleFile file) {
+        Validate.notNull(file);
         files.add(file);
+    }
+
+    /**
+     * Get reported files.
+     *
+     * @return never {@code nul}, may be empty
+     */
+    public Set<CheckstyleFile> getFiles() {
+        return files;
     }
 
     @Override
@@ -59,7 +79,5 @@ public class CheckstyleReport {
     public String toString() {
         return Objects.toStringHelper(this).add("files", files).add("version", version).toString();
     }
-
-
 
 }

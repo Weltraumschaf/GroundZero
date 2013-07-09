@@ -112,6 +112,16 @@ public final class CheckstyleViolation {
         this.source = source;
     }
 
+    /**
+     * Returns the portion after the last dot of {@link #getSource() source}.
+     *
+     * @return never {@code null}, maybe empty
+     */
+    public String getCheck() {
+        final int pos = source.lastIndexOf(".") + 1;
+        return source.substring(pos, source.length());
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(line, column, severity, message, source);
