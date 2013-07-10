@@ -194,6 +194,20 @@
         </pluginManagement>
     
         <plugins>
+            <!-- 
+                Build plugins.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${project.build.version.source}</source>
+                    <target>${project.build.version.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -207,11 +221,13 @@
                         <descriptorRefs>jar-with-dependencies</descriptorRefs>
                     </descriptorRefs>
                     <finalName>${finalName}</finalName>
+                    <outputDirectory>${basedir}/bin</outputDirectory>
                     <appendAssemblyId>false</appendAssemblyId>
                     <attach>false</attach>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
@@ -220,11 +236,13 @@
                 </executions>
             </plugin>
 
+            <!--
+                Code analysis plugins.
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>javancss-maven-plugin</artifactId>
-            </plugin>
-        
+            </plugin>        
             <plugin>
                 <!-- http://wiki.netbeans.org/MavenCodeCoverage -->
                 <groupId>org.jacoco</groupId>
@@ -304,35 +322,6 @@
                     <effort>Max</effort>
                     <debug>false</debug>
                     <relaxed>false</relaxed>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <configuration>
-                            <tasks>
-                                <copy file="${project.build.directory}/${project.artifactId}.jar"
-                                      tofile="${basedir}/bin/${project.artifactId}.jar"
-                                      overwrite="true" />
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${project.build.version.source}</source>
-                    <target>${project.build.version.target}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
         </plugins>
