@@ -80,4 +80,8 @@ public class CheckstyleReport {
         return Objects.toStringHelper(this).add("files", files).add("version", version).toString();
     }
 
+    public boolean hasFiles() {
+        return files.size() > 0;
+    }
+
 }
