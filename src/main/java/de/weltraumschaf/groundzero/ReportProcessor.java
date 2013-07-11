@@ -30,6 +30,10 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class ReportProcessor {
+
+    /**
+     * Input encoding of report files.
+     */
     private static final String ENCODING = "UTF-8";
 
     /**
