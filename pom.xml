@@ -464,6 +464,15 @@
                                 </tagListOptions>
                             </configuration>
                         </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+<!--                            <configuration>
+                                <configLocation>${project.basedir}/src/main/config/checkstyle-ruleset.xml</configLocation>
+                                <logViolationsToConsole>true</logViolationsToConsole>
+                                <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                            </configuration>-->
+                        </plugin>
                     </reportPlugins>
                 </configuration>
             </plugin>
