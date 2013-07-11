@@ -79,6 +79,29 @@ public class CheckstyleSaxHandlerTest {
     }
 
     @Test
+    public void parseCheckstyleTagWithOneNonEmptyFileAndErrorWithoutColumn() throws SAXException, IOException {
+        final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
+                + "    <file name=\"foo/bar.java\">\n"
+                + "        <error line=\"2\" severity=\"error\" message=\"Line contains a tab character.\" "
+                + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
+                + "    </file>\n"
+                + "</checkstyle>\n");
+        xmlReader.parse(new InputSource(reader));
+
+        final CheckstyleReport expectedReport = new CheckstyleReport("5.4");
+        final CheckstyleFile expectedFile = new CheckstyleFile("foo/bar.java");
+        expectedReport.addFile(expectedFile);
+        final CheckstyleViolation expectedViolation1 = new CheckstyleViolation();
+        expectedViolation1.setLine(2);
+        expectedViolation1.setSeverity(CheckstyleSeverity.ERROR);
+        expectedViolation1.setMessage("Line contains a tab character.");
+        expectedViolation1.setSource("com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck");
+        expectedFile.addViolation(expectedViolation1);
+
+        assertThat(sut.getReport(), is(equalTo(expectedReport)));
+    }
+
+    @Test
     public void parseCheckstyleTagWithOneNonEmptyFileAndThreeErrors() throws SAXException, IOException {
         final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
                 + "    <file name=\"foo/bar.java\">\n"

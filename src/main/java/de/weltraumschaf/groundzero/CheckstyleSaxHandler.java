@@ -89,16 +89,7 @@ public class CheckstyleSaxHandler extends DefaultHandler {
             final String fileName = atts.getValue(FileTagAttribute.NAME.getName());
             currentFile = new CheckstyleFile(fileName);
         } else if (isCurrentTag(ReportTags.ERROR)) {
-            final CheckstyleViolation currentViolation = new CheckstyleViolation();
-            final String line = atts.getValue(ErrorTagAttribute.LINE.getName());
-            currentViolation.setLine(Integer.valueOf(line));
-            final String column = atts.getValue(ErrorTagAttribute.COLUMN.getName());
-            currentViolation.setColumn(Integer.valueOf(column));
-            final String severity = atts.getValue(ErrorTagAttribute.SEVERITY.getName());
-            currentViolation.setSeverity(CheckstyleSeverity.valueOf(severity.toUpperCase()));
-            currentViolation.setMessage(atts.getValue(ErrorTagAttribute.MESSAGE.getName()));
-            currentViolation.setSource(atts.getValue(ErrorTagAttribute.SOURCE.getName()));
-            currentFile.addViolation(currentViolation);
+            parseError(atts);
         }
     }
 
@@ -109,6 +100,35 @@ public class CheckstyleSaxHandler extends DefaultHandler {
         if (isCurrentTag(ReportTags.FILE)) {
             currentReport.addFile(currentFile);
         }
+    }
+
+    private void parseError(final Attributes atts) {
+        final CheckstyleViolation currentViolation = new CheckstyleViolation();
+        final String line = atts.getValue(ErrorTagAttribute.LINE.getName());
+
+        try {
+            currentViolation.setLine(Integer.valueOf(line));
+        } catch (final NumberFormatException ex) {
+            // If there is nothing we can format to a number the default of CheckstyleViolation is used.
+        } catch (final IllegalArgumentException ex) {
+            // If there is nothing we can set the default of CheckstyleViolation is used.
+        }
+
+        final String column = atts.getValue(ErrorTagAttribute.COLUMN.getName());
+
+        try {
+            currentViolation.setColumn(Integer.valueOf(column));
+        } catch (final NumberFormatException ex) {
+            // If there is nothing we can format to a number the default of CheckstyleViolation is used.
+        } catch (final IllegalArgumentException ex) {
+            // If there is nothing we can set the default of CheckstyleViolation is used.
+        }
+
+        final String severity = atts.getValue(ErrorTagAttribute.SEVERITY.getName());
+        currentViolation.setSeverity(CheckstyleSeverity.valueOf(severity.toUpperCase()));
+        currentViolation.setMessage(atts.getValue(ErrorTagAttribute.MESSAGE.getName()));
+        currentViolation.setSource(atts.getValue(ErrorTagAttribute.SOURCE.getName()));
+        currentFile.addViolation(currentViolation);
     }
 
     /**
@@ -186,7 +206,6 @@ public class CheckstyleSaxHandler extends DefaultHandler {
          * Version attribute of {@link ReportTags#CHECKSTYLE}.
          */
         VERSION("version");
-
         /**
          * Name of the attribute.
          */
@@ -221,7 +240,6 @@ public class CheckstyleSaxHandler extends DefaultHandler {
          * Name attribute of {@link ReportTags#FILE}.
          */
         NAME("name");
-
         /**
          * Name of the attribute.
          */
