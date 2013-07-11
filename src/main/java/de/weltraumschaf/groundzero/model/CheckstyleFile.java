@@ -62,6 +62,16 @@ public final class CheckstyleFile {
         return violations;
     }
 
+    /**
+     * Add violation to file.
+     * 
+     * @param violation must not be {@code null}
+     */
+    public void addViolation(final CheckstyleViolation violation) {
+        Validate.notNull(violation);
+        violations.add(violation);
+    }
+    
     @Override
     public int hashCode() {
         return Objects.hashCode(fileName, violations);
@@ -80,12 +90,10 @@ public final class CheckstyleFile {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).add("fileName", fileName).add("violations", violations).toString();
+        return Objects.toStringHelper(this)
+                .add("fileName", fileName)
+                .add("violations", violations)
+                .toString();
     }
-
-    public void addViolation(final CheckstyleViolation violation) {
-        violations.add(violation);
-    }
-
 
 }
