@@ -15,7 +15,6 @@ import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSeverity;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
 import java.util.Map;
-import java.util.logging.Logger;
 import org.apache.commons.lang3.Validate;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -39,10 +38,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class CheckstyleSaxHandler extends DefaultHandler {
 
-    /**
-     * Logging facility.
-     */
-    private static final Logger LOGGER = Logger.getLogger(CheckstyleSaxHandler.class.getName());
     /**
      * The current parsed tag.
      */
