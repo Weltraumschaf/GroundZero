@@ -25,7 +25,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CheckstyleReport {
+public final class CheckstyleReport {
 
     /**
      * Version of Checkstyle which created the report.
