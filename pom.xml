@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>Ground Zero</name>
-    <description>TBD</description>
+    <description>A tool to generate line based suppression files for Checkstyle.</description>
     <url>http://weltraumschaf.github.com/GroundZero/</url>
 
     <developers>
