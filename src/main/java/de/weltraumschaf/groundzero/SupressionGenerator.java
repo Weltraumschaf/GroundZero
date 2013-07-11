@@ -14,7 +14,7 @@ package de.weltraumschaf.groundzero;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
-import java.util.Set;
+import java.util.Collection;
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -61,7 +61,7 @@ public class SupressionGenerator {
         return buffer.toString();
     }
 
-    private void generateFileSuppressions(final StringBuilder buffer, final Set<CheckstyleFile> files) {
+    private void generateFileSuppressions(final StringBuilder buffer, final Collection<CheckstyleFile> files) {
         for (final CheckstyleFile file : files) {
             generateFileSuppression(buffer, file);
         }
