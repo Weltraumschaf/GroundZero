@@ -14,17 +14,39 @@ package de.weltraumschaf.groundzero;
 import de.weltraumschaf.commons.system.ExitCode;
 
 /**
+ * Exit codes for {@link GroundZero CLI application}.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public enum ExitCodeImpl implements ExitCode {
 
+    /**
+     * No errors.
+     */
     OK(0),
+    /**
+     * Errors while parsing a Checkstyle report occurred.
+     */
     XML_INPUT_PARSE_ERROR(1),
+    /**
+     * Errors while reading a Checkstyle report file occurred.
+     */
     XML_INPUT_FILE_READ_ERROR(2),
+    /**
+     * Unspecified fatal error occurred.
+     */
     FATAL(-1);
+
+    /**
+     * Exit code number returned as exit code to JVM.
+     */
     private final int code;
 
+    /**
+     * Dedicated constructor.
+     *
+     * @param code exit code number
+     */
     ExitCodeImpl(final int code) {
         this.code = code;
     }

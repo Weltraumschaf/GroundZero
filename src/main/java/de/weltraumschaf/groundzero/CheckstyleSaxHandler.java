@@ -65,17 +65,32 @@ public class CheckstyleSaxHandler extends DefaultHandler {
         return currentReport;
     }
 
+    /**
+     * Tries to recognize the {@link ReportTags tag} by it's name and set it as {@link #currentTag}.
+     *
+     * Throws a {@link IllegalStateException} if a unrecognizable tag name was given.
+     *
+     * @param tagName must not be {@code null} or empty
+     */
     private void recognizeTag(final String tagName) {
+        Validate.notEmpty(tagName);
         final ReportTags tag = ReportTags.forTagName(tagName);
 
         if (null == tag) {
-            LOGGER.warning(String.format("Unrecognized tag <%s>!", tagName));
+            throw new IllegalStateException(String.format("Unrecognized tag <%s>!", tagName));
         } else {
             currentTag = tag;
         }
     }
 
+    /**
+     * Whether the {@link #currentTag} is of a particular {@link ReportTags tag}.
+     *
+     * @param tag must not be {@code null}
+     * @return {@code true} if {@link #currentTag} is same as given tag, else {@code false}
+     */
     private boolean isCurrentTag(final ReportTags tag) {
+        Validate.notNull(tag);
         return currentTag == tag;
     }
 
@@ -102,7 +117,13 @@ public class CheckstyleSaxHandler extends DefaultHandler {
         }
     }
 
+    /**
+     * Parse a {@literal <error/>} tag.
+     *
+     * @param atts must not be {@code null}
+     */
     private void parseError(final Attributes atts) {
+        Validate.notNull(atts);
         final CheckstyleViolation currentViolation = new CheckstyleViolation();
         final String line = atts.getValue(ErrorTagAttribute.LINE.getName());
 

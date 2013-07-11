@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import org.apache.commons.lang3.Validate;
 import org.xml.sax.SAXException;
 
 /**
@@ -98,14 +99,30 @@ public class GroundZero extends InvokableAdapter {
         }
     }
 
+    /**
+     * Find the command line arguments.
+     *
+     * Command line arguments are:
+     * <ul>
+     *  <li>-h or --help</li>
+     *  <li>-v or --version</li>
+     *  <li>everything else is treated as file name argument</li>
+     * </ul>
+     */
     private void examineCommandLineOptions() {
         for (final String option : getArgs()) {
-            if ("-h".equals(option) || "--help".equals(option)) {
-                showHelp = true;
-            } else if ("-v".equals(option) || "--version".equals(option)) {
-                showVersion = true;
-            } else {
-                reportFiles.add(option);
+            switch (option) {
+                case "-h":
+                case "--help":
+                    showHelp = true;
+                    break;
+                case "-v":
+                case "--version":
+                    showVersion = true;
+                    break;
+                default:
+                    reportFiles.add(option);
+                    break;
             }
         }
     }
@@ -124,11 +141,21 @@ public class GroundZero extends InvokableAdapter {
         getIoStreams().println(String.format("Version: %s", version.getVersion()));
     }
 
+    /**
+     * Load version information from {@link #VERSION_FILE properties}.
+     *
+     * @throws IOException if properties can't be load
+     */
     void initializeVersionInformation() throws IOException {
         version = new Version(VERSION_FILE);
         version.load();
     }
 
+    /**
+     * Process all given report files.
+     *
+     * @return never {@code null}, maybe empty
+     */
     Collection<CheckstyleReport> processReports() {
         if (reportFiles.isEmpty()) {
             getIoStreams().println("Nothing to do.");
@@ -145,14 +172,34 @@ public class GroundZero extends InvokableAdapter {
         return reports;
     }
 
-    public void setProcessor(ReportProcessor processor) {
+    /**
+     * Injection point for report processor.
+     *
+     * @param processor must not be {@code null}
+     */
+    public void setProcessor(final ReportProcessor processor) {
+        Validate.notNull(processor);
         this.processor = processor;
     }
 
+    /**
+     * Get report processor.
+     *
+     * @return never {@code null}
+     */
     public ReportProcessor getProcessor() {
         return processor;
     }
 
+    /**
+     * Processes a single report file.
+     *
+     * Exits the application with exit code != {@link ExitCodeImpl#OK}, if {@link SAXException} or {@link IOException}
+     * was thrown.
+     *
+     * @param reportFile file name of Checkstyle report
+     * @return never {@code null}
+     */
     private CheckstyleReport processReport(final String reportFile) {
         try {
             return processor.process(reportFile);

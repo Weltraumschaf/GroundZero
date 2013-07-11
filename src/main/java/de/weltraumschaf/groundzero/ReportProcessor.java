@@ -64,7 +64,7 @@ public class ReportProcessor {
      * @param reportFileName file name of the report, must not be {@code null} or empty
      * @throws SAXException if XML parse errors occurs
      * @throws IOException if file I/O errors occurs
-     * @return always new instance
+     * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final String reportFileName) throws SAXException, IOException {
         Validate.notEmpty(reportFileName);
@@ -77,7 +77,7 @@ public class ReportProcessor {
      * @param reportFileName file name of the report, must not be {@code null}
      * @throws SAXException if XML parse errors occurs
      * @throws IOException if file I/O errors occurs
-     * @return always new instance
+     * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final File report) throws SAXException, IOException {
         Validate.notNull(report);

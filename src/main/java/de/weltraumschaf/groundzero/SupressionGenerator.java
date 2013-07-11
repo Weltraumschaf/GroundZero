@@ -28,14 +28,32 @@ public class SupressionGenerator {
      * Format of a suppression tag.
      */
     private static final char NL = '\n';
+    /**
+     * Format string for suppress tag.
+     */
     private static final String SUPRESS_TAG_FORMAT =
             "    <suppress files=\"%s\" lines=\"%s\" columns=\"%s\" checks=\"%s\"/>";
+    /**
+     * XML preamble string.
+     */
     private static final String XML_PREAMBLE = "<?xml version=\"1.0\" encoding\"UTF-8\"?>";
+    /**
+     * DTD for Checkstyle suppression file.
+     */
     private static final String XML_DTD = "<!DOCTYPE suppressions PUBLIC "
             + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
             + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">";
+    /**
+     * Open root tag.
+     */
     private static final String TAG_OPEN_SUPPRESSIONS = "<suppressions>";
+    /**
+     * Close root tag.
+     */
     private static final String TAG_CLOSE_SUPPRESSIONS = "</suppressions>";
+    /**
+     * Empty root tag.
+     */
     private static final String TAG_EMPTY_SUPPRESSIONS = "<suppressions/>";
 
     /**
@@ -61,18 +79,41 @@ public class SupressionGenerator {
         return buffer.toString();
     }
 
+    /**
+     * Generate suppressions for a collection of {@code CheckstyleFile reported files}.
+     *
+     * @param buffer used to collect generated XML
+     * @param files must not be {@code null}
+     */
     private void generateFileSuppressions(final StringBuilder buffer, final Collection<CheckstyleFile> files) {
+        Validate.notNull(files);
+
         for (final CheckstyleFile file : files) {
             generateFileSuppression(buffer, file);
         }
     }
 
+    /**
+     * Generate suppressions for a {@code CheckstyleFile reported file}.
+     *
+     * @param buffer used to collect generated XML
+     * @param file must not be {@code null}
+     */
     private void generateFileSuppression(final StringBuilder buffer, final CheckstyleFile file) {
+        Validate.notNull(file);
+
         for (final CheckstyleViolation violation : file.getViolations()) {
             generateErrorSupression(buffer, file.getFileName(), violation);
         }
     }
 
+    /**
+     * Generates the suppress tag for a violation.
+     *
+     * @param buffer used to collect generated XML
+     * @param fileName name of reported file which has the violation
+     * @param violation violation of the file
+     */
     private void generateErrorSupression(final StringBuilder buffer, final String fileName,
             final CheckstyleViolation violation) {
         buffer.append(String.format(SUPRESS_TAG_FORMAT,

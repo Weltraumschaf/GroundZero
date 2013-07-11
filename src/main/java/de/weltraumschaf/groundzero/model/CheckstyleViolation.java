@@ -42,6 +42,11 @@ public final class CheckstyleViolation {
      */
     private String source = "";
 
+    /**
+     * Get the line where in the reported file the violation occurred.
+     *
+     * @return 0 if in the error tag of the report the line attribute is missing
+     */
     public int getLine() {
         return line;
     }
@@ -56,6 +61,11 @@ public final class CheckstyleViolation {
         this.line = line;
     }
 
+    /**
+     * Get the column where in the reported file the violation occurred.
+     *
+     * @return 0 if in the error tag of the report the column attribute is missing
+     */
     public int getColumn() {
         return column;
     }
@@ -70,6 +80,11 @@ public final class CheckstyleViolation {
         this.column = column;
     }
 
+    /**
+     * Get the severity.
+     *
+     * @return never {@code null}, default is {@link CheckstyleSeverity#IGNORE}
+     */
     public CheckstyleSeverity getSeverity() {
         return severity;
     }
@@ -84,6 +99,11 @@ public final class CheckstyleViolation {
         this.severity = severity;
     }
 
+    /**
+     * Get violation description.
+     *
+     * @return never {@code null}, maybe empty
+     */
     public String getMessage() {
         return message;
     }
@@ -98,6 +118,11 @@ public final class CheckstyleViolation {
         this.message = message;
     }
 
+    /**
+     * Get the full qualified class name of the checker which found this violation.
+     *
+     * @return never {@code null}, maybe empty
+     */
     public String getSource() {
         return source;
     }

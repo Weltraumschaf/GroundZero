@@ -20,6 +20,8 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
 import org.xml.sax.SAXException;
 
@@ -30,6 +32,9 @@ import org.xml.sax.SAXException;
  */
 public class GroundZeroTest {
 
+    // CHECKSTYLE:OFF Must be public for JUnit
+    @Rule public final ExpectedException thrown = ExpectedException.none();
+    //CHECKSTYLE:ON
     private final CapturingOutputStream out = new CapturingOutputStream();
     private final CapturingOutputStream err = new CapturingOutputStream();
     private final InputStream in = mock(InputStream.class);
@@ -123,6 +128,12 @@ public class GroundZeroTest {
         verify(processorSpy, times(1)).process(fileName1);
         verify(processorSpy, times(1)).process(fileName2);
         verify(processorSpy, times(1)).process(fileName3);
+    }
+
+    @Test
+    public void setProcessor_throwsExceptionIfNull() throws SAXException {
+        thrown.expect(NullPointerException.class);
+        createSut().setProcessor(null);
     }
 
 }

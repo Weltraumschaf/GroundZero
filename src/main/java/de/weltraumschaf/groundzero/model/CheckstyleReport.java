@@ -37,8 +37,14 @@ public final class CheckstyleReport {
      */
     private final Set<CheckstyleFile> files = Sets.newLinkedHashSet();
 
+    /**
+     * Dedicated constructor.
+     *
+     * @param version of Checkstyle which generated the report, must not be {@code null}
+     */
     public CheckstyleReport(final String version) {
         super();
+        Validate.notNull(version);
         this.version = version;
     }
 
@@ -59,6 +65,16 @@ public final class CheckstyleReport {
      */
     public Collection<CheckstyleFile> getFiles() {
         return files;
+    }
+
+    /**
+     * Whether the report has files with violations.
+     *
+     * @return {@code true} if files {@link #addFile(de.weltraumschaf.groundzero.model.CheckstyleFile) were added},
+     * else {@code false}
+     */
+    public boolean hasFiles() {
+        return files.size() > 0;
     }
 
     @Override
@@ -82,10 +98,6 @@ public final class CheckstyleReport {
                 .add("version", version)
                 .add("files", files)
                 .toString();
-    }
-
-    public boolean hasFiles() {
-        return files.size() > 0;
     }
 
 }
