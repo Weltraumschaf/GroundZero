@@ -32,9 +32,29 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     /**
+     * System dependent new line.
+     */
+    private static final String NL = String.format("%n");
+    /**
      * Usage string.
      */
-    private static final String USAGE = "Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]";
+    private static final String HELP_USAGE = "Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]";
+    /**
+     * Tool short description.
+     */
+    private static final String HELP_DESCRIPTION = "A tool to generate line based suppression files for Checkstyle.";
+    /**
+     * Options help.
+     */
+    private static final String HELP_OPTIONS =
+            "  -h | --help     Show this help." + NL
+            + "  -v | --version  Show version information";
+    /**
+     * Footer information for help.
+     */
+    private static final String HELP_FOOTER = "Project site: http://weltraumschaf.github.io/GroundZero/" + NL
+            + "Report bugs here: https://github.com/Weltraumschaf/GroundZero/issues";
+
     /**
      * Holds the set of report files to process from CLI arguments.
      */
@@ -104,9 +124,9 @@ public class GroundZero extends InvokableAdapter {
      *
      * Command line arguments are:
      * <ul>
-     *  <li>-h or --help</li>
-     *  <li>-v or --version</li>
-     *  <li>everything else is treated as file name argument</li>
+     * <li>-h or --help</li>
+     * <li>-v or --version</li>
+     * <li>everything else is treated as file name argument</li>
      * </ul>
      */
     private void examineCommandLineOptions() {
@@ -131,7 +151,12 @@ public class GroundZero extends InvokableAdapter {
      * Prints help and usage information on STDOUT.
      */
     void showHelpMessage() {
-        getIoStreams().println(USAGE);
+        final StringBuilder buffer = new StringBuilder();
+        buffer.append(HELP_USAGE).append(NL).append(NL)
+            .append(HELP_DESCRIPTION).append(NL).append(NL)
+            .append(HELP_OPTIONS).append(NL).append(NL)
+            .append(HELP_FOOTER);
+        getIoStreams().println(buffer.toString());
     }
 
     /**
