@@ -41,6 +41,13 @@ public class ReportProcessor {
      */
     private final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 
+    /**
+     * Dedicated constructor.
+     *
+     * Set up the XML reader with the SAX handler.
+     *
+     * @throws SAXException if creation of XML reader fails
+     */
     public ReportProcessor() throws SAXException {
         super();
         xmlReader.setContentHandler(handler);
@@ -48,16 +55,30 @@ public class ReportProcessor {
     }
 
     /**
-     * Process the file given as file name.
+     * Process the report given as file name.
      *
-     * @param fileName file name of the report, must not be {@code null} or empty
+     * @param reportFileName file name of the report, must not be {@code null} or empty
      * @throws SAXException if XML parse errors occurs
      * @throws IOException if file I/O errors occurs
+     * @return always new instance
      */
-    public CheckstyleReport process(final String fileName) throws SAXException, IOException {
-        Validate.notEmpty(fileName);
+    public CheckstyleReport process(final String reportFileName) throws SAXException, IOException {
+        Validate.notEmpty(reportFileName);
+        return process(new File(reportFileName));
+    }
 
-        try (final InputStream inputStream = new FileInputStream(new File(fileName))) {
+    /**
+     * Process the report given as file.
+     *
+     * @param reportFileName file name of the report, must not be {@code null}
+     * @throws SAXException if XML parse errors occurs
+     * @throws IOException if file I/O errors occurs
+     * @return always new instance
+     */
+    public CheckstyleReport process(final File report) throws SAXException, IOException {
+        Validate.notNull(report);
+
+        try (final InputStream inputStream = new FileInputStream(report)) {
             final Reader reader = new InputStreamReader(inputStream, ENCODING);
             xmlReader.parse(new InputSource(reader));
         }
