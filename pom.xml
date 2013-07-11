@@ -387,7 +387,7 @@
                         <version>1.4</version>
                     </dependency>
                 </dependencies>
-                
+
                 <configuration>
                     <reportPlugins>
                         <plugin>
@@ -481,6 +481,7 @@
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>taglist-maven-plugin</artifactId>
                             <configuration>
+                                <linkXRef>false</linkXRef>
                                 <tagListOptions>
                                     <tagClasses>
                                         <tagClass>
@@ -523,6 +524,7 @@
                                 <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                                 <logViolationsToConsole>true</logViolationsToConsole>
                                 <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                <linkXRef>false</linkXRef>
                             </configuration>
                         </plugin>
                         <plugin>
