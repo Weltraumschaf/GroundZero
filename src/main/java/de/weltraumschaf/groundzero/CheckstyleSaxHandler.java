@@ -124,9 +124,9 @@ public class CheckstyleSaxHandler extends DefaultHandler {
 
         try {
             currentViolation.setLine(Integer.valueOf(line));
-        } catch (final NumberFormatException ex) {
+        } catch (final NumberFormatException ex) { //NOPMD
             // If there is nothing we can format to a number the default of CheckstyleViolation is used.
-        } catch (final IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) { //NOPMD
             // If there is nothing we can set the default of CheckstyleViolation is used.
         }
 
@@ -134,9 +134,9 @@ public class CheckstyleSaxHandler extends DefaultHandler {
 
         try {
             currentViolation.setColumn(Integer.valueOf(column));
-        } catch (final NumberFormatException ex) {
+        } catch (final NumberFormatException ex) { //NOPMD
             // If there is nothing we can format to a number the default of CheckstyleViolation is used.
-        } catch (final IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) { //NOPMD
             // If there is nothing we can set the default of CheckstyleViolation is used.
         }
 
