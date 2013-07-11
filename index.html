@@ -182,10 +182,12 @@
         <div id="bodyColumn"  class="span10" >
                                   
             <h1>Welcome to the Ground Zero Project</h1>
-<p>A tool to generate line based suppression files for Checkstyle.</p>
+<p>A tool to generate line based suppression files for <a class="externalLink" href="http://checkstyle.sourceforge.net/">Checkstyle</a>.</p>
 <div class="section">
 <h2>What is Ground Zero<a name="What_is_Ground_Zero"></a></h2>
-<p>TBD</p></div>
+<p>Most of you know <a class="externalLink" href="http://checkstyle.sourceforge.net/">Checkstyle</a> a very useful code quality tool. But also most of you know these historical grown software projects where a analysis with <a class="externalLink" href="http://checkstyle.sourceforge.net/">Checkstyle</a> leads to hundreds of thousands warnings and errors. Developers not experienced with a situation like this tend to say: &#x201c;Ok, lets fix this shit.&#x201d; A few thousand warnings later everybody is frustrated about the low progress in getting zero warnings. It&#x2019;s like a fight against windmills.</p>
+<p>A more practical approach is to use <a class="externalLink" href="http://checkstyle.sourceforge.net/">Checkstyle</a>, but suppress all warnings and errors from a beginning point based on line and column of their occurrence. If a developer edit the sources so that the position of the suppressed warning will change it pops up because it is no longer suppressed. In combination with a team commitment that nothing with warnings may be committed the developer is forced to remove this few warnings. This approach is less frustrating because you do not waste your effort. You clean up the parts of your software where you do the work.</p>
+<p>This tool helps you to generate a line based suppression file from a <a class="externalLink" href="http://checkstyle.sourceforge.net/">Checkstyle</a> report. Add this suppression file to your <a class="externalLink" href="http://checkstyle.sourceforge.net/">Checkstyle</a> configuration and have fun fixing the warnings.</p></div>
 <div class="section">
 <h2>Build and Install<a name="Build_and_Install"></a></h2>
 <p>A current <a class="externalLink" href="http://maven.apache.org/">Maven</a> installation is required.</p>
