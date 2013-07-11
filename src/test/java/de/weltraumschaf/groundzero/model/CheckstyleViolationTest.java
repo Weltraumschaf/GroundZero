@@ -9,7 +9,6 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-
 package de.weltraumschaf.groundzero.model;
 
 import org.junit.Test;
@@ -26,7 +25,8 @@ import org.junit.rules.ExpectedException;
 public class CheckstyleViolationTest {
 
     // CHECKSTYLE:OFF Must be public for JUnit.
-    @Rule public final ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
     //CHECKSTYLE:ON
     private final CheckstyleViolation sut = new CheckstyleViolation();
 
@@ -169,6 +169,19 @@ public class CheckstyleViolationTest {
         assertThat(sut2.equals(sut2), is(true));
         assertThat(sut2.equals(sut), is(false));
         assertThat(sut2.equals(sut1), is(false));
+
+        sut.setMessage("message");
+        assertThat(sut.equals(sut1), is(false));
+        sut1.setMessage("message");
+        assertThat(sut.equals(sut1), is(true));
+        sut.setSeverity(CheckstyleSeverity.WARNING);
+        assertThat(sut.equals(sut1), is(false));
+        sut1.setSeverity(CheckstyleSeverity.WARNING);
+        assertThat(sut.equals(sut1), is(true));
+        sut.setSource("source");
+        assertThat(sut.equals(sut1), is(false));
+        sut1.setSource("source");
+        assertThat(sut.equals(sut1), is(true));
     }
 
     @Test
@@ -182,5 +195,4 @@ public class CheckstyleViolationTest {
         assertThat(sut.toString(),
                 is("CheckstyleViolation{line=23, column=42, severity=warning, message=foo, source=bar}"));
     }
-
 }
