@@ -20,15 +20,17 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link CheckstyleFile}.
- * 
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class CheckstyleFileTest {
 
+    // CHECKSTYLE:OFF Must be public for JUnit.
     @Rule public final ExpectedException thrown = ExpectedException.none();
-    
+    // CHECKSTYLE:ON
+
     private final CheckstyleFile sut = new CheckstyleFile("foo.bar");
-    
+
     @Test
     public void getFileName() {
         assertThat(sut.getFileName(), is(equalTo("foo.bar")));
@@ -38,13 +40,13 @@ public class CheckstyleFileTest {
     public void getViolations() {
         assertThat(sut.getViolations(), empty());
     }
-    
-    @Test 
+
+    @Test
     public void addViolation_throwsExceptionIfNull() {
         thrown.expect(NullPointerException.class);
         sut.addViolation(null);
     }
-    
+
     @Test
     public void addViolation() {
         final CheckstyleViolation v1 = new CheckstyleViolation();
@@ -52,7 +54,7 @@ public class CheckstyleFileTest {
         sut.addViolation(v1);
         assertThat(sut.getViolations(), hasSize(1));
         assertThat(sut.getViolations(), contains(v1));
-        
+
         final CheckstyleViolation v2 = new CheckstyleViolation();
         v2.setMessage("bar");
         sut.addViolation(v2);
@@ -64,45 +66,47 @@ public class CheckstyleFileTest {
     public void testHashCode() {
         final CheckstyleFile sut1 = new CheckstyleFile("foo.bar");
         final CheckstyleFile sut2 = new CheckstyleFile("snafu");
-        
+
         assertThat(sut.hashCode(), is(sut.hashCode()));
         assertThat(sut.hashCode(), is(sut1.hashCode()));
         assertThat(sut1.hashCode(), is(sut.hashCode()));
         assertThat(sut1.hashCode(), is(sut1.hashCode()));
-        
+
         assertThat(sut2.hashCode(), is(sut2.hashCode()));
         assertThat(sut2.hashCode(), is(not(sut.hashCode())));
         assertThat(sut2.hashCode(), is(not(sut1.hashCode())));
     }
 
-    @Test 
+    @Test
     public void testEquals() {
         final CheckstyleFile sut1 = new CheckstyleFile("foo.bar");
         final CheckstyleFile sut2 = new CheckstyleFile("snafu");
-        
+
+        //CHECKSTYLE:OFF Pirpose to check null returns false.
         assertThat(sut.equals(null), is(false));
-        assertThat(sut.equals("foo"), is(false));
-        
+        //CHECKSTYLE:ON
+        assertThat(sut.equals(new Object()), is(false));
+
         assertThat(sut.equals(sut), is(true));
         assertThat(sut1.equals(sut), is(true));
         assertThat(sut.equals(sut1), is(true));
         assertThat(sut1.equals(sut1), is(true));
-        
+
         assertThat(sut2.equals(sut2), is(true));
         assertThat(sut2.equals(sut), is(false));
-        assertThat(sut2.equals(sut1), is(false));        
+        assertThat(sut2.equals(sut1), is(false));
     }
 
     @Test
     public void testToString() {
         assertThat(sut.toString(), is(equalTo("CheckstyleFile{fileName=foo.bar, violations=[]}")));
-        
+
         final CheckstyleViolation v1 = new CheckstyleViolation();
         v1.setMessage("foo");
         sut.addViolation(v1);
         assertThat(sut.toString(), is(equalTo("CheckstyleFile{fileName=foo.bar, "
                 + "violations=[CheckstyleViolation{line=0, column=0, severity=ignore, message=foo, source=}]}")));
-        
+
         final CheckstyleViolation v2 = new CheckstyleViolation();
         v2.setMessage("bar");
         sut.addViolation(v2);

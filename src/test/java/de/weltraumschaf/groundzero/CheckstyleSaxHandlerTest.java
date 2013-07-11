@@ -105,11 +105,14 @@ public class CheckstyleSaxHandlerTest {
     public void parseCheckstyleTagWithOneNonEmptyFileAndThreeErrors() throws SAXException, IOException {
         final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
                 + "    <file name=\"foo/bar.java\">\n"
-                + "        <error line=\"2\" column=\"22\" severity=\"error\" message=\"Line contains a tab character.\" "
+                + "        <error line=\"2\" column=\"22\" severity=\"error\" "
+                + "message=\"Line contains a tab character.\" "
                 + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
-                + "        <error line=\"4\" column=\"23\" severity=\"warning\" message=\"Line contains a tab character.\" "
+                + "        <error line=\"4\" column=\"23\" severity=\"warning\" "
+                + "message=\"Line contains a tab character.\" "
                 + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
-                + "        <error line=\"6\" column=\"24\" severity=\"info\" message=\"Line contains a tab character.\" "
+                + "        <error line=\"6\" column=\"24\" severity=\"info\" "
+                + "message=\"Line contains a tab character.\" "
                 + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
                 + "    </file>\n"
                 + "</checkstyle>\n");

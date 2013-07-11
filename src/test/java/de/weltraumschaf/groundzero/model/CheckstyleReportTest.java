@@ -12,7 +12,6 @@
 
 package de.weltraumschaf.groundzero.model;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -21,27 +20,29 @@ import static org.hamcrest.Matchers.*;
 
 /**
  * Tests for {@link CheckstyleReport}.
- * 
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class CheckstyleReportTest {
-    
+
+    // CHECKSTYLE:OFF Must be public for JUnit.
     @Rule public final ExpectedException thrown = ExpectedException.none();
+    //CHECKSTYLE:ON
     private final CheckstyleReport sut = new CheckstyleReport("foobar");
-    
+
     @Test
     public void addFile_throwsExceptionIfNul() {
         thrown.expect(NullPointerException.class);
         sut.addFile(null);
     }
-    
+
     @Test
     public void addFile() {
         final CheckstyleFile f1 = new CheckstyleFile("foo");
         sut.addFile(f1);
         assertThat(sut.getFiles(), hasSize(1));
         assertThat(sut.getFiles(), containsInAnyOrder(f1));
-        
+
         final CheckstyleFile f2 = new CheckstyleFile("bar");
         sut.addFile(f2);
         assertThat(sut.getFiles(), hasSize(2));
@@ -53,40 +54,42 @@ public class CheckstyleReportTest {
         assertThat(sut.getFiles(), empty());
     }
 
-    @Test 
+    @Test
     public void testHashCode() {
         final CheckstyleReport sut1 = new CheckstyleReport("foobar");
         final CheckstyleReport sut2 = new CheckstyleReport("snafu");
-        
+
         assertThat(sut.hashCode(), is(sut.hashCode()));
         assertThat(sut.hashCode(), is(sut1.hashCode()));
         assertThat(sut1.hashCode(), is(sut.hashCode()));
         assertThat(sut1.hashCode(), is(sut1.hashCode()));
-        
+
         assertThat(sut2.hashCode(), is(sut2.hashCode()));
         assertThat(sut2.hashCode(), is(not(sut.hashCode())));
         assertThat(sut2.hashCode(), is(not(sut1.hashCode())));
     }
 
-    @Test 
+    @Test
     public void testEquals() {
         final CheckstyleReport sut1 = new CheckstyleReport("foobar");
         final CheckstyleReport sut2 = new CheckstyleReport("snafu");
-        
+
+        //CHECKSTYLE:OFF Pirpose to check null returns false.
         assertThat(sut.equals(null), is(false));
-        assertThat(sut.equals("foo"), is(false));
-        
+        //CHECKSTYLE:ON
+        assertThat(sut.equals(new Object()), is(false));
+
         assertThat(sut.equals(sut), is(true));
         assertThat(sut1.equals(sut), is(true));
         assertThat(sut.equals(sut1), is(true));
         assertThat(sut1.equals(sut1), is(true));
-        
+
         assertThat(sut2.equals(sut2), is(true));
         assertThat(sut2.equals(sut), is(false));
-        assertThat(sut2.equals(sut1), is(false)); 
+        assertThat(sut2.equals(sut1), is(false));
     }
 
-    @Test 
+    @Test
     public void testToString() {
         assertThat(sut.toString(), is(equalTo("CheckstyleReport{version=foobar, files=[]}")));
         sut.addFile(new CheckstyleFile("foo"));
@@ -100,7 +103,7 @@ public class CheckstyleReportTest {
                 + "]}")));
     }
 
-    @Test 
+    @Test
     public void testHasFiles() {
         assertThat(sut.hasFiles(), is(false));
         sut.addFile(new CheckstyleFile("foo"));

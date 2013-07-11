@@ -26,8 +26,8 @@ import org.junit.rules.ExpectedException;
  */
 public class SupressionGeneratorTest {
 
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
+    // CHECKSTYLE:OFF Must be public for JUnit.
+    @Rule public final ExpectedException thrown = ExpectedException.none();
     private final SupressionGenerator sut = new SupressionGenerator();
 
     @Test

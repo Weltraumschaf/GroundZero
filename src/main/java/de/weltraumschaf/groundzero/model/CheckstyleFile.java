@@ -64,14 +64,14 @@ public final class CheckstyleFile {
 
     /**
      * Add violation to file.
-     * 
+     *
      * @param violation must not be {@code null}
      */
     public void addViolation(final CheckstyleViolation violation) {
         Validate.notNull(violation);
         violations.add(violation);
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hashCode(fileName, violations);

@@ -32,8 +32,8 @@ public class SupressionGenerator {
             "    <suppress files=\"%s\" lines=\"%s\" columns=\"%s\" checks=\"%s\"/>";
     private static final String XML_PREAMBLE = "<?xml version=\"1.0\" encoding\"UTF-8\"?>";
     private static final String XML_DTD = "<!DOCTYPE suppressions PUBLIC "
-                                  + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
-                                  + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">";
+            + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
+            + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">";
     private static final String TAG_OPEN_SUPPRESSIONS = "<suppressions>";
     private static final String TAG_CLOSE_SUPPRESSIONS = "</suppressions>";
     private static final String TAG_EMPTY_SUPPRESSIONS = "<suppressions/>";
@@ -49,7 +49,7 @@ public class SupressionGenerator {
         final StringBuilder buffer = new StringBuilder();
         buffer.append(XML_PREAMBLE).append(NL)
                 .append(XML_DTD).append(NL);
-        
+
         if (report.hasFiles()) {
             buffer.append(TAG_OPEN_SUPPRESSIONS).append(NL);
             generateFileSuppressions(buffer, report.getFiles());
@@ -57,7 +57,7 @@ public class SupressionGenerator {
         } else {
             buffer.append(TAG_EMPTY_SUPPRESSIONS).append(NL);
         }
-        
+
         return buffer.toString();
     }
 
@@ -73,7 +73,8 @@ public class SupressionGenerator {
         }
     }
 
-    private void generateErrorSupression(final StringBuilder buffer, final String fileName, final CheckstyleViolation violation) {
+    private void generateErrorSupression(final StringBuilder buffer, final String fileName,
+            final CheckstyleViolation violation) {
         buffer.append(String.format(SUPRESS_TAG_FORMAT,
                 escapeFileName(fileName), violation.getCheck(), violation.getLine(), violation.getColumn()));
     }
