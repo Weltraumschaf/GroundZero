@@ -95,6 +95,19 @@ public class CheckstyleFileTest {
         assertThat(sut2.equals(sut2), is(true));
         assertThat(sut2.equals(sut), is(false));
         assertThat(sut2.equals(sut1), is(false));
+
+        final CheckstyleViolation violation1 = new CheckstyleViolation();
+        violation1.setLine(23);
+        sut.addViolation(violation1);
+        sut1.addViolation(violation1);
+        assertThat(sut.equals(sut1), is(true));
+
+        final CheckstyleViolation violation2 = new CheckstyleViolation();
+        violation2.setLine(42);
+        sut.addViolation(violation2);
+        assertThat(sut.equals(sut1), is(false));
+        sut1.addViolation(violation2);
+        assertThat(sut.equals(sut1), is(true));
     }
 
     @Test
