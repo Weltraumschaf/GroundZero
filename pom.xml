@@ -56,7 +56,7 @@
 
     <ciManagement>
         <system>jenkins</system>
-        <url>http://www.weltraumschaf.de:8080/job/GroundZero/</url>
+        <url>http://ci.weltraumschaf.de/job/GroundZero/</url>
     </ciManagement>
 
     <properties>
