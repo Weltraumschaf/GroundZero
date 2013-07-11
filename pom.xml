@@ -147,7 +147,7 @@
                 <version>0.3.1</version>
             </extension>
         </extensions>
-        
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -192,9 +192,9 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-    
+
         <plugins>
-            <!-- 
+            <!--
                 Build plugins.
             -->
             <plugin>
@@ -221,7 +221,7 @@
                         <descriptorRefs>jar-with-dependencies</descriptorRefs>
                     </descriptorRefs>
                     <finalName>${finalName}</finalName>
-                    <outputDirectory>${basedir}/bin</outputDirectory>
+                    <outputDirectory>${project.basedir}/bin</outputDirectory>
                     <appendAssemblyId>false</appendAssemblyId>
                     <attach>false</attach>
                 </configuration>
@@ -242,7 +242,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>javancss-maven-plugin</artifactId>
-            </plugin>        
+            </plugin>
             <plugin>
                 <!-- http://wiki.netbeans.org/MavenCodeCoverage -->
                 <groupId>org.jacoco</groupId>
@@ -268,7 +268,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <configuration>
                     <linkXRef>false</linkXRef>
-                    <includeTests>true</includeTests>
+                    <includeTests>false</includeTests> <!-- FIXME: Make exclude properties work. -->
                     <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
                     <targetJdk>${project.build.targetJdk}</targetJdk>
