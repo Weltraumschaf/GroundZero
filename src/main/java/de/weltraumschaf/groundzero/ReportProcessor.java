@@ -74,7 +74,7 @@ public class ReportProcessor {
     /**
      * Process the report given as file.
      *
-     * @param reportFileName file name of the report, must not be {@code null}
+     * @param report file name of the report, must not be {@code null}
      * @throws SAXException if XML parse errors occurs
      * @throws IOException if file I/O errors occurs
      * @return always new instance, never {@code null}

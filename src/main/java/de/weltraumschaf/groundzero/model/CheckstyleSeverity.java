@@ -42,7 +42,7 @@ public enum CheckstyleSeverity {
     private final String name;
 
     /**
-     * Initializes the {@link #name textual representation.
+     * Initializes the {@link #name textual representation}.
      *
      * @param name must not be {@code null} nor empty.
      */
