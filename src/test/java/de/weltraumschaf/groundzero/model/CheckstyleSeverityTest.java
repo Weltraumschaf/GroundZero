@@ -14,6 +14,8 @@ package de.weltraumschaf.groundzero.model;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Tests for {@link CheckstyleSeverity}.
@@ -22,15 +24,12 @@ import org.junit.Test;
  */
 public class CheckstyleSeverityTest {
    
-    @Test @Ignore
-    public void testValues() {
-    }
-
-    @Test @Ignore
-    public void testValueOf() {
-    }
-
-    @Test @Ignore
+    @Test 
     public void testToString() {
+        assertThat(CheckstyleSeverity.IGNORE.toString(), is(equalTo("ignore")));
+        assertThat(CheckstyleSeverity.INFO.toString(), is(equalTo("info")));
+        assertThat(CheckstyleSeverity.WARNING.toString(), is(equalTo("warning")));
+        assertThat(CheckstyleSeverity.ERROR.toString(), is(equalTo("error")));
     }
+    
 }
