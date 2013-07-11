@@ -87,6 +87,15 @@ public class CheckstyleReportTest {
         assertThat(sut2.equals(sut2), is(true));
         assertThat(sut2.equals(sut), is(false));
         assertThat(sut2.equals(sut1), is(false));
+
+        final CheckstyleFile file1 = new CheckstyleFile("file1");
+        sut.addFile(file1);
+        assertThat(sut.equals(sut1), is(false));
+        final CheckstyleFile file2 = new CheckstyleFile("file2");
+        sut1.addFile(file1);
+        assertThat(sut.equals(sut1), is(true));
+        sut.addFile(file2);
+        assertThat(sut.equals(sut1), is(false));
     }
 
     @Test
