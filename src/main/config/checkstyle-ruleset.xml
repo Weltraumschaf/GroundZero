@@ -18,9 +18,9 @@
 <!-- Checkstyle is very configurable. Be sure to read the documentation at -->
 <!-- http://checkstyle.sf.net (or in your downloaded distribution). -->
 <module name="Checker">
-    <module name="SuppressionFilter">
-        <property name="file" value="checkstyle-suppressions.xml" />
-    </module>
+<!--    <module name="SuppressionFilter">
+        <property name="file" value="./checkstyle-suppressions.xml" />
+    </module>-->
     <module name="SuppressionCommentFilter" />
     <property name="severity" value="error" />
     <module name="FileLength">
@@ -126,9 +126,6 @@
 
         <!-- Checks for common coding problems               -->
         <!-- See http://checkstyle.sf.net/config_coding.html -->
-        <module name="DoubleCheckedLocking">
-            <property name="severity" value="warning" />
-        </module>
         <module name="ArrayTrailingComma" />
         <module name="CovariantEquals" />
         <module name="EmptyStatement" />

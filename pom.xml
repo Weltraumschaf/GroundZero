@@ -500,8 +500,10 @@
                             <artifactId>maven-checkstyle-plugin</artifactId>
                             <configuration>
                                 <configLocation>${project.basedir}/src/main/config/checkstyle-ruleset.xml</configLocation>
+                                <suppressionsLocation>${project.basedir}/src/main/config/checkstyle-suppressions.xml</suppressionsLocation>
+                                <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                                 <logViolationsToConsole>true</logViolationsToConsole>
-                                <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
                             </configuration>
                         </plugin>
                     </reportPlugins>
