@@ -14,10 +14,10 @@ package de.weltraumschaf.groundzero.model;
 
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;import org.junit.Ignore;
+import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-;
 
 /**
  * Tests for {@link CheckstyleViolation}.
@@ -112,16 +112,72 @@ public class CheckstyleViolationTest {
         sut.setSource("");
     }
 
-    @Test @Ignore
+    @Test 
     public void testHashCode() {
+        sut.setLine(23);
+        sut.setColumn(42);
+        sut.setMessage("foo");
+        sut.setSource("bar");
+        final CheckstyleViolation sut1 = new CheckstyleViolation();
+        sut1.setLine(23);
+        sut1.setColumn(42);
+        sut1.setMessage("foo");
+        sut1.setSource("bar");
+        final CheckstyleViolation sut2 = new CheckstyleViolation();
+        sut2.setLine(1);
+        sut2.setColumn(2);
+        sut2.setMessage("foo");
+        sut2.setSource("bar");
+        
+        assertThat(sut.hashCode(), is(sut.hashCode()));
+        assertThat(sut.hashCode(), is(sut1.hashCode()));
+        assertThat(sut1.hashCode(), is(sut1.hashCode()));
+        
+        assertThat(sut2.hashCode(), is(sut2.hashCode()));
+        assertThat(sut2.hashCode(), is(not(sut.hashCode())));
+        assertThat(sut2.hashCode(), is(not(sut1.hashCode())));
     }
 
-    @Test @Ignore
+    @Test 
     public void testEquals() {
+        sut.setLine(23);
+        sut.setColumn(42);
+        sut.setMessage("foo");
+        sut.setSource("bar");
+        final CheckstyleViolation sut1 = new CheckstyleViolation();
+        sut1.setLine(23);
+        sut1.setColumn(42);
+        sut1.setMessage("foo");
+        sut1.setSource("bar");
+        final CheckstyleViolation sut2 = new CheckstyleViolation();
+        sut2.setLine(1);
+        sut2.setColumn(2);
+        sut2.setMessage("foo");
+        sut2.setSource("bar");
+        
+        assertThat(sut.equals(null), is(false));
+        assertThat(sut.equals("foo"), is(false));
+        
+        assertThat(sut.equals(sut), is(true));
+        assertThat(sut1.equals(sut), is(true));
+        assertThat(sut.equals(sut1), is(true));
+        assertThat(sut1.equals(sut1), is(true));
+        
+        assertThat(sut2.equals(sut2), is(true));
+        assertThat(sut2.equals(sut), is(false));
+        assertThat(sut2.equals(sut1), is(false));        
     }
 
-    @Test @Ignore
+    @Test 
     public void testToString() {
+        assertThat(sut.toString(), is("CheckstyleViolation{line=0, column=0, severity=ignore, message=, source=}"));
+        sut.setLine(23);
+        sut.setColumn(42);
+        sut.setSeverity(CheckstyleSeverity.WARNING);
+        sut.setMessage("foo");
+        sut.setSource("bar");
+        assertThat(sut.toString(), 
+                is("CheckstyleViolation{line=23, column=42, severity=warning, message=foo, source=bar}"));
     }
 
 }

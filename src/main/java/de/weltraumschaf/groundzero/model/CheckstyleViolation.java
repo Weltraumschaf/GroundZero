@@ -134,11 +134,11 @@ public final class CheckstyleViolation {
         }
 
         final CheckstyleViolation other = (CheckstyleViolation) obj;
-        return Objects.equal(other.line, other.line)
-                && Objects.equal(other.column, other.column)
-                && Objects.equal(other.severity, other.severity)
-                && Objects.equal(other.message, other.message)
-                && Objects.equal(other.source, other.source);
+        return Objects.equal(line, other.line)
+                && Objects.equal(column, other.column)
+                && Objects.equal(severity, other.severity)
+                && Objects.equal(message, other.message)
+                && Objects.equal(source, other.source);
     }
 
     @Override
