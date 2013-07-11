@@ -15,6 +15,8 @@ package de.weltraumschaf.groundzero.model;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 ;
 
 /**
@@ -24,55 +26,90 @@ import static org.hamcrest.Matchers.*;import org.junit.Ignore;
  */
 public class CheckstyleViolationTest {
 
+    @Rule public final ExpectedException thrown = ExpectedException.none();
+    private final CheckstyleViolation sut = new CheckstyleViolation();
+    
     @Test
     public void getCheck() {
-        final CheckstyleViolation sut = new CheckstyleViolation();
         sut.setSource("com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck");
         assertThat(sut.getCheck(), is(equalTo("FileTabCharacterCheck")));
     }
 
-    @Test @Ignore
-    public void testGetLine() {
+    @Test 
+    public void setAndGetLine() {
+        assertThat(sut.getLine(), is(0));
+        sut.setLine(23);
+        assertThat(sut.getLine(), is(23));
     }
 
-    @Test @Ignore
-    public void testSetLine() {
+    @Test
+    public void setLine_throwsExceptionIfLessThanOne() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.setLine(0);
+    }
+    
+    @Test 
+    public void testSetAndGetColumn() {
+        assertThat(sut.getColumn(), is(0));
+        sut.setColumn(42);
+        assertThat(sut.getColumn(), is(42));
     }
 
-    @Test @Ignore
-    public void testGetColumn() {
+    @Test
+    public void setColumn_throwsExceptionIfLessThanOne() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.setColumn(0);
+    }
+    
+    @Test 
+    public void setAndGetSeverity() {
+        assertThat(sut.getSeverity(), is(CheckstyleSeverity.IGNORE));
+        sut.setSeverity(CheckstyleSeverity.WARNING);
+        assertThat(sut.getSeverity(), is(CheckstyleSeverity.WARNING));
     }
 
-    @Test @Ignore
-    public void testSetColumn() {
+    @Test
+    public void setSeverity_throwsExceptionIfNull() {
+        thrown.expect(NullPointerException.class);
+        sut.setSeverity(null);
+    }
+    
+    @Test 
+    public void setAndGetMessage() {
+        assertThat(sut.getMessage(), is(""));
+        sut.setMessage("foobar");
+        assertThat(sut.getMessage(), is("foobar"));
+    }
+    
+    @Test
+    public void setMessage_throwsExceptionIfNull() {
+        thrown.expect(NullPointerException.class);
+        sut.setMessage(null);
+    }
+    
+    @Test
+    public void setMessage_throwsExceptionIfEmpty() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.setMessage("");
     }
 
-    @Test @Ignore
-    public void testGetSeverity() {
+    @Test 
+    public void setAndGetSource() {
+        assertThat(sut.getSource(), is(""));
+        sut.setSource("foobar");
+        assertThat(sut.getSource(), is("foobar"));
     }
-
-    @Test @Ignore
-    public void testSetSeverity() {
+    
+    @Test
+    public void setSource_throwsExceptionIfNull() {
+        thrown.expect(NullPointerException.class);
+        sut.setSource(null);
     }
-
-    @Test @Ignore
-    public void testGetMessage() {
-    }
-
-    @Test @Ignore
-    public void testSetMessage() {
-    }
-
-    @Test @Ignore
-    public void testGetSource() {
-    }
-
-    @Test @Ignore
-    public void testSetSource() {
-    }
-
-    @Test @Ignore
-    public void testGetCheck() {
+    
+    @Test
+    public void setSource_throwsExceptionIfEmpty() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.setSource("");
     }
 
     @Test @Ignore

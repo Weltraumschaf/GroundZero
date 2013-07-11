@@ -32,15 +32,15 @@ public final class CheckstyleViolation {
     /**
      * Severity of violation.
      */
-    private CheckstyleSeverity severity;
+    private CheckstyleSeverity severity = CheckstyleSeverity.IGNORE;
     /**
      * Human readable message which describes the violation.
      */
-    private String message;
+    private String message = "";
     /**
      * Full qualified class name of the Checkstyle checker which found the violation.
      */
-    private String source;
+    private String source = "";
 
     public int getLine() {
         return line;
