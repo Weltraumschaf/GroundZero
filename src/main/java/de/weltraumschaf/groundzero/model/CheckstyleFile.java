@@ -31,7 +31,7 @@ public final class CheckstyleFile {
     /**
      * Set of found violations.
      */
-    private final Set<CheckstyleViolation> violations = Sets.newHashSet();
+    private final Set<CheckstyleViolation> violations = Sets.newLinkedHashSet();
 
     /**
      * Dedicated constructor.
@@ -84,8 +84,8 @@ public final class CheckstyleFile {
         }
 
         final CheckstyleFile other = (CheckstyleFile) obj;
-        return Objects.equal(other.fileName, other.fileName)
-                && Objects.equal(other.violations, other.violations);
+        return Objects.equal(fileName, other.fileName)
+                && Objects.equal(violations, other.violations);
     }
 
     @Override

@@ -31,23 +31,23 @@ public class CheckstyleFileTest {
     private final CheckstyleFile sut = new CheckstyleFile("foo.bar");
     
     @Test
-    public void testGetFileName() {
+    public void getFileName() {
         assertThat(sut.getFileName(), is(equalTo("foo.bar")));
     }
 
     @Test
-    public void testGetViolations() {
+    public void getViolations() {
         assertThat(sut.getViolations(), empty());
     }
     
     @Test 
-    public void testAddViolation_throwsExceptionIfNull() {
+    public void addViolation_throwsExceptionIfNull() {
         thrown.expect(NullPointerException.class);
         sut.addViolation(null);
     }
     
     @Test
-    public void testAddViolation() {
+    public void addViolation() {
         final CheckstyleViolation v1 = new CheckstyleViolation();
         v1.setMessage("foo");
         sut.addViolation(v1);
@@ -61,12 +61,37 @@ public class CheckstyleFileTest {
         assertThat(sut.getViolations(), containsInAnyOrder(v1, v2));
     }
 
-    @Test @Ignore
+    @Test
     public void testHashCode() {
+        final CheckstyleFile sut1 = new CheckstyleFile("foo.bar");
+        final CheckstyleFile sut2 = new CheckstyleFile("snafu");
+        
+        assertThat(sut.hashCode(), is(sut.hashCode()));
+        assertThat(sut.hashCode(), is(sut1.hashCode()));
+        assertThat(sut1.hashCode(), is(sut.hashCode()));
+        assertThat(sut1.hashCode(), is(sut1.hashCode()));
+        
+        assertThat(sut2.hashCode(), is(sut2.hashCode()));
+        assertThat(sut2.hashCode(), is(not(sut.hashCode())));
+        assertThat(sut2.hashCode(), is(not(sut1.hashCode())));
     }
 
-    @Test @Ignore
+    @Test 
     public void testEquals() {
+        final CheckstyleFile sut1 = new CheckstyleFile("foo.bar");
+        final CheckstyleFile sut2 = new CheckstyleFile("snafu");
+        
+        assertThat(sut.equals(null), is(false));
+        assertThat(sut.equals("foo"), is(false));
+        
+        assertThat(sut.equals(sut), is(true));
+        assertThat(sut1.equals(sut), is(true));
+        assertThat(sut.equals(sut1), is(true));
+        assertThat(sut1.equals(sut1), is(true));
+        
+        assertThat(sut2.equals(sut2), is(true));
+        assertThat(sut2.equals(sut), is(false));
+        assertThat(sut2.equals(sut1), is(false));        
     }
 
     @Test
@@ -83,8 +108,8 @@ public class CheckstyleFileTest {
         v2.setMessage("bar");
         sut.addViolation(v2);
         assertThat(sut.toString(), is(equalTo("CheckstyleFile{fileName=foo.bar, violations=["
-                + "CheckstyleViolation{line=0, column=0, severity=ignore, message=bar, source=}, "
-                + "CheckstyleViolation{line=0, column=0, severity=ignore, message=foo, source=}"
+                + "CheckstyleViolation{line=0, column=0, severity=ignore, message=foo, source=}, "
+                + "CheckstyleViolation{line=0, column=0, severity=ignore, message=bar, source=}"
                 + "]}")));
     }
 
