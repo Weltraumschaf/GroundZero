@@ -23,6 +23,8 @@ import org.xml.sax.SAXException;
 /**
  * Main application class.
  *
+ * TODO Add option -f|--file-out for writing generated suppressons to file.
+ * 
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public class GroundZero extends InvokableAdapter {
