@@ -100,16 +100,22 @@ public class CheckstyleReportTest {
 
     @Test
     public void testToString() {
-        assertThat(sut.toString(), is(equalTo("CheckstyleReport{version=foobar, files=[]}")));
+        assertThat(sut.toString(), is(equalTo("CheckstyleReport{version=foobar, files=[], fileName=}")));
         sut.addFile(new CheckstyleFile("foo"));
-        assertThat(sut.toString(), is(equalTo("CheckstyleReport{version=foobar, files=["
+        assertThat(sut.toString(), is(equalTo("CheckstyleReport{"
+                + "version=foobar, "
+                + "files=["
                 + "CheckstyleFile{fileName=foo, violations=[]}"
-                + "]}")));
+                + "], "
+                + "fileName=}")));
         sut.addFile(new CheckstyleFile("bar"));
-        assertThat(sut.toString(), is(equalTo("CheckstyleReport{version=foobar, files=["
+        assertThat(sut.toString(), is(equalTo("CheckstyleReport{"
+                + "version=foobar, "
+                + "files=["
                 + "CheckstyleFile{fileName=foo, violations=[]}, "
                 + "CheckstyleFile{fileName=bar, violations=[]}"
-                + "]}")));
+                + "], "
+                + "fileName=}")));
     }
 
     @Test

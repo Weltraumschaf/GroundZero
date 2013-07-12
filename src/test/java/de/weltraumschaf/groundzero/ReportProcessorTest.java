@@ -39,6 +39,7 @@ public class ReportProcessorTest {
     @Test
     public void process() throws Exception {
         final CheckstyleReport expected = new CheckstyleReport("5.4");
+        expected.setFile("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("foo/Bar.java");
         expected.addFile(file);
         final CheckstyleViolation errorOne = new CheckstyleViolation();
@@ -57,6 +58,7 @@ public class ReportProcessorTest {
 
         final URL testdata = getClass().getResource("/de/weltraumschaf/groundzero/testdata.xml");
         final CheckstyleReport actual = sut.process(new File(testdata.toURI()));
+        actual.setFile("foo.xml");
         assertThat(actual, is(equalTo(expected)));
     }
 

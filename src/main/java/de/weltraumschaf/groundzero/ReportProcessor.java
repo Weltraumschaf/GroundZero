@@ -35,7 +35,6 @@ public class ReportProcessor {
      * Input encoding of report files.
      */
     private static final String ENCODING = "UTF-8";
-
     /**
      * Handler to intercept SAX parser events.
      */
@@ -74,19 +73,21 @@ public class ReportProcessor {
     /**
      * Process the report given as file.
      *
-     * @param report file name of the report, must not be {@code null}
+     * @param input file name of the report, must not be {@code null}
      * @throws SAXException if XML parse errors occurs
      * @throws IOException if file I/O errors occurs
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final File report) throws SAXException, IOException {
-        Validate.notNull(report);
+    public CheckstyleReport process(final File input) throws SAXException, IOException {
+        Validate.notNull(input);
 
-        try (final InputStream inputStream = new FileInputStream(report)) {
+        try (final InputStream inputStream = new FileInputStream(input)) {
             final Reader reader = new InputStreamReader(inputStream, ENCODING);
             xmlReader.parse(new InputSource(reader));
         }
 
-        return handler.getReport();
+        final CheckstyleReport report = handler.getReport();
+        report.setFile(input.getAbsolutePath());
+        return report;
     }
 }

@@ -9,11 +9,16 @@
  */
 package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -22,6 +27,8 @@ import org.xml.sax.SAXException;
 
 /**
  * Main application class.
+ *
+ * TODO Print to STDOUT which file is parsed and which one is saved.
  *
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
@@ -61,7 +68,7 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String HELP_FOOTER = "Project site: http://weltraumschaf.github.io/GroundZero/" + NL
             + "Report bugs here: https://github.com/Weltraumschaf/GroundZero/issues";
-
+    private static final String SUPPRESSIONS_FILE_EXTENSION = ".suppressions";
     /**
      * Holds the set of report files to process from CLI arguments.
      */
@@ -118,12 +125,10 @@ public class GroundZero extends InvokableAdapter {
             return;
         }
 
-        final SuppressionGenerator generator = new SuppressionGenerator();
-        for (final CheckstyleReport report : processReports()) {
-            if (null != report) { // FIXME must not be null!
-                getIoStreams().println(generator.generate(report));
-            }
-        }
+        // FIXME Generate and save directly after parsing.
+        final Collection<CheckstyleReport> reports = processReports();
+        final Collection<CheckstyleSuppressions> suppressions = generateSuppressions(reports);
+        saveSuppressionFiles(suppressions);
     }
 
     /**
@@ -160,9 +165,9 @@ public class GroundZero extends InvokableAdapter {
     void showHelpMessage() {
         final StringBuilder buffer = new StringBuilder();
         buffer.append(HELP_USAGE).append(NL).append(NL)
-            .append(HELP_DESCRIPTION).append(NL).append(NL)
-            .append(HELP_OPTIONS).append(NL).append(NL)
-            .append(HELP_FOOTER);
+                .append(HELP_DESCRIPTION).append(NL).append(NL)
+                .append(HELP_OPTIONS).append(NL).append(NL)
+                .append(HELP_FOOTER);
         getIoStreams().println(buffer.toString());
     }
 
@@ -237,14 +242,65 @@ public class GroundZero extends InvokableAdapter {
             return processor.process(reportFile);
         } catch (SAXException ex) {
             getIoStreams()
-                    .errorln(String.format("ERROR: Excpetion thrown while parsing input XMl! %s", ex.getMessage()));
-            exit(1);
+                    .errorln(String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
+                    reportFile,
+                    ex.getMessage()));
+            exit(ExitCodeImpl.XML_INPUT_PARSE_ERROR);
             return null;
         } catch (IOException ex) {
             getIoStreams()
-                    .errorln(String.format("ERROR: Excpetion thrown while reading input file! %s", ex.getMessage()));
-            exit(2);
+                    .errorln(String.format("ERROR: Excpetion thrown while reading input file'%s'! %s",
+                    reportFile,
+                    ex.getMessage()));
+            exit(ExitCodeImpl.XML_INPUT_FILE_READ_ERROR);
             return null;
         }
+    }
+
+    private Collection<CheckstyleSuppressions> generateSuppressions(final Collection<CheckstyleReport> reports) {
+        Collection<CheckstyleSuppressions> suppressions = Sets.newHashSet();
+
+        for (final CheckstyleReport report : reports) {
+            suppressions.add(generateSuppression(report));
+        }
+
+        return suppressions;
+    }
+    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator();
+
+    private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
+        return GENERATOR.generate(report);
+    }
+
+    private void saveSuppressionFiles(final Collection<CheckstyleSuppressions> suppressions) {
+        for (final CheckstyleSuppressions suppression : suppressions) {
+            saveSuppressionFile(suppression);
+        }
+    }
+
+    private void saveSuppressionFile(final CheckstyleSuppressions suppression) {
+        final String targetFileName = extendFileName(suppression.getFileName(), SUPPRESSIONS_FILE_EXTENSION);
+
+        try {
+            try (FileOutputStream fos = new FileOutputStream(new File(targetFileName), false)) {
+                try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos))) {
+                    br.write(suppression.getXmlContent());
+                    br.flush();
+                }
+                fos.flush();
+            }
+        } catch (final IOException ex) {
+            getIoStreams()
+                    .errorln(String.format("ERROR: Excpetion thrown while writing suppresions file '%s'! %s",
+                    ex.getMessage(),
+                    targetFileName));
+            exit(ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR);
+        }
+    }
+
+    static String extendFileName(final String fileName, final String extension) {
+        final StringBuilder buffer = new StringBuilder(fileName);
+        buffer.insert(fileName.lastIndexOf('.'), extension);
+        return buffer.toString();
     }
 }

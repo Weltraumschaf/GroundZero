@@ -9,7 +9,6 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-
 package de.weltraumschaf.groundzero.model;
 
 import com.google.common.collect.Sets;
@@ -31,7 +30,10 @@ public final class CheckstyleReport {
      * Version of Checkstyle which created the report.
      */
     private final String version;
-
+    /**
+     * File name of the Checkstyle report.
+     */
+    private String fileName = "";
     /**
      * Checked files with violations.
      */
@@ -44,7 +46,7 @@ public final class CheckstyleReport {
      */
     public CheckstyleReport(final String version) {
         super();
-        Validate.notNull(version);
+        Validate.notEmpty(version);
         this.version = version;
     }
 
@@ -70,16 +72,25 @@ public final class CheckstyleReport {
     /**
      * Whether the report has files with violations.
      *
-     * @return {@code true} if files {@link #addFile(de.weltraumschaf.groundzero.model.CheckstyleFile) were added},
-     * else {@code false}
+     * @return {@code true} if files {@link #addFile(de.weltraumschaf.groundzero.model.CheckstyleFile) were added}, else
+     * {@code false}
      */
     public boolean hasFiles() {
         return files.size() > 0;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFile(String fileName) {
+        Validate.notEmpty(fileName);
+        this.fileName = fileName;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(files, version);
+        return Objects.hashCode(files, version, fileName);
     }
 
     @Override
@@ -89,7 +100,9 @@ public final class CheckstyleReport {
         }
 
         final CheckstyleReport other = (CheckstyleReport) obj;
-        return Objects.equal(files, other.files) && Objects.equal(version, other.version);
+        return Objects.equal(files, other.files)
+                && Objects.equal(fileName, other.fileName)
+                && Objects.equal(version, other.version);
     }
 
     @Override
@@ -97,7 +110,7 @@ public final class CheckstyleReport {
         return Objects.toStringHelper(this)
                 .add("version", version)
                 .add("files", files)
+                .add("fileName", fileName)
                 .toString();
     }
-
 }

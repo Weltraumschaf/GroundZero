@@ -13,6 +13,7 @@ package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
@@ -48,17 +49,22 @@ public class SuppressionGeneratorTest {
 
     @Test
     public void generate_emptyReport() {
-        assertThat(sut.generate(new CheckstyleReport("foo")), is(equalTo(
+        final CheckstyleReport report = new CheckstyleReport("4.3");
+        report.setFile("foo.xml");
+        final CheckstyleSuppressions suppressions = sut.generate(report);
+        assertThat(suppressions.getXmlContent(), is(equalTo(
                 "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
                 + "<suppressions/>\n")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
     }
 
     @Test
     public void generateOneFileOneError() {
-        final CheckstyleReport report = new CheckstyleReport("foo");
+        final CheckstyleReport report = new CheckstyleReport("4.3");
+        report.setFile("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("Foo.java");
         report.addFile(file);
         final CheckstyleViolation violation = new CheckstyleViolation();
@@ -67,7 +73,8 @@ public class SuppressionGeneratorTest {
         violation.setColumn(42);
         violation.setMessage("foo");
         violation.setSource("bar");
-        assertThat(sut.generate(report), is(equalTo(
+        final CheckstyleSuppressions suppressions = sut.generate(report);
+        assertThat(suppressions.getXmlContent(), is(equalTo(
                 "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
@@ -75,11 +82,13 @@ public class SuppressionGeneratorTest {
                 + "<suppressions>\n"
                 + "    <suppress files=\"Foo\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "</suppressions>\n")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
     }
 
     @Test
     public void generateOneFileThreeError() {
-        final CheckstyleReport report = new CheckstyleReport("foo");
+        final CheckstyleReport report = new CheckstyleReport("4.3");
+        report.setFile("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("Foo.java");
         report.addFile(file);
         final CheckstyleViolation violation1 = new CheckstyleViolation();
@@ -100,8 +109,9 @@ public class SuppressionGeneratorTest {
         violation3.setMessage("blub");
         violation3.setSource("foobar");
         file.addViolation(violation3);
+        final CheckstyleSuppressions suppressions = sut.generate(report);
 
-        assertThat(sut.generate(report), is(equalTo(
+        assertThat(suppressions.getXmlContent(), is(equalTo(
                 "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
@@ -111,6 +121,7 @@ public class SuppressionGeneratorTest {
                 + "    <suppress files=\"Foo\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
                 + "    <suppress files=\"Foo\\.java\" lines=\"14\" columns=\"15\" checks=\"foobar\"/>\n"
                 + "</suppressions>\n")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
     }
 
     @Test
@@ -128,12 +139,14 @@ public class SuppressionGeneratorTest {
         final CheckstyleFile file3 = new CheckstyleFile("Baz.java");
         file3.addViolation(violation);
 
-        final CheckstyleReport report = new CheckstyleReport("foo");
+        final CheckstyleReport report = new CheckstyleReport("4.3");
+        report.setFile("foo.xml");
         report.addFile(file1);
         report.addFile(file2);
         report.addFile(file3);
+        final CheckstyleSuppressions suppressions = sut.generate(report);
 
-        assertThat(sut.generate(report), is(equalTo(
+        assertThat(suppressions.getXmlContent(), is(equalTo(
                 "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
@@ -143,6 +156,7 @@ public class SuppressionGeneratorTest {
                 + "    <suppress files=\"Bar\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "    <suppress files=\"Baz\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "</suppressions>\n")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
     }
 
     @Test
@@ -176,12 +190,14 @@ public class SuppressionGeneratorTest {
         file3.addViolation(violation2);
         file3.addViolation(violation3);
 
-        final CheckstyleReport report = new CheckstyleReport("foo");
+        final CheckstyleReport report = new CheckstyleReport("4.3");
+        report.setFile("foo.xml");
         report.addFile(file1);
         report.addFile(file2);
         report.addFile(file3);
+        final CheckstyleSuppressions suppressions = sut.generate(report);
 
-        assertThat(sut.generate(report), is(equalTo(
+        assertThat(suppressions.getXmlContent(), is(equalTo(
                 "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
@@ -197,5 +213,6 @@ public class SuppressionGeneratorTest {
                 + "    <suppress files=\"Baz\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
                 + "    <suppress files=\"Baz\\.java\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
                 + "</suppressions>\n")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
     }
 }

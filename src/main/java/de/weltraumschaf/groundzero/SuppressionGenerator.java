@@ -13,6 +13,7 @@ package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
 import java.util.Collection;
 import org.apache.commons.lang3.Validate;
@@ -62,7 +63,7 @@ public class SuppressionGenerator {
      * @param report must not be {@code null}
      * @return never {@code null}.
      */
-    public String generate(final CheckstyleReport report) {
+    public CheckstyleSuppressions generate(final CheckstyleReport report) {
         Validate.notNull(report);
         final StringBuilder buffer = new StringBuilder();
         buffer.append(XML_PREAMBLE).append(NL)
@@ -76,7 +77,7 @@ public class SuppressionGenerator {
             buffer.append(TAG_EMPTY_SUPPRESSIONS).append(NL);
         }
 
-        return buffer.toString();
+        return new CheckstyleSuppressions(buffer.toString(), report.getFileName());
     }
 
     /**
