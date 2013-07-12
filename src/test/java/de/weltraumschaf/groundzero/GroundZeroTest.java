@@ -19,7 +19,6 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
@@ -137,7 +136,7 @@ public class GroundZeroTest {
         verify(sut, never()).showVersionMessage();
     }
 
-    @Test @Ignore
+    @Test
     public void processOneFile() throws Exception {
         final String fileName = "/one/file/name";
         final GroundZero sut = createSut(new String[]{fileName});
@@ -147,7 +146,7 @@ public class GroundZeroTest {
         verify(processorSpy, times(1)).process(fileName);
     }
 
-    @Test @Ignore
+    @Test
     public void processMultipleFile() throws Exception {
         final String fileName1 = "/one/file/name1";
         final String fileName2 = "one/file/name2";
