@@ -328,6 +328,8 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
+                    <destFile>${sonar.jacoco.reportPath}</destFile>
+                    <append>true</append>
                     <excludes>
                         <exclude>**/**/ExitCodeImpl*</exclude>
                     </excludes>
