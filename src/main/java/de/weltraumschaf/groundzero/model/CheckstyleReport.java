@@ -79,13 +79,23 @@ public final class CheckstyleReport {
         return files.size() > 0;
     }
 
+    /**
+     * Get the file name from where the report data was read.
+     *
+     * @return never {@code null}, by default empty
+     */
     public String getFileName() {
         return fileName;
     }
 
-    public void setFile(String fileName) {
-        Validate.notEmpty(fileName);
-        this.fileName = fileName;
+    /**
+     * Set the file name from where the report data was read.
+     *
+     * @param fn must not be {@code null} or empty
+     */
+    public void setFile(final String fn) {
+        Validate.notEmpty(fn);
+        this.fileName = fn;
     }
 
     @Override

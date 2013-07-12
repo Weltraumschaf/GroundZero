@@ -44,6 +44,24 @@ public final class CheckstyleSuppressions {
         this.fileName = fileName;
     }
 
+    /**
+     * Get the formatted suppressions XML as string.
+     *
+     * @return never {@code null} nor empty
+     */
+    public String getXmlContent() {
+        return xmlContent;
+    }
+
+    /**
+     * Get the file name of the suppressions file.
+     *
+     * @return never {@code null} nor empty
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(xmlContent, fileName);
@@ -65,14 +83,6 @@ public final class CheckstyleSuppressions {
                 .add("xmlContent", xmlContent)
                 .add("fileName", fileName)
                 .toString();
-    }
-
-    public String getXmlContent() {
-        return xmlContent;
-    }
-
-    public String getFileName() {
-        return fileName;
     }
 
 }

@@ -32,6 +32,9 @@ public enum ExitCodeImpl implements ExitCode {
      * Errors while reading a Checkstyle report file occurred.
      */
     XML_INPUT_FILE_READ_ERROR(2),
+    /**
+     * Errors while writing XML file.
+     */
     XML_OUTOUT_FILE_WRITE_ERROR(3),
     /**
      * Unspecified fatal error occurred.
