@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class SupressionGenerator {
+public class SuppressionGenerator {
 
     /**
      * Format of a suppression tag.
@@ -117,7 +117,7 @@ public class SupressionGenerator {
     private void generateErrorSupression(final StringBuilder buffer, final String fileName,
             final CheckstyleViolation violation) {
         buffer.append(String.format(SUPRESS_TAG_FORMAT,
-                escapeFileName(fileName), violation.getCheck(), violation.getLine(), violation.getColumn()));
+                escapeFileName(fileName), violation.getLine(), violation.getColumn(), violation.getCheck())).append(NL);
     }
 
     /**

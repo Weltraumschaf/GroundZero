@@ -113,7 +113,7 @@ public class GroundZero extends InvokableAdapter {
             return;
         }
 
-        final SupressionGenerator generator = new SupressionGenerator();
+        final SuppressionGenerator generator = new SuppressionGenerator();
         for (final CheckstyleReport report : processReports()) {
             if (null != report) { // FIXME must not be null!
                 getIoStreams().println(generator.generate(report));
