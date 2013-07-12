@@ -23,8 +23,6 @@ import org.xml.sax.SAXException;
 /**
  * Main application class.
  *
- * TODO Add option -f|--file-out for writing generated suppressons to file.
- * 
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public class GroundZero extends InvokableAdapter {
@@ -44,7 +42,14 @@ public class GroundZero extends InvokableAdapter {
     /**
      * Tool short description.
      */
-    private static final String HELP_DESCRIPTION = "A tool to generate line based suppression files for Checkstyle.";
+    private static final String HELP_DESCRIPTION =
+            "A tool to generate line based suppression files for Checkstyle." + NL + NL
+            + "Parses the Checkstyle report files given as command line argument" + NL
+            + "and generates suppression XML configuration files from them. The suppression" + NL
+            + "configurations are saved into files in the current working directory. The file" + NL
+            + "names are the same as the report filename with the addition of '.suppressions'" + NL
+            + "before the '.xml' file extension. So the report file 'foobar.xml' will produce" + NL
+            + "a suppression file named 'foobar.suppressions.xml'.";
     /**
      * Options help.
      */

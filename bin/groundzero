@@ -1,6 +1,6 @@
 #!/bin/bash
 
-currentWorkDir=$( cd -P -- "$(dirname -- "${0}")" && printf '%s\n' "$(pwd -P)/$(basename -- "${0}")" ) || exit 1
-currentWorkDir=`dirname "${currentWorkDir}"`
+CWD=$( cd -P -- "$(dirname -- "${0}")" && printf '%s\n' "$(pwd -P)/$(basename -- "${0}")" ) || exit 1
+CWD=`dirname "${CWD}"`
 
-java -jar  "${currentWorkDir}/groundzero.jar" $*
+java -Xms128m -Xmx1024m -jar  "${CWD}/groundzero.jar" $*

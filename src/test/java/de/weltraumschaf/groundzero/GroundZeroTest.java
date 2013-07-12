@@ -19,6 +19,7 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
@@ -66,6 +67,13 @@ public class GroundZeroTest {
                 + "%n"
                 + "A tool to generate line based suppression files for Checkstyle.%n"
                 + "%n"
+                + "Parses the Checkstyle report files given as command line argument%n"
+                + "and generates suppression XML configuration files from them. The suppression%n"
+                + "configurations are saved into files in the current working directory. The file%n"
+                + "names are the same as the report filename with the addition of '.suppressions'%n"
+                + "before the '.xml' file extension. So the report file 'foobar.xml' will produce%n"
+                + "a suppression file named 'foobar.suppressions.xml'.%n"
+                + "%n"
                 + "  -h | --help     Show this help.%n"
                 + "  -v | --version  Show version information%n"
                 + "%n"
@@ -84,6 +92,13 @@ public class GroundZeroTest {
                 is(equalTo(String.format("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]%n"
                 + "%n"
                 + "A tool to generate line based suppression files for Checkstyle.%n"
+                + "%n"
+                + "Parses the Checkstyle report files given as command line argument%n"
+                + "and generates suppression XML configuration files from them. The suppression%n"
+                + "configurations are saved into files in the current working directory. The file%n"
+                + "names are the same as the report filename with the addition of '.suppressions'%n"
+                + "before the '.xml' file extension. So the report file 'foobar.xml' will produce%n"
+                + "a suppression file named 'foobar.suppressions.xml'.%n"
                 + "%n"
                 + "  -h | --help     Show this help.%n"
                 + "  -v | --version  Show version information%n"
