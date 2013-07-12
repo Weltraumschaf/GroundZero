@@ -187,8 +187,6 @@ public class GroundZero extends InvokableAdapter {
 
     /**
      * Process all given report files.
-     *
-     * @return never {@code null}, maybe empty
      */
     void processReports() {
         if (reportFiles.isEmpty()) {
@@ -229,21 +227,21 @@ public class GroundZero extends InvokableAdapter {
      * was thrown.
      *
      * @param reportFile file name of Checkstyle report
-     * @return never {@code null}
      */
     private void processReport(final String reportFile) {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
+
         try {
-            CheckstyleReport report = processor.process(reportFile);
+            final CheckstyleReport report = processor.process(reportFile);
             final CheckstyleSuppressions suppression = generateSuppression(report);
             saveSuppressionFile(suppression);
-        } catch (SAXException ex) {
+        } catch (final SAXException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
                     reportFile,
                     ex.getMessage()));
             exit(ExitCodeImpl.XML_INPUT_PARSE_ERROR);
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while reading input file'%s'! %s",
                     reportFile,
