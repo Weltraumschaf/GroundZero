@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 import org.apache.commons.lang3.Validate;
 import org.xml.sax.SAXException;
@@ -28,12 +26,14 @@ import org.xml.sax.SAXException;
 /**
  * Main application class.
  *
- * TODO Print to STDOUT which file is parsed and which one is saved.
- *
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public class GroundZero extends InvokableAdapter {
 
+    /**
+     * Used to generate suppressions configuration.
+     */
+    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator();
     /**
      * JAR relative path to version property file.
      */
@@ -125,10 +125,7 @@ public class GroundZero extends InvokableAdapter {
             return;
         }
 
-        // FIXME Generate and save directly after parsing.
-        final Collection<CheckstyleReport> reports = processReports();
-        final Collection<CheckstyleSuppressions> suppressions = generateSuppressions(reports);
-        saveSuppressionFiles(suppressions);
+        processReports();
     }
 
     /**
@@ -193,20 +190,17 @@ public class GroundZero extends InvokableAdapter {
      *
      * @return never {@code null}, maybe empty
      */
-    Collection<CheckstyleReport> processReports() {
+    void processReports() {
         if (reportFiles.isEmpty()) {
             getIoStreams().println("Nothing to do.");
-            return Collections.<CheckstyleReport>emptySet();
+            return;
         }
-
-        final Set<CheckstyleReport> reports = Sets.newHashSet();
 
         for (final String reportFile : reportFiles) {
-            reports.add(processReport(reportFile));
+            processReport(reportFile);
         }
 
-        getIoStreams().println(String.format("All reports %d proccesed.", reportFiles.size()));
-        return reports;
+        getIoStreams().println(String.format("All %d reports proccesed.", reportFiles.size()));
     }
 
     /**
@@ -237,48 +231,46 @@ public class GroundZero extends InvokableAdapter {
      * @param reportFile file name of Checkstyle report
      * @return never {@code null}
      */
-    private CheckstyleReport processReport(final String reportFile) {
+    private void processReport(final String reportFile) {
+        getIoStreams().println(String.format("Process report %s ...", reportFile));
         try {
-            return processor.process(reportFile);
+            CheckstyleReport report = processor.process(reportFile);
+            final CheckstyleSuppressions suppression = generateSuppression(report);
+            saveSuppressionFile(suppression);
         } catch (SAXException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
                     reportFile,
                     ex.getMessage()));
             exit(ExitCodeImpl.XML_INPUT_PARSE_ERROR);
-            return null;
         } catch (IOException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while reading input file'%s'! %s",
                     reportFile,
                     ex.getMessage()));
             exit(ExitCodeImpl.XML_INPUT_FILE_READ_ERROR);
-            return null;
         }
     }
 
-    private Collection<CheckstyleSuppressions> generateSuppressions(final Collection<CheckstyleReport> reports) {
-        Collection<CheckstyleSuppressions> suppressions = Sets.newHashSet();
-
-        for (final CheckstyleReport report : reports) {
-            suppressions.add(generateSuppression(report));
-        }
-
-        return suppressions;
-    }
-    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator();
-
+    /**
+     * Generate suppressions configuration from report.
+     *
+     * @param report must not be {@code null}
+     * @return never {@code null}
+     */
     private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
         return GENERATOR.generate(report);
     }
 
-    private void saveSuppressionFiles(final Collection<CheckstyleSuppressions> suppressions) {
-        for (final CheckstyleSuppressions suppression : suppressions) {
-            saveSuppressionFile(suppression);
-        }
-    }
-
+    /**
+     * Save suppressions configuration to file.
+     *
+     * @param suppression must not be {@code null}
+     */
     private void saveSuppressionFile(final CheckstyleSuppressions suppression) {
+        Validate.notNull(suppression);
+        getIoStreams().println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
+
         try {
             try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
                 try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos))) {
