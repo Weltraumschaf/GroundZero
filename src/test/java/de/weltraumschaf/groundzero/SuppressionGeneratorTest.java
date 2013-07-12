@@ -57,7 +57,7 @@ public class SuppressionGeneratorTest {
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
                 + "<suppressions/>\n")));
-        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class SuppressionGeneratorTest {
                 + "<suppressions>\n"
                 + "    <suppress files=\"Foo\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "</suppressions>\n")));
-        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class SuppressionGeneratorTest {
                 + "    <suppress files=\"Foo\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
                 + "    <suppress files=\"Foo\\.java\" lines=\"14\" columns=\"15\" checks=\"foobar\"/>\n"
                 + "</suppressions>\n")));
-        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
 
     @Test
@@ -155,7 +155,7 @@ public class SuppressionGeneratorTest {
                 + "    <suppress files=\"Bar\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "    <suppress files=\"Baz\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "</suppressions>\n")));
-        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
 
     @Test
@@ -212,6 +212,13 @@ public class SuppressionGeneratorTest {
                 + "    <suppress files=\"Baz\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
                 + "    <suppress files=\"Baz\\.java\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
                 + "</suppressions>\n")));
-        assertThat(suppressions.getFileName(), is(equalTo("foo.xml")));
+        assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
+
+    @Test
+    public void extendFileName() {
+        assertThat(SuppressionGenerator.extendFileName("foo.xml", ".suppressions"),
+                is(equalTo("foo.suppressions.xml")));
+    }
+
 }

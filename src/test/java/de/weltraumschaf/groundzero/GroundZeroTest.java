@@ -167,8 +167,4 @@ public class GroundZeroTest {
         createSut().setProcessor(null);
     }
 
-    @Test
-    public void extendFileName() {
-        assertThat(GroundZero.extendFileName("foo.xml", ".suppressions"), is(equalTo("foo.suppressions.xml")));
-    }
 }

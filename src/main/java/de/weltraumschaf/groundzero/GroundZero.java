@@ -68,7 +68,7 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String HELP_FOOTER = "Project site: http://weltraumschaf.github.io/GroundZero/" + NL
             + "Report bugs here: https://github.com/Weltraumschaf/GroundZero/issues";
-    private static final String SUPPRESSIONS_FILE_EXTENSION = ".suppressions";
+
     /**
      * Holds the set of report files to process from CLI arguments.
      */
@@ -279,10 +279,8 @@ public class GroundZero extends InvokableAdapter {
     }
 
     private void saveSuppressionFile(final CheckstyleSuppressions suppression) {
-        final String targetFileName = extendFileName(suppression.getFileName(), SUPPRESSIONS_FILE_EXTENSION);
-
         try {
-            try (FileOutputStream fos = new FileOutputStream(new File(targetFileName), false)) {
+            try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
                 try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos))) {
                     br.write(suppression.getXmlContent());
                     br.flush();
@@ -293,14 +291,9 @@ public class GroundZero extends InvokableAdapter {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while writing suppresions file '%s'! %s",
                     ex.getMessage(),
-                    targetFileName));
+                    suppression.getFileName()));
             exit(ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR);
         }
     }
 
-    static String extendFileName(final String fileName, final String extension) {
-        final StringBuilder buffer = new StringBuilder(fileName);
-        buffer.insert(fileName.lastIndexOf('.'), extension);
-        return buffer.toString();
-    }
 }

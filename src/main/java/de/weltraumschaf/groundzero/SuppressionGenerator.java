@@ -26,6 +26,11 @@ import org.apache.commons.lang3.Validate;
 public class SuppressionGenerator {
 
     /**
+     * Used to extend the report file name to generate the suppressions file name.
+     */
+    private static final String SUPPRESSIONS_FILE_EXTENSION = ".suppressions";
+
+    /**
      * Format of a suppression tag.
      */
     private static final char NL = '\n';
@@ -77,7 +82,8 @@ public class SuppressionGenerator {
             buffer.append(TAG_EMPTY_SUPPRESSIONS).append(NL);
         }
 
-        return new CheckstyleSuppressions(buffer.toString(), report.getFileName());
+        final String targetFileName = extendFileName(report.getFileName(), SUPPRESSIONS_FILE_EXTENSION);
+        return new CheckstyleSuppressions(buffer.toString(), targetFileName);
     }
 
     /**
@@ -130,5 +136,27 @@ public class SuppressionGenerator {
     String escapeFileName(final String fileName) {
         Validate.notNull(fileName);
         return fileName.replace(".", "\\.");
+    }
+
+    /**
+     * Extend a given file name with an extension before the actual file extension.
+     *
+     * Example:
+     * <pre>
+     * fileName  == "foo.xml"
+     * extension == ".suppressions"
+     *           -> "foo.suppressions.xml"
+     * </pre>
+     *
+     * @param fileName must not be {@code null}
+     * @param extension must not be {@code null}
+     * @return never {@code null} maybe empty
+     */
+    static String extendFileName(final String fileName, final String extension) {
+        Validate.notNull(fileName);
+        Validate.notNull(extension);
+        final StringBuilder buffer = new StringBuilder(fileName);
+        buffer.insert(fileName.lastIndexOf('.'), extension);
+        return buffer.toString();
     }
 }
