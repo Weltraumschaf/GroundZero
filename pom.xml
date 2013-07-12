@@ -325,7 +325,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/ExitCodeImpl.class</exclude>
+                        <exclude>ExitCodeImpl.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
