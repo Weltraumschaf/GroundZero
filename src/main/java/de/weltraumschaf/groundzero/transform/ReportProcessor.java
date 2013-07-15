@@ -11,7 +11,6 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
-import de.weltraumschaf.groundzero.ApplicationException;
 import de.weltraumschaf.groundzero.ExitCodeImpl;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
@@ -25,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import org.apache.commons.lang3.Validate;
+import de.weltraumschaf.commons.ApplicationException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

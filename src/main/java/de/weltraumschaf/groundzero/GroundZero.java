@@ -10,13 +10,13 @@
 package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
+import de.weltraumschaf.commons.ApplicationException;
 import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
 import java.util.Set;
 import org.apache.commons.lang3.Validate;
-import org.xml.sax.SAXException;
 
 /**
  * Main application class.

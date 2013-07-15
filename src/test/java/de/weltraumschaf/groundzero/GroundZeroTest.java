@@ -25,6 +25,7 @@ import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
 import org.xml.sax.SAXException;
+import de.weltraumschaf.commons.ApplicationException;
 
 /**
  * Tests for {@link GroundZero}.
