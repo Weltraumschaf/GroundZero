@@ -90,6 +90,8 @@ public final class CheckstyleReport {
 
     /**
      * Set the file name from where the report data was read.
+     * 
+     * FIXME Change method name to setFileName()
      *
      * @param fn must not be {@code null} or empty
      */

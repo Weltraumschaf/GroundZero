@@ -21,6 +21,8 @@ import org.apache.commons.lang3.Validate;
 /**
  * Generates a suppression XML for a {@link CheckstyleReport report}.
  *
+ * TODO Move into model package.
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class SuppressionGenerator {
