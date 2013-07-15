@@ -3,4 +3,13 @@
 CWD=$( cd -P -- "$(dirname -- "${0}")" && printf '%s\n' "$(pwd -P)/$(basename -- "${0}")" ) || exit 1
 CWD=`dirname "${CWD}"`
 
-java -Xms128m -Xmx1024m -jar  "${CWD}/groundzero.jar" $*
+JAR="${CWD}/groundzero.jar"
+
+if [ ! -f "${JAR}" ] ; then
+    PROJECT_DIR=`dirname "${CWD}"`
+    echo "ERROR: JAR file ${JAR} not pressent!"
+    echo "Invoke 'mvn clean install' in the project base directory: ${PROJECT_DIR}."
+    exit 1
+fi
+
+java -Xms128m -Xmx1024m -jar "${JAR}"  $*
