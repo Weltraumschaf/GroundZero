@@ -340,6 +340,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/ExitCodeImpl.class</exclude>
+                        <exclude>**/ApplicationException.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
