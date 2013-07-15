@@ -11,8 +11,9 @@
  */
 
 /**
- * Main application package.
+ * Contains classes to transform data.
  *
- * Contains the {@link GroundZero main class} and helper classes for the main class.
+ * - Classes to read and parse the XML reports and transform them into a model.
+ * - Classes to generate suppressions configurations from the model.
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.transform;

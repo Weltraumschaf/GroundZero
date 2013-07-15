@@ -7,7 +7,7 @@
  * this stuff. If we meet some day, and you think this stuff is worth it,
  * you can buy me a beer in return.
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.transform;
 
 import com.google.common.collect.Maps;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
@@ -36,7 +36,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
-public class CheckstyleSaxHandler extends DefaultHandler {
+class CheckstyleSaxHandler extends DefaultHandler {
 
     /**
      * The current parsed tag.

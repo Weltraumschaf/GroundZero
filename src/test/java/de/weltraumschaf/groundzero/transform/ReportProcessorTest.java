@@ -10,7 +10,7 @@
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
 
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.transform;
 
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;

@@ -9,6 +9,8 @@
  */
 package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.groundzero.transform.ReportProcessor;
+import de.weltraumschaf.groundzero.transform.SuppressionGenerator;
 import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;

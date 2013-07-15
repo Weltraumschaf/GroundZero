@@ -11,6 +11,7 @@
  */
 package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.CapturingOutputStream;
 import de.weltraumschaf.commons.IOStreams;
 import de.weltraumschaf.commons.system.NullExiter;
