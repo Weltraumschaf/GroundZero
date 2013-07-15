@@ -141,7 +141,8 @@ public class ReportProcessor {
         } catch (final IOException ex) {
             throw new ApplicationException(
                     ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR,
-                    String.format("ERROR: Excpetion thrown while writing suppresions file '%s'!", suppression.getFileName()),
+                    String.format("ERROR: Excpetion thrown while writing suppresions file '%s'!",
+                        suppression.getFileName()),
                     ex);
         }
     }
