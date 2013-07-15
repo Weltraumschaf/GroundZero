@@ -13,6 +13,6 @@
 /**
  * Main application package.
  *
- * Contains the {@link GroundZero main class} and helper classes for the main class.
+ * Contains the main class and helper classes for it.
  */
 package de.weltraumschaf.groundzero;
