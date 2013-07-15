@@ -40,7 +40,7 @@ public class GroundZeroTest {
     private final CapturingOutputStream err = new CapturingOutputStream();
     private final InputStream in = mock(InputStream.class);
     private final IOStreams io = new IOStreams(in, new PrintStream(out), new PrintStream(err));
-    private final ReportProcessor processorSpy = spy(new ReportProcessor());
+    private final ReportProcessor processor = mock(ReportProcessor.class);
 
     public GroundZeroTest() throws SAXException {
         super();
@@ -53,7 +53,7 @@ public class GroundZeroTest {
     private GroundZero createSut(final String[] args) throws SAXException {
         final GroundZero sut = new GroundZero(args);
         sut.setIoStreams(io);
-        sut.setProcessor(processorSpy);
+        sut.setProcessor(processor);
         sut.setExiter(new NullExiter());
         return spy(sut);
     }
@@ -79,7 +79,7 @@ public class GroundZeroTest {
                 + "%n"
                 + "Project site: http://weltraumschaf.github.io/GroundZero/%n"
                 + "Report bugs here: https://github.com/Weltraumschaf/GroundZero/issues%n"))));
-        verify(processorSpy, never()).process(anyString());
+        verify(processor, never()).process(anyString());
         verify(sut, never()).showVersionMessage();
     }
 
@@ -87,7 +87,7 @@ public class GroundZeroTest {
     public void showHelpMessage_withLongOption() throws Exception {
         final GroundZero sut = createSut(new String[]{"--help"});
         sut.execute();
-        verify(processorSpy, never()).process(anyString());
+        verify(processor, never()).process(anyString());
         assertThat(out.getCapturedOutput(),
                 is(equalTo(String.format("Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]%n"
                 + "%n"
@@ -114,7 +114,7 @@ public class GroundZeroTest {
         sut.execute();
         verify(sut, times(1)).initializeVersionInformation();
         assertThat(out.getCapturedOutput(), is(equalTo(String.format("Version: TEST%n"))));
-        verify(processorSpy, never()).process(anyString());
+        verify(processor, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
     }
 
@@ -124,7 +124,7 @@ public class GroundZeroTest {
         sut.execute();
         verify(sut, times(1)).initializeVersionInformation();
         assertThat(out.getCapturedOutput(), is(equalTo(String.format("Version: TEST%n"))));
-        verify(processorSpy, never()).process(anyString());
+        verify(processor, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
     }
 
@@ -132,7 +132,7 @@ public class GroundZeroTest {
     public void doNothingIfNoReportFilesGiven() throws Exception {
         final GroundZero sut = createSut();
         sut.execute();
-        verify(processorSpy, never()).process(anyString());
+        verify(processor, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
         verify(sut, never()).showVersionMessage();
     }
@@ -144,7 +144,7 @@ public class GroundZeroTest {
         sut.execute();
         verify(sut, never()).showHelpMessage();
         verify(sut, never()).showVersionMessage();
-        verify(processorSpy, times(1)).process(fileName);
+        verify(processor, times(1)).process(fileName);
     }
 
     @Test
@@ -156,9 +156,9 @@ public class GroundZeroTest {
         sut.execute();
         verify(sut, never()).showHelpMessage();
         verify(sut, never()).showVersionMessage();
-        verify(processorSpy, times(1)).process(fileName1);
-        verify(processorSpy, times(1)).process(fileName2);
-        verify(processorSpy, times(1)).process(fileName3);
+        verify(processor, times(1)).process(fileName1);
+        verify(processor, times(1)).process(fileName2);
+        verify(processor, times(1)).process(fileName3);
     }
 
     @Test

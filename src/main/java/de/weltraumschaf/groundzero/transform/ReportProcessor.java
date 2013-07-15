@@ -11,12 +11,18 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.groundzero.ApplicationException;
+import de.weltraumschaf.groundzero.ExitCodeImpl;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import org.apache.commons.lang3.Validate;
 import org.xml.sax.InputSource;
@@ -35,6 +41,10 @@ public class ReportProcessor {
      * Input encoding of report files.
      */
     private static final String ENCODING = "UTF-8";
+    /**
+     * Used to generate suppressions configuration.
+     */
+    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator();
     /**
      * Handler to intercept SAX parser events.
      */
@@ -65,7 +75,7 @@ public class ReportProcessor {
      * @throws IOException if file I/O errors occurs
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final String reportFileName) throws SAXException, IOException {
+    public CheckstyleReport process(final String reportFileName) throws ApplicationException {
         Validate.notEmpty(reportFileName);
         return process(new File(reportFileName));
     }
@@ -78,16 +88,61 @@ public class ReportProcessor {
      * @throws IOException if file I/O errors occurs
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final File input) throws SAXException, IOException {
+    public CheckstyleReport process(final File input) throws ApplicationException {
         Validate.notNull(input);
 
         try (final InputStream inputStream = new FileInputStream(input)) {
             final Reader reader = new InputStreamReader(inputStream, ENCODING);
             xmlReader.parse(new InputSource(reader));
+        } catch (final IOException ex) {
+            throw new ApplicationException(
+                    ExitCodeImpl.XML_INPUT_PARSE_ERROR,
+                    String.format("ERROR: Excpetion thrown while parsing input file '%s'!", input.getAbsolutePath()),
+                    ex);
+        } catch (final SAXException ex) {
+            throw new ApplicationException(
+                    ExitCodeImpl.XML_INPUT_FILE_READ_ERROR,
+                    String.format("ERROR: Excpetion thrown while reading input file '%s'!", input.getAbsolutePath()),
+                    ex);
         }
 
         final CheckstyleReport report = handler.getReport();
         report.setFile(input.getAbsolutePath());
+        final CheckstyleSuppressions suppression = generateSuppression(report);
+        saveSuppressionFile(suppression);
         return report;
+    }
+
+    /**
+     * Generate suppressions configuration from report.
+     *
+     * @param report must not be {@code null}
+     * @return never {@code null}
+     */
+    private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
+        return GENERATOR.generate(report);
+    }
+
+    /**
+     * Save suppressions configuration to file.
+     *
+     * @param suppression must not be {@code null}
+     */
+    private void saveSuppressionFile(final CheckstyleSuppressions suppression) {
+        Validate.notNull(suppression);
+//        getIoStreams().println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
+
+        try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
+            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos))) {
+                br.write(suppression.getXmlContent());
+                br.flush();
+            }
+            fos.flush();
+        } catch (final IOException ex) {
+            throw new ApplicationException(
+                    ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR,
+                    String.format("ERROR: Excpetion thrown while writing suppresions file '%s'!", suppression.getFileName()),
+                    ex);
+        }
     }
 }

@@ -33,10 +33,6 @@ import org.xml.sax.SAXException;
 public class GroundZero extends InvokableAdapter {
 
     /**
-     * Used to generate suppressions configuration.
-     */
-    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator();
-    /**
      * JAR relative path to version property file.
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
@@ -232,60 +228,7 @@ public class GroundZero extends InvokableAdapter {
      */
     private void processReport(final String reportFile) {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
-
-        try {
-            final CheckstyleReport report = processor.process(reportFile);
-            final CheckstyleSuppressions suppression = generateSuppression(report); // TODO Move into processor
-            saveSuppressionFile(suppression); // TODO Move into processor
-        } catch (final SAXException ex) {
-            getIoStreams()
-                    .errorln(String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
-                    reportFile,
-                    ex.getMessage()));
-            exit(ExitCodeImpl.XML_INPUT_PARSE_ERROR);
-        } catch (final IOException ex) {
-            getIoStreams()
-                    .errorln(String.format("ERROR: Excpetion thrown while reading input file'%s'! %s",
-                    reportFile,
-                    ex.getMessage()));
-            exit(ExitCodeImpl.XML_INPUT_FILE_READ_ERROR);
-        }
-    }
-
-    /**
-     * Generate suppressions configuration from report.
-     *
-     * @param report must not be {@code null}
-     * @return never {@code null}
-     */
-    private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
-        return GENERATOR.generate(report);
-    }
-
-    /**
-     * Save suppressions configuration to file.
-     *
-     * @param suppression must not be {@code null}
-     */
-    private void saveSuppressionFile(final CheckstyleSuppressions suppression) {
-        Validate.notNull(suppression);
-        getIoStreams().println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
-
-        try {
-            try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-                try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos))) {
-                    br.write(suppression.getXmlContent());
-                    br.flush();
-                }
-                fos.flush();
-            }
-        } catch (final IOException ex) {
-            getIoStreams()
-                    .errorln(String.format("ERROR: Excpetion thrown while writing suppresions file '%s'! %s",
-                    ex.getMessage(),
-                    suppression.getFileName()));
-            exit(ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR);
-        }
+        processor.process(reportFile);
     }
 
 }
