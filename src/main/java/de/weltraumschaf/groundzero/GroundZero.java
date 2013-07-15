@@ -205,15 +205,6 @@ public class GroundZero extends InvokableAdapter {
     }
 
     /**
-     * Get report processor.
-     *
-     * @return never {@code null}
-     */
-    public ReportProcessor getProcessor() {
-        return processor;
-    }
-
-    /**
      * Processes a single report file.
      *
      * Exits the application with exit code != {@link ExitCodeImpl#OK}, if {@link SAXException} or {@link IOException}
