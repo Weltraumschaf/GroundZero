@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# JVM settings.
+JVM_MIN_HEAP_SPACE="128m"
+JVM_MAX_HEAP_SPACE="1024m"
+
+# Find current working directory.
 CWD=$( cd -P -- "$(dirname -- "${0}")" && printf '%s\n' "$(pwd -P)/$(basename -- "${0}")" ) || exit 1
 CWD=`dirname "${CWD}"`
 
@@ -12,4 +17,6 @@ if [ ! -f "${JAR}" ] ; then
     exit 1
 fi
 
-java -Xms128m -Xmx1024m -jar "${JAR}"  $*
+JVM_OPTIONS="-Xms${JVM_MIN_HEAP_SPACE} -Xmx${JVM_MAX_HEAP_SPACE}"
+java ${JVM_OPTIONS} -jar "${JAR}" $*
+
