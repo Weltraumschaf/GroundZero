@@ -33,8 +33,8 @@ public class ApplicationException extends RuntimeException {
      * Dedicated constructor.
      *
      * @param exitCode must not be {@code null}
-     * @param message passed to {@link RuntimeException#RuntimeException(java.lang.String, java.lang.Throwable)
-     * @param cause passed to {@link RuntimeException#RuntimeException(java.lang.String, java.lang.Throwable)
+     * @param message passed to {@link RuntimeException#RuntimeException(java.lang.String, java.lang.Throwable)}
+     * @param cause passed to {@link RuntimeException#RuntimeException(java.lang.String, java.lang.Throwable)}
      */
     public ApplicationException(final ExitCode exitCode, final String message, final Throwable cause) {
         super(message, cause);
