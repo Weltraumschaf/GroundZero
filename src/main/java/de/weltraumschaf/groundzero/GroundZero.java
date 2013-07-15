@@ -54,11 +54,12 @@ public class GroundZero extends InvokableAdapter {
     private static final String HELP_OPTIONS =
             "  -h | --help     Show this help." + NL
             + "  -v | --version  Show version information";
+    private static final String ISSUES_URI = "https://github.com/Weltraumschaf/GroundZero/issues";
     /**
      * Footer information for help.
      */
     private static final String HELP_FOOTER = "Project site: http://weltraumschaf.github.io/GroundZero/" + NL
-            + "Report bugs here: https://github.com/Weltraumschaf/GroundZero/issues";
+            + "Report bugs here: " + ISSUES_URI;
 
     /**
      * Holds the set of report files to process from CLI arguments.
@@ -67,7 +68,7 @@ public class GroundZero extends InvokableAdapter {
     /**
      * Processes the report files.
      */
-    private ReportProcessor processor = new ReportProcessor();
+    private ReportProcessor processor;
     /**
      * Version of the application.
      */
@@ -85,9 +86,8 @@ public class GroundZero extends InvokableAdapter {
      * Dedicated constructor.
      *
      * @param args command line arguments provided by JVM
-     * @throws SAXException if SAX exception occurs on {@link #processor} instantiation
      */
-    public GroundZero(final String[] args) throws SAXException {
+    public GroundZero(final String[] args) {
         super(args);
     }
 
@@ -95,14 +95,18 @@ public class GroundZero extends InvokableAdapter {
      * Main entry point of application invoked by JVM.
      *
      * @param args command line arguments provided by JVM
-     * @throws SAXException if SAX exception occurs on {@link #processor} instantiation
+     * @throws ApplicationException if SAX exception occurs on {@link #processor} instantiation
      */
-    public static void main(final String[] args) throws SAXException {
-        InvokableAdapter.main(new GroundZero(args));
+    public static void main(final String[] args) throws ApplicationException {
+        final GroundZero app = new GroundZero(args);
+        app.setProcessor(new ReportProcessor());
+        InvokableAdapter.main(app);
     }
 
     @Override
     public void execute() throws Exception {
+        Validate.notNull(processor, "The report processor must not be null! "
+                + "This is a serious program bug. Please report it at %s", ISSUES_URI);
         initializeVersionInformation();
         examineCommandLineOptions();
 

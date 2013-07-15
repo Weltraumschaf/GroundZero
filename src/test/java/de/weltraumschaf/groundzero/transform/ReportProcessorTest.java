@@ -12,17 +12,17 @@
 
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.groundzero.ApplicationException;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSeverity;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-import org.junit.Ignore;
 
 /**
  * Tests for {@link ReportProcessor}.
@@ -33,12 +33,12 @@ public class ReportProcessorTest {
 
     private final ReportProcessor sut = new ReportProcessor();
 
-    public ReportProcessorTest() throws SAXException {
+    public ReportProcessorTest() throws ApplicationException {
         super();
     }
 
     @Test
-    public void process() throws Exception {
+    public void process() throws ApplicationException, URISyntaxException {
         final CheckstyleReport expected = new CheckstyleReport("5.4");
         expected.setFileName("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("foo/Bar.java");

@@ -52,17 +52,24 @@ public class ReportProcessor {
     /**
      * XML reader.
      */
-    private final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+    private final XMLReader xmlReader;
 
     /**
      * Dedicated constructor.
      *
      * Set up the XML reader with the SAX handler.
      *
-     * @throws SAXException if creation of XML reader fails
+     * @throws ApplicationException if creation of XML reader fails
      */
-    public ReportProcessor() throws SAXException {
+    public ReportProcessor() throws ApplicationException {
         super();
+
+        try {
+            xmlReader = XMLReaderFactory.createXMLReader();
+        } catch (final SAXException ex) {
+            throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, "", ex);
+        }
+
         xmlReader.setContentHandler(handler);
         xmlReader.setErrorHandler(handler);
     }
@@ -71,7 +78,7 @@ public class ReportProcessor {
      * Process the report given as file name.
      *
      * @param reportFileName file name of the report, must not be {@code null} or empty
-     * @throws ApplicationException if file I/O or XML parse errors  occurs
+     * @throws ApplicationException if file I/O or XML parse errors occurs
      * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final String reportFileName) throws ApplicationException {
@@ -83,7 +90,7 @@ public class ReportProcessor {
      * Process the report given as file.
      *
      * @param input file name of the report, must not be {@code null}
-     * @throws ApplicationException if file I/O or XML parse errors  occurs
+     * @throws ApplicationException if file I/O or XML parse errors occurs
      * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final File input) throws ApplicationException {
@@ -142,7 +149,7 @@ public class ReportProcessor {
             throw new ApplicationException(
                     ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR,
                     String.format("ERROR: Excpetion thrown while writing suppresions file '%s'!",
-                        suppression.getFileName()),
+                    suppression.getFileName()),
                     ex);
         }
     }

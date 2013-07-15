@@ -37,6 +37,10 @@ public enum ExitCodeImpl implements ExitCode {
      */
     XML_OUTOUT_FILE_WRITE_ERROR(3),
     /**
+     * Can not create a SAX XML reader.
+     */
+    XML_CANT_CREATE_READER(4),
+    /**
      * Unspecified fatal error occurred.
      */
     FATAL(-1);

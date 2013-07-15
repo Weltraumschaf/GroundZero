@@ -20,6 +20,7 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
@@ -46,11 +47,11 @@ public class GroundZeroTest {
         super();
     }
 
-    private GroundZero createSut() throws SAXException {
+    private GroundZero createSut() {
         return createSut(new String[]{});
     }
 
-    private GroundZero createSut(final String[] args) throws SAXException {
+    private GroundZero createSut(final String[] args) {
         final GroundZero sut = new GroundZero(args);
         sut.setIoStreams(io);
         sut.setProcessor(processor);
@@ -162,9 +163,22 @@ public class GroundZeroTest {
     }
 
     @Test
-    public void setProcessor_throwsExceptionIfNull() throws SAXException {
+    public void setProcessor_throwsExceptionIfNull() {
         thrown.expect(NullPointerException.class);
         createSut().setProcessor(null);
     }
 
+    @Test
+    public void execute_throwsExcpetionIfNoProcessorSet() throws Exception {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("The report processor must not be null! "
+                + "This is a serious program bug. Please report it at "
+                + "https://github.com/Weltraumschaf/GroundZero/issues");
+        new GroundZero(new String[] {}).execute();
+    }
+
+    @Test @Ignore
+    public void main() {
+
+    }
 }
