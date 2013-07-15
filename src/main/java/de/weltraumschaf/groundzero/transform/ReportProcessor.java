@@ -107,7 +107,7 @@ public class ReportProcessor {
         }
 
         final CheckstyleReport report = handler.getReport();
-        report.setFile(input.getAbsolutePath());
+        report.setFileName(input.getAbsolutePath());
         final CheckstyleSuppressions suppression = generateSuppression(report);
         saveSuppressionFile(suppression);
         return report;

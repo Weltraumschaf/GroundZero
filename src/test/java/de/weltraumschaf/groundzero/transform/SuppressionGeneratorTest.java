@@ -49,7 +49,7 @@ public class SuppressionGeneratorTest {
     @Test
     public void generate_emptyReport() {
         final CheckstyleReport report = new CheckstyleReport("4.3");
-        report.setFile("foo.xml");
+        report.setFileName("foo.xml");
         final CheckstyleSuppressions suppressions = sut.generate(report);
         assertThat(suppressions.getXmlContent(), is(equalTo(
                 "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
@@ -63,7 +63,7 @@ public class SuppressionGeneratorTest {
     @Test
     public void generateOneFileOneError() {
         final CheckstyleReport report = new CheckstyleReport("4.3");
-        report.setFile("foo.xml");
+        report.setFileName("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("Foo.java");
         report.addFile(file);
         final CheckstyleViolation violation = new CheckstyleViolation();
@@ -87,7 +87,7 @@ public class SuppressionGeneratorTest {
     @Test
     public void generateOneFileThreeError() {
         final CheckstyleReport report = new CheckstyleReport("4.3");
-        report.setFile("foo.xml");
+        report.setFileName("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("Foo.java");
         report.addFile(file);
         final CheckstyleViolation violation1 = new CheckstyleViolation();
@@ -139,7 +139,7 @@ public class SuppressionGeneratorTest {
         file3.addViolation(violation);
 
         final CheckstyleReport report = new CheckstyleReport("4.3");
-        report.setFile("foo.xml");
+        report.setFileName("foo.xml");
         report.addFile(file1);
         report.addFile(file2);
         report.addFile(file3);
@@ -190,7 +190,7 @@ public class SuppressionGeneratorTest {
         file3.addViolation(violation3);
 
         final CheckstyleReport report = new CheckstyleReport("4.3");
-        report.setFile("foo.xml");
+        report.setFileName("foo.xml");
         report.addFile(file1);
         report.addFile(file2);
         report.addFile(file3);
