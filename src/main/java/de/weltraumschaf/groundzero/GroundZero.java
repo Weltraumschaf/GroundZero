@@ -235,8 +235,8 @@ public class GroundZero extends InvokableAdapter {
 
         try {
             final CheckstyleReport report = processor.process(reportFile);
-            final CheckstyleSuppressions suppression = generateSuppression(report);
-            saveSuppressionFile(suppression);
+            final CheckstyleSuppressions suppression = generateSuppression(report); // TODO Move into processor
+            saveSuppressionFile(suppression); // TODO Move into processor
         } catch (final SAXException ex) {
             getIoStreams()
                     .errorln(String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",

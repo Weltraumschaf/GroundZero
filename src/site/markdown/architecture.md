@@ -8,11 +8,16 @@ by a generator into XML suppressions files.
 
 ## Semantic Model
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam purus sapien, sagittis placerat nisl vel, 
-semper volutpat lorem. Vivamus interdum placerat ultricies. Interdum et malesuada fames ac ante ipsum 
-primis in faucibus. Phasellus suscipit risus lectus, at congue libero malesuada vitae. Duis eget consequat 
-est. Donec ut orci placerat, congue turpis a, interdum metus. Pellentesque sit amet vulputate orci, et 
-dapibus arcu. Integer aliquam enim sollicitudin pulvinar condimentum. Vivamus at convallis massa. 
+The model constists basicaly of two parts: A object tree representing a [Checkstyle][1] report and a class
+representing a [Checkstyle][1] suppressions configuration.
+
+The report model represents the report as near as possible like the XML: The root object for each report
+is a `CheckstyleReport` object. This report object contains for each reported source file a `CheckstyleFile`
+object. This contains for each found error a `CheckstyleViolation` object. This classes are simple value
+objects.
+
+The suppressions configuration model consists only of one class yet: `CheckstyleSuppressions`. This holds
+the formatted XML string for the supressions configuration and the file name to store the XML in.
 
 <img alt="Big picture" src="uml/model.png"/>
 
