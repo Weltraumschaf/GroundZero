@@ -125,9 +125,11 @@ public class ReportProcessor {
      * Save suppressions configuration to file.
      *
      * @param suppression must not be {@code null}
+     * @throws ApplicationException if an error occurs while writing suppressions configuration to file
      */
-    private void saveSuppressionFile(final CheckstyleSuppressions suppression) {
+    private void saveSuppressionFile(final CheckstyleSuppressions suppression) throws ApplicationException {
         Validate.notNull(suppression);
+        // TODO Inject IO Streams.
 //        getIoStreams().println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {

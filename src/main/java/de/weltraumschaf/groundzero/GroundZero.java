@@ -178,8 +178,10 @@ public class GroundZero extends InvokableAdapter {
 
     /**
      * Process all given report files.
+     *
+     * @throws ApplicationException if any I/O or XML parse error occurs
      */
-    void processReports() {
+    void processReports() throws ApplicationException {
         if (reportFiles.isEmpty()) {
             getIoStreams().println("Nothing to do.");
             return;
@@ -218,8 +220,9 @@ public class GroundZero extends InvokableAdapter {
      * was thrown.
      *
      * @param reportFile file name of Checkstyle report
+     * @throws ApplicationException if any I/O or XML parse error occurs
      */
-    private void processReport(final String reportFile) {
+    private void processReport(final String reportFile) throws ApplicationException {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
         processor.process(reportFile);
     }
