@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class ApplicationException extends RuntimeException {
+public class ApplicationException extends Exception {
 
     /**
      * Exit code used to return to JVM.

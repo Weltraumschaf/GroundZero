@@ -71,8 +71,7 @@ public class ReportProcessor {
      * Process the report given as file name.
      *
      * @param reportFileName file name of the report, must not be {@code null} or empty
-     * @throws SAXException if XML parse errors occurs
-     * @throws IOException if file I/O errors occurs
+     * @throws ApplicationException if file I/O or XML parse errors  occurs
      * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final String reportFileName) throws ApplicationException {
@@ -84,8 +83,7 @@ public class ReportProcessor {
      * Process the report given as file.
      *
      * @param input file name of the report, must not be {@code null}
-     * @throws SAXException if XML parse errors occurs
-     * @throws IOException if file I/O errors occurs
+     * @throws ApplicationException if file I/O or XML parse errors  occurs
      * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final File input) throws ApplicationException {

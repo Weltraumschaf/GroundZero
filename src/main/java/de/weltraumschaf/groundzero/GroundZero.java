@@ -10,17 +10,10 @@
 package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
-import de.weltraumschaf.groundzero.transform.SuppressionGenerator;
-import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
-import de.weltraumschaf.groundzero.model.CheckstyleReport;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Set;
 import org.apache.commons.lang3.Validate;
 import org.xml.sax.SAXException;
