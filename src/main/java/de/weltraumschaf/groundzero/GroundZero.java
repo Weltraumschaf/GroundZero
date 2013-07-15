@@ -54,13 +54,15 @@ public class GroundZero extends InvokableAdapter {
     private static final String HELP_OPTIONS =
             "  -h | --help     Show this help." + NL
             + "  -v | --version  Show version information";
+    /**
+     * URI to the issue tracker.
+     */
     private static final String ISSUES_URI = "https://github.com/Weltraumschaf/GroundZero/issues";
     /**
      * Footer information for help.
      */
     private static final String HELP_FOOTER = "Project site: http://weltraumschaf.github.io/GroundZero/" + NL
             + "Report bugs here: " + ISSUES_URI;
-
     /**
      * Holds the set of report files to process from CLI arguments.
      */
@@ -95,10 +97,20 @@ public class GroundZero extends InvokableAdapter {
      * Main entry point of application invoked by JVM.
      *
      * @param args command line arguments provided by JVM
-     * @throws ApplicationException if SAX exception occurs on {@link #processor} instantiation
+     * @throws ApplicationException if errors occurs while creating report processor
      */
     public static void main(final String[] args) throws ApplicationException {
-        final GroundZero app = new GroundZero(args);
+        main(new GroundZero(args));
+    }
+
+    /**
+     * Setup and invokes the application.
+     *
+     * @param app invoked application, must not be {@code}
+     * @throws ApplicationException if errors occurs while creating report processor
+     */
+    static void main(final GroundZero app) throws ApplicationException {
+        Validate.notNull(app);
         app.setProcessor(new ReportProcessor());
         InvokableAdapter.main(app);
     }

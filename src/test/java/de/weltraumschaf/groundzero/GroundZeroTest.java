@@ -20,10 +20,10 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
 import org.xml.sax.SAXException;
 
 /**
@@ -177,8 +177,11 @@ public class GroundZeroTest {
         new GroundZero(new String[] {}).execute();
     }
 
-    @Test @Ignore
-    public void main() {
-
+    @Test
+    public void main() throws ApplicationException, Exception {
+        final GroundZero spy = createSut();
+        GroundZero.main(spy);
+        verify(spy, times(1)).setProcessor(Mockito.<ReportProcessor>anyObject());
+        verify(spy, times(1)).execute();
     }
 }
