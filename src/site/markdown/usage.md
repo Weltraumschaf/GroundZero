@@ -1,4 +1,27 @@
 # Usage
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam purus sapien, sagittis placerat nisl vel, semper volutpat lorem. Vivamus interdum placerat ultricies. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus suscipit risus lectus, at congue libero malesuada vitae. Duis eget consequat est. Donec ut orci placerat, congue turpis a, interdum metus. Pellentesque sit amet vulputate orci, et dapibus arcu. Integer aliquam enim sollicitudin pulvinar condimentum. Vivamus at convallis massa. Duis auctor ligula ut massa pellentesque, vitae cursus elit condimentum. Praesent vulputate, turpis accumsan mollis eleifend, odio nisi consequat mauris, vitae facilisis elit nulla eget mauris. Integer elementum quis nunc et accumsan. In consequat massa nec volutpat ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+## Create Some Reports
 
+In first place you need some reports. To get them you need [Checkstyle][1] of course.
+
+### Install Checkstyle For Command Line
+
+- On __Debian__ systems type: `apt-get install checkstyle`
+- On __Mac OS X__ with [Homebrew][2] type: `brew install checkstyle`
+
+## Create Reports On Command Line
+
+Choose source code you desire to create reports from. In the examples here the
+[GroundZero source][3] itself is used. Also you need a [Checkstyle configuration][4].
+For this example the configuration for this project is used. For generating a report
+get the source and type:
+
+    $ cd ~/tmp
+    $ git clone https://github.com/Weltraumschaf/GroundZero.git
+    $ cd GroundZero
+    $ checkstyle -c src/main/config/checkstyle-ruleset.xml -f xml -o checkstyle-warnings.xml -r src/main/java
+
+[1]: http://checkstyle.sourceforge.net/
+[2]: http://mxcl.github.io/homebrew/
+[3]: https://github.com/Weltraumschaf/GroundZero
+[4]: http://checkstyle.sourceforge.net/config.html
