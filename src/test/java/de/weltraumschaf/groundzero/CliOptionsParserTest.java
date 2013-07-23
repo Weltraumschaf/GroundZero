@@ -20,19 +20,20 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 /**
- * Tests for {@link CliOptions}.
+ * Tests for {@link CliOptionsParser}.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CliOptionsTest {
+public class CliOptionsParserTest {
 
-    //CHECKSTYLE: OFF
+    //CHECKSTYLE:OFF Must be public for JUnit's sake.
     @Rule public final ExpectedException thrown = ExpectedException.none();
-    //CHECKSTYLE: ON
+    //CHECKSTYLE:ON
 
     private CliOptions setUpSut(final String[] args) throws ParseException {
         final CliOptions options = new CliOptions();
-        options.parse(args);
+        final CliOptionsParser parser = new CliOptionsParser(options);
+        parser.parse(args);
         return options;
     }
 

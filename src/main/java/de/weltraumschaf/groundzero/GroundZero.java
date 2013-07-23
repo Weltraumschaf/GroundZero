@@ -108,7 +108,8 @@ public class GroundZero extends InvokableAdapter {
      */
     private void examineCommandLineOptions() throws ApplicationException {
         try {
-            options.parse(getArgs());
+            final CliOptionsParser parser = new CliOptionsParser(options);
+            parser.parse(getArgs());
         } catch (ParseException ex) {
             throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
         }

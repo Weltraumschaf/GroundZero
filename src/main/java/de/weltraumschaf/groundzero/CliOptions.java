@@ -18,12 +18,13 @@ import java.util.Collections;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Available command line arguments.
  *
- * TODO Move configuration out as value object.
+ * Set up an {@link Option parser configuration} and provides it and also works as configuration
+ * value object.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
@@ -42,7 +43,7 @@ class CliOptions {
      *
      * FIXME Better formatting with newlines.
      */
-    static final String HEADER = String.format("%n"
+    private static final String HEADER = String.format("%n"
             + "A tool to generate line based suppression files for Checkstyle."
             + "Parses the Checkstyle report files given as command line argument"
             + "and generates suppression XML configuration files from them. The suppression"
@@ -50,7 +51,7 @@ class CliOptions {
             + "names are the same as the report filename with the addition of '.suppressions'"
             + "before the '.xml' file extension. So the report file 'foobar.xml' will produce"
             + "a suppression file named 'foobar.suppressions.xml'.");
-    
+
     /**
      * Author name and email address.
      */
@@ -63,7 +64,7 @@ class CliOptions {
     /**
      * Options configuration.
      */
-    private final Options options;
+    private final Options options = new Options();
     /**
      * Path prefix to stript of suppressed file names.
      */
@@ -82,52 +83,82 @@ class CliOptions {
      * Show version or net.
      */
     private boolean version;
+    /**
+     * Collect all not recognized arguments as file pats.
+     */
     private Collection<String> reportFiles = Collections.emptyList();
 
     /**
-     * Configures the {@link #options}.
+     * Configures the {@link #options parse options}.
      */
     public CliOptions() {
-        options = new Options();
+        super();
         // w/ argument
-        options.addOption(OptionBuilder.withDescription(
-                "PRefix to strip from checked file paths.")
-                .withArgName("path")
-                .hasArg()
-                .withLongOpt(OptionsParser.OPT_PATH_PREFIX_LONG)
-                .create(OptionsParser.OPT_PATH_PREFIX));
+        OptionBuilder.withDescription("Prefix to strip from checked file paths.");
+        OptionBuilder.withArgName("path");
+        OptionBuilder.hasArg();
+        OptionBuilder.withLongOpt(CliOptionsParser.OPT_PATH_PREFIX_LONG);
+        options.addOption(OptionBuilder.create(CliOptionsParser.OPT_PATH_PREFIX));
 
         // w/o argument
-        options.addOption(OptionsParser.OPT_DEBUG, OptionsParser.OPT_DEBUG_LONG, false, "Enables debug output.");
-        options.addOption(OptionsParser.OPT_HELP, OptionsParser.OPT_HELP_LONG, false, "This help.");
-        options.addOption(OptionsParser.OPT_VERSION, OptionsParser.OPT_VERSION_LONG, false, "Show version information.");
+        options.addOption(CliOptionsParser.OPT_DEBUG, CliOptionsParser.OPT_DEBUG_LONG, false, "Enables debug output.");
+        options.addOption(CliOptionsParser.OPT_HELP, CliOptionsParser.OPT_HELP_LONG, false, "This help.");
+        options.addOption(CliOptionsParser.OPT_VERSION, CliOptionsParser.OPT_VERSION_LONG, false,
+                "Show version information.");
     }
 
     /**
      * Get the configured options.
      *
-     * @return Commons CLI object.
+     * @return never {@code null}.
      */
-    public Options getOptions() {
+    public Options getParseOptions() {
         return options;
     }
 
+    /**
+     * Set path prefix option.
+     *
+     * @param pathPrefix must not be {@code null}
+     */
     public void setPathPrefix(final String pathPrefix) {
+        Validate.notNull(pathPrefix);
         this.pathPrefix = pathPrefix;
     }
 
+    /**
+     * Get the path prefix option.
+     *
+     * @return never {@code null} maybe empty
+     */
     public String getPathPrefix() {
         return pathPrefix;
     }
 
-    public void setReportFiles(final Collection<String> argList) {
-        reportFiles = argList;
+    /**
+     * Set report files.
+     *
+     * @param files must not be {@code null}
+     */
+    public void setReportFiles(final Collection<String> files) {
+        Validate.notNull(files);
+        reportFiles = files;
     }
 
+    /**
+     * Whether there are report files or not.
+     *
+     * @return {@code true} if {@link #getReportFiles()} is not empty, else {@code false}
+     */
     public boolean hasReportFiles() {
         return reportFiles.isEmpty() == false;
     }
 
+    /**
+     * Get report files.
+     *
+     * @return never {@code null} maybe empty
+     */
     public Collection<String> getReportFiles() {
         return reportFiles;
     }
@@ -184,17 +215,6 @@ class CliOptions {
      */
     public boolean isHelp() {
         return help;
-    }
-
-    /**
-     * Parse given argument strings.
-     *
-     * @param args Argument strings.
-     * @throws ParseException On parse errors.
-     */
-    public void parse(final String[] args) throws ParseException {
-        final OptionsParser parser = new OptionsParser(this);
-        parser.parse(args);
     }
 
     /**

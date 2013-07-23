@@ -21,7 +21,7 @@ import org.apache.commons.cli.PosixParser;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class OptionsParser {
+final class CliOptionsParser {
 
     /**
      * Short option for path prefix.
@@ -72,7 +72,7 @@ final class OptionsParser {
      *
      * @param options Newly created options object.
      */
-    public OptionsParser(final CliOptions options) {
+    public CliOptionsParser(final CliOptions options) {
         this.options = options;
     }
 
@@ -84,7 +84,7 @@ final class OptionsParser {
      */
     public void parse(final String[] args) throws ParseException {
         final CommandLineParser parser = new PosixParser();
-        final CommandLine cmd = parser.parse(options.getOptions(), args);
+        final CommandLine cmd = parser.parse(options.getParseOptions(), args);
         optPathPrefix(cmd);
         optDebug(cmd);
         optHelp(cmd);
