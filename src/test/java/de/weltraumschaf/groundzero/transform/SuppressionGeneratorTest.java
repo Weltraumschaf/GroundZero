@@ -52,7 +52,7 @@ public class SuppressionGeneratorTest {
         report.setFileName("foo.xml");
         final CheckstyleSuppressions suppressions = sut.generate(report);
         assertThat(suppressions.getXmlContent(), is(equalTo(
-                "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
@@ -74,7 +74,7 @@ public class SuppressionGeneratorTest {
         violation.setSource("bar");
         final CheckstyleSuppressions suppressions = sut.generate(report);
         assertThat(suppressions.getXmlContent(), is(equalTo(
-                "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
@@ -111,7 +111,7 @@ public class SuppressionGeneratorTest {
         final CheckstyleSuppressions suppressions = sut.generate(report);
 
         assertThat(suppressions.getXmlContent(), is(equalTo(
-                "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
@@ -146,7 +146,7 @@ public class SuppressionGeneratorTest {
         final CheckstyleSuppressions suppressions = sut.generate(report);
 
         assertThat(suppressions.getXmlContent(), is(equalTo(
-                "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
@@ -197,7 +197,7 @@ public class SuppressionGeneratorTest {
         final CheckstyleSuppressions suppressions = sut.generate(report);
 
         assertThat(suppressions.getXmlContent(), is(equalTo(
-                "<?xml version=\"1.0\" encoding\"UTF-8\"?>\n"
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<!DOCTYPE suppressions PUBLIC "
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"

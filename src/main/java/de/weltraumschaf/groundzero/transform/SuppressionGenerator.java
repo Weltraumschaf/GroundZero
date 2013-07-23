@@ -42,7 +42,7 @@ public class SuppressionGenerator {
     /**
      * XML preamble string.
      */
-    private static final String XML_PREAMBLE = "<?xml version=\"1.0\" encoding\"UTF-8\"?>";
+    private static final String XML_PREAMBLE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     /**
      * DTD for Checkstyle suppression file.
      */
