@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="5.6">
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ApplicationService.java">
-</file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ApplicationService.java"></file>
   <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/BusinessServiceProvider.java">
     <error line="15" column="8" severity="warning" message="Unused import - com.vaadin.data.Validatable." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
     <error line="25" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
@@ -10,74 +9,13 @@
     <error line="34" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
     <error line="38" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/package-info.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/RegistrationService.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServiceExcpetion.java">
-</file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/package-info.java"></file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/RegistrationService.java"></file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServiceExcpetion.java"></file>
   <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/UserService.java">
     <error line="34" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
     <error line="38" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/Authentication.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/AuthenticationResourceFilters.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/package-info.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/SecuirityContextFilter.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/SecurityContextFilterAnonymous.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/SecurityContextFilterDigest.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/filter/SecurityContextImpl.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/Constants.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/digest/AuthorizationHeaderParser.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/digest/BaseParameters.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/digest/Digest.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/digest/package-info.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/digest/RequestParameters.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/digest/ResponseParameters.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/ForbiddenException.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/MediaType.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/package-info.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/Typeable.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/UnauthorizedException.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/http/UriList.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/nonce/BaseNonce.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/nonce/Nonce.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/nonce/NonceCache.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/nonce/NonceFactory.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/nonce/package-info.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/nonce/Sha1.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/NullInjector.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/package-info.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/registration/package-info.java">
-</file>
   <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/registration/RegisrationUI.java">
     <error line="32" column="8" severity="warning" message="Unused import - org.lafayette.server.domain.Finders." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
   </file>
@@ -137,8 +75,7 @@
     <error line="102" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
     <error line="108" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/IndexResource.java">
-</file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/IndexResource.java"></file>
   <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/JsonObject.java">
     <error line="17" column="8" severity="warning" message="Unused import - java.util.logging.Level." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
     <error line="18" column="8" severity="warning" message="Unused import - java.util.logging.Logger." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
@@ -146,8 +83,7 @@
     <error line="29" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
     <error line="33" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/package-info.java">
-</file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/package-info.java"></file>
   <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/ServiceResource.java">
     <error line="24" column="8" severity="warning" message="Unused import - org.apache.commons.io.IOUtils." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
     <error line="37" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
@@ -160,10 +96,8 @@
     <error line="29" column="8" severity="warning" message="Unused import - org.lafayette.server.domain.UserFinder." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
     <error line="56" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServerContextListener.java">
-</file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServerModule.java">
-</file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServerContextListener.java"></file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServerModule.java"></file>
   <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/Services.java">
     <error line="25" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
     <error line="26" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
@@ -171,6 +105,5 @@
     <error line="33" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
     <error line="37" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/Stage.java">
-</file>
+  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/Stage.java"></file>
 </checkstyle>
