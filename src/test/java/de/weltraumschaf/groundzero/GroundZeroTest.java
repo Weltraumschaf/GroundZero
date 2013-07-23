@@ -149,7 +149,7 @@ public class GroundZeroTest {
     }
 
     @Test
-    public void main() throws ApplicationException, Exception {
+    public void main() throws Exception {
         final GroundZero spy = createSut();
         GroundZero.main(spy);
         verify(spy, times(1)).setProcessor(Mockito.<ReportProcessor>anyObject());
