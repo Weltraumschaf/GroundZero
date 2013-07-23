@@ -26,7 +26,6 @@ import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
 import org.xml.sax.SAXException;
 import de.weltraumschaf.commons.ApplicationException;
-import org.junit.Ignore;
 
 /**
  * Tests for {@link GroundZero}.
@@ -101,7 +100,7 @@ public class GroundZeroTest {
         verify(sut, never()).showHelpMessage();
     }
 
-    @Test @Ignore
+    @Test
     public void doNothingIfNoReportFilesGiven() throws Exception {
         final GroundZero sut = createSut();
         sut.execute();
@@ -120,7 +119,7 @@ public class GroundZeroTest {
         verify(processor, times(1)).process(fileName);
     }
 
-    @Test @Ignore
+    @Test
     public void processMultipleFile() throws Exception {
         final String fileName1 = "/one/file/name1";
         final String fileName2 = "one/file/name2";
