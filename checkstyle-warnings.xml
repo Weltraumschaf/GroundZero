@@ -1,109 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="5.6">
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ApplicationService.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/BusinessServiceProvider.java">
-    <error line="15" column="8" severity="warning" message="Unused import - com.vaadin.data.Validatable." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
-    <error line="25" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="26" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="28" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="34" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="38" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/ApplicationService.java"></file>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider.java">
+    <error line="15" column="8" severity="warning" message="Unused import - com.vaadin.data.Validatable."
+           source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+    <error line="25" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
+    <error line="26" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
+    <error line="28" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+    <error line="34" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+    <error line="38" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/package-info.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/RegistrationService.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServiceExcpetion.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/UserService.java">
-    <error line="34" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="38" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/package-info.java"></file>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/RegistrationService.java"></file>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/ServiceExcpetion.java"></file>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/UserService.java">
+    <error line="34" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+    <error line="38" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/registration/RegisrationUI.java">
-    <error line="32" column="8" severity="warning" message="Unused import - org.lafayette.server.domain.Finders." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/registration/RegisrationUI.java">
+    <error line="32" column="8" severity="warning" message="Unused import - org.lafayette.server.domain.Finders."
+           source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/Registry.java">
-    <error line="74" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="218" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="222" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/Registry.java">
+    <error line="74" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
+    <error line="218" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+    <error line="222" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/BaseResource.java">
-    <error line="159" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+  <file name="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/resources/BaseResource.java">
+    <error line="159" column="5" severity="error" message="Missing a Javadoc comment."
+           source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
   </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/Converter.java">
-    <error line="28" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="29" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="30" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="32" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="36" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="40" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="44" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="48" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck"/>
-    <error line="50" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="51" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="52" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="53" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="54" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="55" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="56" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="56" column="21" severity="error" message="Variable 'indentation' explicitly initialized to '0' (default value for its type)." source="com.puppycrawl.tools.checkstyle.checks.coding.ExplicitInitializationCheck"/>
-    <error line="58" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="62" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="66" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="70" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="74" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="82" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="92" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="103" severity="error" message="Line is longer than 120 characters (found 126)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-    <error line="103" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="125" severity="error" message="Line is longer than 120 characters (found 125)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-    <error line="125" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="129" column="29" severity="error" message="Variable 'length' should be declared final." source="com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck"/>
-    <error line="146" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="155" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck"/>
-    <error line="156" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="158" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="164" column="9" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-  </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/DataServiceResource.java">
-    <error line="40" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="44" column="20" severity="error" message="Variable 'datum' should be declared final." source="com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck"/>
-    <error line="53" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="56" severity="error" message="Line is longer than 120 characters (found 125)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-    <error line="57" column="20" severity="error" message="Variable 'datum' should be declared final." source="com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck"/>
-    <error line="66" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="73" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="76" severity="error" message="Line is longer than 120 characters (found 141)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-    <error line="90" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="102" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="108" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-  </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/IndexResource.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/JsonObject.java">
-    <error line="17" column="8" severity="warning" message="Unused import - java.util.logging.Level." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
-    <error line="18" column="8" severity="warning" message="Unused import - java.util.logging.Logger." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
-    <error line="27" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="29" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="33" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-  </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/package-info.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/ServiceResource.java">
-    <error line="24" column="8" severity="warning" message="Unused import - org.apache.commons.io.IOUtils." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
-    <error line="37" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="38" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="47" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="57" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="71" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-  </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/resources/UserResource.java">
-    <error line="29" column="8" severity="warning" message="Unused import - org.lafayette.server.domain.UserFinder." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
-    <error line="56" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-  </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServerContextListener.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/ServerModule.java"></file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/Services.java">
-    <error line="25" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="26" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck"/>
-    <error line="28" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="33" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-    <error line="37" column="5" severity="error" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
-  </file>
-  <file name="/home/weltraumschaf/GroundZero/src/main/java/de/weltraumschaf/groundzero/Stage.java"></file>
 </checkstyle>

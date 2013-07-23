@@ -67,6 +67,49 @@ This will produce a file `checkstyle-warnings.xml` which may looks like this for
   </file>
 </checkstyle>
 ```
+
+### Generate Suppressions File
+
+For generating the supressions file feed the generated report into ground zero:
+
+    $ groundzero checkstyle-warnings.xml
+
+This will produce a suppressions file like this:
+
+```
+<?xml version="1.0" encoding"UTF-8"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+                              "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider\.java"
+              lines="15" columns="8" checks="UnusedImportsCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider\.java"
+              lines="25" columns="5" checks="JavadocVariableCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider\.java"
+              lines="26" columns="5" checks="JavadocVariableCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider\.java"
+              lines="28" columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider\.java"
+              lines="34" columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/BusinessServiceProvider\.java"
+              lines="38" columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/UserService\.java" lines="34"
+              columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/UserService\.java" lines="38"
+              columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/registration/RegisrationUI\.java"
+              lines="32" columns="8" checks="UnusedImportsCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/Registry\.java"
+              lines="74" columns="5" checks="JavadocVariableCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/Registry\.java"
+              lines="218" columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/Registry\.java"
+              lines="222" columns="5" checks="JavadocMethodCheck"/>
+    <suppress files="/home/weltraumschaf/foo/src/main/java/de/weltraumschaf/foo/resources/BaseResource\.java"
+              lines="159" columns="5" checks="JavadocMethodCheck"/>
+</suppressions>
+```
+
 [1]: http://checkstyle.sourceforge.net/
 [2]: http://mxcl.github.io/homebrew/
 [3]: http://www.maven.org/
