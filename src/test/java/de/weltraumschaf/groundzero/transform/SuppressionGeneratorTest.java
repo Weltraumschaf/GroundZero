@@ -31,7 +31,7 @@ public class SuppressionGeneratorTest {
     // CHECKSTYLE:OFF Must be public for JUnit.
     @Rule public final ExpectedException thrown = ExpectedException.none();
     // CHECKSTYLE:ON
-    private final SuppressionGenerator sut = new SuppressionGenerator();
+    private final SuppressionGenerator sut = new SuppressionGenerator("UTF-8");
 
     @Test
     public void escapeFileName() {

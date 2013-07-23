@@ -111,7 +111,7 @@ public class GroundZero extends InvokableAdapter {
      */
     static void main(final GroundZero app) throws ApplicationException {
         Validate.notNull(app);
-        app.setProcessor(new ReportProcessor());
+        app.setProcessor(new ReportProcessor("UTF-8")); // FIXME Make input encoding a CLI option
         InvokableAdapter.main(app);
     }
 

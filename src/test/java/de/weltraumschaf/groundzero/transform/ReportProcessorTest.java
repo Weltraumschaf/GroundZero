@@ -31,7 +31,7 @@ import de.weltraumschaf.commons.ApplicationException;
  */
 public class ReportProcessorTest {
 
-    private final ReportProcessor sut = new ReportProcessor();
+    private final ReportProcessor sut = new ReportProcessor("UTF-8");
 
     public ReportProcessorTest() throws ApplicationException {
         super();

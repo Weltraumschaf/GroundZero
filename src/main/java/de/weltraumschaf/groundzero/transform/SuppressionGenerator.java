@@ -42,7 +42,7 @@ public class SuppressionGenerator {
     /**
      * XML preamble string.
      */
-    private static final String XML_PREAMBLE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+    private static final String XML_PREAMBLE_FORMAT = "<?xml version=\"1.0\" encoding=\"%s\"?>";
     /**
      * DTD for Checkstyle suppression file.
      */
@@ -61,6 +61,16 @@ public class SuppressionGenerator {
      * Empty root tag.
      */
     private static final String TAG_EMPTY_SUPPRESSIONS = "<suppressions/>";
+    /**
+     * Output encoding of suppressions.
+     */
+    private final String encoding;
+
+    public SuppressionGenerator(final String encoding) {
+        super();
+        Validate.notEmpty(encoding);
+        this.encoding = encoding;
+    }
 
     /**
      * Generates the report string.
@@ -71,7 +81,7 @@ public class SuppressionGenerator {
     public CheckstyleSuppressions generate(final CheckstyleReport report) {
         Validate.notNull(report);
         final StringBuilder buffer = new StringBuilder();
-        buffer.append(XML_PREAMBLE).append(NL)
+        buffer.append(String.format(XML_PREAMBLE_FORMAT, encoding)).append(NL)
                 .append(XML_DTD).append(NL);
 
         if (report.hasFiles()) {

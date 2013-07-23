@@ -38,13 +38,14 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class ReportProcessor {
 
     /**
-     * Input encoding of report files.
+     * Encoding of the generated suppressions file.
      */
-    private static final String ENCODING = "UTF-8";
+    private static final String OUTPUT_ENCODING = "UTF-8";
+
     /**
      * Used to generate suppressions configuration.
      */
-    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator();
+    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator(OUTPUT_ENCODING);
     /**
      * Handler to intercept SAX parser events.
      */
@@ -53,15 +54,20 @@ public class ReportProcessor {
      * XML reader.
      */
     private final XMLReader xmlReader;
+    /**
+     * Input encoding of report files.
+     */
+    private final String encoding;
 
     /**
      * Dedicated constructor.
      *
      * Set up the XML reader with the SAX handler.
      *
+     * @param encoding must not be {@code null} or empty
      * @throws ApplicationException if creation of XML reader fails
      */
-    public ReportProcessor() throws ApplicationException {
+    public ReportProcessor(final String encoding) throws ApplicationException {
         super();
 
         try {
@@ -72,6 +78,8 @@ public class ReportProcessor {
 
         xmlReader.setContentHandler(handler);
         xmlReader.setErrorHandler(handler);
+        Validate.notEmpty(encoding);
+        this.encoding = encoding;
     }
 
     /**
@@ -97,7 +105,7 @@ public class ReportProcessor {
         Validate.notNull(input);
 
         try (final InputStream inputStream = new FileInputStream(input)) {
-            final Reader reader = new InputStreamReader(inputStream, ENCODING);
+            final Reader reader = new InputStreamReader(inputStream, encoding);
             xmlReader.parse(new InputSource(reader));
         } catch (final IOException ex) {
             throw new ApplicationException(
@@ -140,7 +148,7 @@ public class ReportProcessor {
 //        getIoStreams().println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos))) {
+            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, OUTPUT_ENCODING))) {
                 br.write(suppression.getXmlContent());
                 br.flush();
             }
