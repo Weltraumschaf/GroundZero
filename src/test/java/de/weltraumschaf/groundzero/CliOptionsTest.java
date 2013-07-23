@@ -51,36 +51,48 @@ public class CliOptionsTest {
     public void parse_debugShortOptions() throws ParseException {
         final CliOptions options = setUpSut(new String[]{"-d"});
         assertThat(options.isDebug(), is(true));
+        assertThat(options.isHelp(), is(false));
+        assertThat(options.isVersion(), is(false));
     }
 
     @Test
     public void parse_debugLongOptions() throws ParseException {
         final CliOptions options = setUpSut(new String[]{"--debug"});
         assertThat(options.isDebug(), is(true));
+        assertThat(options.isHelp(), is(false));
+        assertThat(options.isVersion(), is(false));
     }
 
     @Test
     public void parse_helpShortOptions() throws ParseException {
         final CliOptions options = setUpSut(new String[]{"-h"});
         assertThat(options.isHelp(), is(true));
+        assertThat(options.isDebug(), is(false));
+        assertThat(options.isVersion(), is(false));
     }
 
     @Test
     public void parse_helpLongOptions() throws ParseException {
         final CliOptions options = setUpSut(new String[]{"--help"});
         assertThat(options.isHelp(), is(true));
+        assertThat(options.isDebug(), is(false));
+        assertThat(options.isVersion(), is(false));
     }
 
     @Test
     public void parse_versionShortOptions() throws ParseException {
         final CliOptions options = setUpSut(new String[]{"-v"});
         assertThat(options.isVersion(), is(true));
+        assertThat(options.isHelp(), is(false));
+        assertThat(options.isDebug(), is(false));
     }
 
     @Test
     public void parse_versionLongOptions() throws ParseException {
         final CliOptions options = setUpSut(new String[]{"--version"});
         assertThat(options.isVersion(), is(true));
+        assertThat(options.isHelp(), is(false));
+        assertThat(options.isDebug(), is(false));
     }
 
 
@@ -107,5 +119,5 @@ public class CliOptionsTest {
         thrown.expect(MissingArgumentException.class);
         setUpSut(new String[]{"--path-prefix"});
     }
-    
+
 }

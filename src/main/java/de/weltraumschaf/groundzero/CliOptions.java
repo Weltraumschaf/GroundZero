@@ -30,30 +30,31 @@ import org.apache.commons.cli.ParseException;
 class CliOptions {
 
     /**
+     * URI to issue tracker.
+     */
+    static final String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
+    /**
      * Name of the CLI executable.
      */
-    static final String EXECUTABLE = "groundzero";
+    private static final String EXECUTABLE = "groundzero";
     /**
      * Usage header.
      *
      * FIXME Better formatting with newlines.
      */
     static final String HEADER = String.format("%n"
-            + "A tool to generate line based suppression files for Checkstyle.%n%n"
-            + "Parses the Checkstyle report files given as command line argument%n"
-            + "and generates suppression XML configuration files from them. The suppression%n"
-            + "configurations are saved into files in the current working directory. The file%n"
-            + "names are the same as the report filename with the addition of '.suppressions'%n"
-            + "before the '.xml' file extension. So the report file 'foobar.xml' will produce%n"
+            + "A tool to generate line based suppression files for Checkstyle."
+            + "Parses the Checkstyle report files given as command line argument"
+            + "and generates suppression XML configuration files from them. The suppression"
+            + "configurations are saved into files in the current working directory. The file"
+            + "names are the same as the report filename with the addition of '.suppressions'"
+            + "before the '.xml' file extension. So the report file 'foobar.xml' will produce"
             + "a suppression file named 'foobar.suppressions.xml'.");
+    
     /**
      * Author name and email address.
      */
     private static final String AUTHOR = "Sven Strittmatter <weltraumschaf@googlemail.com>";
-    /**
-     * URI to issue tracker.
-     */
-    private static final String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
     /**
      * Usage footer.
      */

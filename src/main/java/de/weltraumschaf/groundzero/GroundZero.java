@@ -11,11 +11,11 @@ package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.ApplicationException;
-import com.google.common.collect.Sets;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
-import java.util.Set;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -30,43 +30,9 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     /**
-     * System dependent new line.
+     * Current command line options.
      */
-    private static final String NL = String.format("%n");
-    /**
-     * Usage string.
-     */
-    private static final String HELP_USAGE = "Usage: groundzero [-h|--help] [-v|--version] [file1 .. fileN]";
-    /**
-     * Tool short description.
-     */
-    private static final String HELP_DESCRIPTION =
-            "A tool to generate line based suppression files for Checkstyle." + NL + NL
-            + "Parses the Checkstyle report files given as command line argument" + NL
-            + "and generates suppression XML configuration files from them. The suppression" + NL
-            + "configurations are saved into files in the current working directory. The file" + NL
-            + "names are the same as the report filename with the addition of '.suppressions'" + NL
-            + "before the '.xml' file extension. So the report file 'foobar.xml' will produce" + NL
-            + "a suppression file named 'foobar.suppressions.xml'.";
-    /**
-     * Options help.
-     */
-    private static final String HELP_OPTIONS =
-            "  -h | --help     Show this help." + NL
-            + "  -v | --version  Show version information";
-    /**
-     * URI to the issue tracker.
-     */
-    private static final String ISSUES_URI = "https://github.com/Weltraumschaf/GroundZero/issues";
-    /**
-     * Footer information for help.
-     */
-    private static final String HELP_FOOTER = "Project site: http://weltraumschaf.github.io/GroundZero/" + NL
-            + "Report bugs here: " + ISSUES_URI;
-    /**
-     * Holds the set of report files to process from CLI arguments.
-     */
-    private final Set<String> reportFiles = Sets.newHashSet();
+    private final CliOptions options;
     /**
      * Processes the report files.
      */
@@ -75,22 +41,24 @@ public class GroundZero extends InvokableAdapter {
      * Version of the application.
      */
     private Version version;
-    /**
-     * Whether to help version message.
-     */
-    private boolean showHelp;
-    /**
-     * Whether to show version message.
-     */
-    private boolean showVersion;
 
     /**
-     * Dedicated constructor.
+     * Initializes object with {@link #DEFAULT_OPTIONS}.
      *
      * @param args command line arguments provided by JVM
      */
     public GroundZero(final String[] args) {
+        this(args, new CliOptions());
+    }
+    /**
+     * Dedicated constructor.
+     *
+     * @param args command line arguments provided by JVM
+     * @param options Command line options
+     */
+    public GroundZero(final String[] args, final CliOptions options) {
         super(args);
+        this.options = options;
     }
 
     /**
@@ -118,16 +86,16 @@ public class GroundZero extends InvokableAdapter {
     @Override
     public void execute() throws Exception {
         Validate.notNull(processor, "The report processor must not be null! "
-                + "This is a serious program bug. Please report it at %s", ISSUES_URI);
+                + "This is a serious program bug. Please report it at %s", CliOptions.ISSUE_TRACKER);
         initializeVersionInformation();
         examineCommandLineOptions();
 
-        if (showHelp) {
+        if (options.isHelp()) {
             showHelpMessage();
             return;
         }
 
-        if (showVersion) {
+        if (options.isVersion()) {
             showVersionMessage();
             return;
         }
@@ -137,29 +105,12 @@ public class GroundZero extends InvokableAdapter {
 
     /**
      * Find the command line arguments.
-     *
-     * Command line arguments are:
-     * <ul>
-     * <li>-h or --help</li>
-     * <li>-v or --version</li>
-     * <li>everything else is treated as file name argument</li>
-     * </ul>
      */
-    private void examineCommandLineOptions() {
-        for (final String option : getArgs()) {
-            switch (option) {
-                case "-h":
-                case "--help":
-                    showHelp = true;
-                    break;
-                case "-v":
-                case "--version":
-                    showVersion = true;
-                    break;
-                default:
-                    reportFiles.add(option);
-                    break;
-            }
+    private void examineCommandLineOptions() throws ApplicationException {
+        try {
+            options.parse(getArgs());
+        } catch (ParseException ex) {
+            throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
         }
     }
 
@@ -167,12 +118,7 @@ public class GroundZero extends InvokableAdapter {
      * Prints help and usage information on STDOUT.
      */
     void showHelpMessage() {
-        final StringBuilder buffer = new StringBuilder();
-        buffer.append(HELP_USAGE).append(NL).append(NL)
-                .append(HELP_DESCRIPTION).append(NL).append(NL)
-                .append(HELP_OPTIONS).append(NL).append(NL)
-                .append(HELP_FOOTER);
-        getIoStreams().println(buffer.toString());
+        options.format(new HelpFormatter(), getIoStreams().getStdout());
     }
 
     /**
@@ -198,16 +144,16 @@ public class GroundZero extends InvokableAdapter {
      * @throws ApplicationException if any I/O or XML parse error occurs
      */
     void processReports() throws ApplicationException {
-        if (reportFiles.isEmpty()) {
+        if (options.hasReportFiles() == false) {
             getIoStreams().println("Nothing to do.");
             return;
         }
 
-        for (final String reportFile : reportFiles) {
+        for (final String reportFile : options.getReportFiles()) {
             processReport(reportFile);
         }
 
-        getIoStreams().println(String.format("All %d reports proccesed.", reportFiles.size()));
+        getIoStreams().println(String.format("All %d reports proccesed.", options.getReportFiles().size()));
     }
 
     /**
