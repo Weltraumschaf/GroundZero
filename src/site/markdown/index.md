@@ -37,5 +37,7 @@ Have fun:
 
     $ ./bin/groundzero -h
 
+See [usage](usage.html) for more detailed example.
+
 [1]: http://checkstyle.sourceforge.net/
 [2]: http://maven.apache.org/
