@@ -172,7 +172,8 @@ public class GroundZero extends InvokableAdapter {
     /**
      * Processes a single report file.
      *
-     * Exits the application with exit code != {@link ExitCodeImpl#OK}, if {@link SAXException} or {@link IOException}
+     * Exits the application with exit code != {@link ExitCodeImpl#OK}, if {@link org.xml.sax.SAXException.SAXException}
+     * or {@link IOException}
      * was thrown.
      *
      * @param reportFile file name of Checkstyle report
