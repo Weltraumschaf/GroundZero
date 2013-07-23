@@ -79,7 +79,7 @@ public class SuppressionGeneratorTest {
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
                 + "<suppressions>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "</suppressions>\n")));
         assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
@@ -116,9 +116,9 @@ public class SuppressionGeneratorTest {
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
                 + "<suppressions>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"14\" columns=\"15\" checks=\"foobar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"14\" columns=\"15\" checks=\"foobar\"/>\n"
                 + "</suppressions>\n")));
         assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
@@ -151,9 +151,9 @@ public class SuppressionGeneratorTest {
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
                 + "<suppressions>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
-                + "    <suppress files=\"Bar\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
-                + "    <suppress files=\"Baz\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Bar\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Baz\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
                 + "</suppressions>\n")));
         assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
@@ -202,15 +202,15 @@ public class SuppressionGeneratorTest {
                 + "\"-//Puppy Crawl//DTD Suppressions 1.1//EN\" "
                 + "\"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\">\n"
                 + "<suppressions>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
-                + "    <suppress files=\"Foo\\.java\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
-                + "    <suppress files=\"Bar\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
-                + "    <suppress files=\"Bar\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
-                + "    <suppress files=\"Bar\\.java\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
-                + "    <suppress files=\"Baz\\.java\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
-                + "    <suppress files=\"Baz\\.java\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
-                + "    <suppress files=\"Baz\\.java\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
+                + "    <suppress files=\"Foo\\.java$\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
+                + "    <suppress files=\"Bar\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Bar\\.java$\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
+                + "    <suppress files=\"Bar\\.java$\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
+                + "    <suppress files=\"Baz\\.java$\" lines=\"23\" columns=\"42\" checks=\"bar\"/>\n"
+                + "    <suppress files=\"Baz\\.java$\" lines=\"11\" columns=\"12\" checks=\"foobar\"/>\n"
+                + "    <suppress files=\"Baz\\.java$\" lines=\"14\" columns=\"15\" checks=\"blub\"/>\n"
                 + "</suppressions>\n")));
         assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }

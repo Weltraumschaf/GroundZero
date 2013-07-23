@@ -38,7 +38,7 @@ public class SuppressionGenerator {
      * Format string for suppress tag.
      */
     private static final String SUPRESS_TAG_FORMAT =
-            "    <suppress files=\"%s\" lines=\"%s\" columns=\"%s\" checks=\"%s\"/>";
+            "    <suppress files=\"%s$\" lines=\"%s\" columns=\"%s\" checks=\"%s\"/>";
     /**
      * XML preamble string.
      */
