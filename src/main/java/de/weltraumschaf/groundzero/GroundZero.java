@@ -105,6 +105,8 @@ public class GroundZero extends InvokableAdapter {
 
     /**
      * Find the command line arguments.
+     *
+     * @throws ApplicationException if command line arguments were not possible to parse
      */
     private void examineCommandLineOptions() throws ApplicationException {
         try {
@@ -145,7 +147,7 @@ public class GroundZero extends InvokableAdapter {
      * @throws ApplicationException if any I/O or XML parse error occurs
      */
     void processReports() throws ApplicationException {
-        if (options.hasReportFiles() == false) {
+        if (!options.hasReportFiles()) {
             getIoStreams().println("Nothing to do.");
             return;
         }

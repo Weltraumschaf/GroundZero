@@ -66,6 +66,11 @@ public class SuppressionGenerator {
      */
     private final String encoding;
 
+    /**
+     * Dedicated constructor.
+     *
+     * @param encoding file output encoding, must not be {@code null} or empty
+     */
     public SuppressionGenerator(final String encoding) {
         super();
         Validate.notEmpty(encoding);

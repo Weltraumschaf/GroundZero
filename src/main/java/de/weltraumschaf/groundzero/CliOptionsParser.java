@@ -15,6 +15,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Parses the command line arguments.
@@ -95,9 +96,11 @@ final class CliOptionsParser {
     /**
      * Determines if path prefix option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd Parsed command line.
+     * @param cmd {@code must not be null}
      */
     private void optPathPrefix(final CommandLine cmd) {
+        Validate.notNull(cmd);
+
         if (cmd.hasOption(OPT_PATH_PREFIX)) {
             options.setPathPrefix(cmd.getOptionValue(OPT_PATH_PREFIX));
         } else if (cmd.hasOption(OPT_PATH_PREFIX_LONG)) {
@@ -108,9 +111,11 @@ final class CliOptionsParser {
     /**
      * Determines if debug option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd Parsed command line.
+     * @param cmd {@code must not be null}
      */
     private void optDebug(final CommandLine cmd) {
+        Validate.notNull(cmd);
+
         if (cmd.hasOption(OPT_DEBUG) || cmd.hasOption(OPT_DEBUG_LONG)) {
             options.setDebug(true);
         }
@@ -119,9 +124,10 @@ final class CliOptionsParser {
     /**
      * Determines if help option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd Parsed command line.
+     * @param cmd {@code must not be null}
      */
     private void optHelp(final CommandLine cmd) {
+        Validate.notNull(cmd);
         if (cmd.hasOption(OPT_HELP) || cmd.hasOption(OPT_HELP_LONG)) {
             options.setHelp(true);
         }
@@ -130,15 +136,24 @@ final class CliOptionsParser {
     /**
      * Determines if version option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd Parsed command line.
+     * @param cmd {@code must not be null}
      */
     private void optVersion(final CommandLine cmd) {
+        Validate.notNull(cmd);
+
         if (cmd.hasOption(OPT_VERSION) || cmd.hasOption(OPT_VERSION_LONG)) {
             options.setVersion(true);
         }
     }
 
+    /**
+     * Set all left-over non-recognized options and arguments as file names to reports.
+     *
+     * @param cmd {@code must not be null}
+     */
     private void reportFileArguments(final CommandLine cmd) {
+        Validate.notNull(cmd);
+
         options.setReportFiles(cmd.getArgList());
     }
 

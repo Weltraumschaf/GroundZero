@@ -40,6 +40,9 @@ public enum ExitCodeImpl implements ExitCode {
      * Can not create a SAX XML reader.
      */
     XML_CANT_CREATE_READER(4),
+    /**
+     * Bad command line arguments were given by user.
+     */
     BAD_ARGUMENTS(5),
     /**
      * Unspecified fatal error occurred.

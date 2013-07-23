@@ -151,7 +151,7 @@ class CliOptions {
      * @return {@code true} if {@link #getReportFiles()} is not empty, else {@code false}
      */
     public boolean hasReportFiles() {
-        return reportFiles.isEmpty() == false;
+        return !reportFiles.isEmpty();
     }
 
     /**
