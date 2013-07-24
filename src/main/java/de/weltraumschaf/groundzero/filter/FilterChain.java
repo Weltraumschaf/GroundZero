@@ -35,7 +35,7 @@ public class FilterChain<T> implements Filter<T> {
     @Override
     public T process(final T input) {
         Validate.notNull(input);
-        
+
         if (filters.isEmpty()) {
             return input;
         }

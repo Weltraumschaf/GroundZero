@@ -26,6 +26,8 @@ import org.apache.commons.lang3.Validate;
  * Set up an {@link Options parser configuration} and provides it and also works as 
  * configuration value object.
  *
+ * TODO Split options config and options value in two seperate objects.
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 class CliOptions {

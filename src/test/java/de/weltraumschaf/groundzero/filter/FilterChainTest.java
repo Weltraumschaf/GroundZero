@@ -14,7 +14,7 @@ package de.weltraumschaf.groundzero.filter;
 
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;import org.junit.Ignore;
+import static org.hamcrest.Matchers.*;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
