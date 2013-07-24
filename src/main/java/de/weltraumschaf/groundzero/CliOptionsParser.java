@@ -151,9 +151,9 @@ final class CliOptionsParser {
      *
      * @param cmd {@code must not be null}
      */
+    @SuppressWarnings("unchecked") // Commons CLI uses no generics.
     private void reportFileArguments(final CommandLine cmd) {
         Validate.notNull(cmd);
-
         options.setReportFiles(cmd.getArgList());
     }
 
