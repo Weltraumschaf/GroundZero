@@ -30,9 +30,15 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     /**
-     * Current command line options.
+     * Configured command line options.
      */
-    private final CliOptions options;
+    private final CliOptionsConfiguration cliOptionsConfiguration = new CliOptionsConfiguration();
+    /**
+     * Current command line options.
+     * 
+     * Initialized with default object.
+     */
+    private CliOptions options = new CliOptions();
     /**
      * Processes the report files.
      */
@@ -43,22 +49,12 @@ public class GroundZero extends InvokableAdapter {
     private Version version;
 
     /**
-     * Initializes object with {@link CliOptions default CLI option}.
+     * Dedicated constructor.
      *
      * @param args command line arguments provided by JVM
      */
     public GroundZero(final String[] args) {
-        this(args, new CliOptions());
-    }
-    /**
-     * Dedicated constructor.
-     *
-     * @param args command line arguments provided by JVM
-     * @param options Command line options
-     */
-    public GroundZero(final String[] args, final CliOptions options) {
         super(args);
-        this.options = options;
     }
 
     /**
@@ -86,7 +82,7 @@ public class GroundZero extends InvokableAdapter {
     @Override
     public void execute() throws Exception {
         Validate.notNull(processor, "The report processor must not be null! "
-                + "This is a serious program bug. Please report it at %s", CliOptions.ISSUE_TRACKER);
+                + "This is a serious program bug. Please report it at %s", CliOptionsConfiguration.ISSUE_TRACKER);
         initializeVersionInformation();
         examineCommandLineOptions();
 
@@ -110,8 +106,8 @@ public class GroundZero extends InvokableAdapter {
      */
     private void examineCommandLineOptions() throws ApplicationException {
         try {
-            final CliOptionsParser parser = new CliOptionsParser(options);
-            parser.parse(getArgs());
+            final CliOptionsParser parser = new CliOptionsParser(cliOptionsConfiguration);
+            options = parser.parse(getArgs());
         } catch (ParseException ex) {
             throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
         }
@@ -121,7 +117,7 @@ public class GroundZero extends InvokableAdapter {
      * Prints help and usage information on STDOUT.
      */
     void showHelpMessage() {
-        options.format(new HelpFormatter(), getIoStreams().getStdout());
+        cliOptionsConfiguration.format(new HelpFormatter(), getIoStreams().getStdout());
     }
 
     /**

@@ -32,9 +32,8 @@ public class CliOptionsParserTest {
 
     private CliOptions setUpSut(final String[] args) throws ParseException {
         final CliOptions options = new CliOptions();
-        final CliOptionsParser parser = new CliOptionsParser(options);
-        parser.parse(args);
-        return options;
+        final CliOptionsParser parser = new CliOptionsParser(new CliOptionsConfiguration());
+        return parser.parse(args);
     }
 
     @Test
