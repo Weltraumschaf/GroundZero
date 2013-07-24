@@ -43,7 +43,7 @@ public class GroundZero extends InvokableAdapter {
     private Version version;
 
     /**
-     * Initializes object with {@link #DEFAULT_OPTIONS}.
+     * Initializes object with {@link CliOptions default CLI option}.
      *
      * @param args command line arguments provided by JVM
      */

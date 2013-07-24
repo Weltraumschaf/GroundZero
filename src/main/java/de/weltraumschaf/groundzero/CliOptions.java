@@ -23,8 +23,8 @@ import org.apache.commons.lang3.Validate;
 /**
  * Available command line arguments.
  *
- * Set up an {@link Option parser configuration} and provides it and also works as configuration
- * value object.
+ * Set up an {@link Options parser configuration} and provides it and also works as 
+ * configuration value object.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
