@@ -11,22 +11,12 @@
  */
 package de.weltraumschaf.groundzero;
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Collections;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.Validate;
 
 /**
- * Available command line arguments.
- *
- * Set up an {@link Options parser configuration} and provides it and also works as 
- * configuration value object.
- *
- * TODO Split options config and options value in two seperate objects.
+ * Holds the given command line arguments.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
