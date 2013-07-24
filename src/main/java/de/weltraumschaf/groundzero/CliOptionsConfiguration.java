@@ -24,6 +24,45 @@ import org.apache.commons.cli.Options;
  */
 final class CliOptionsConfiguration {
     /**
+     * Short option for path prefix.
+     */
+    static final String OPT_PATH_PREFIX = "p";
+
+    /**
+     * Short option to enable debug output.
+     */
+    static final String OPT_DEBUG = "d";
+
+    /**
+     * Short option for help message.
+     */
+    static final String OPT_HELP = "h";
+
+    /**
+     * Short option to show the version.
+     */
+    static final String OPT_VERSION = "v";
+    /**
+     * Long option for path prefix.
+     */
+    static final String OPT_PATH_PREFIX_LONG = "path-prefix";
+
+    /**
+     * Long option to enable debug output.
+     */
+    static final String OPT_DEBUG_LONG = "debug";
+
+    /**
+     * Long option for help message.
+     */
+    static final String OPT_HELP_LONG = "help";
+
+    /**
+     * Long option to show the version.
+     */
+    static final String OPT_VERSION_LONG = "version";
+    
+    /**
      * URI to issue tracker.
      */
     static final String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
@@ -65,13 +104,13 @@ final class CliOptionsConfiguration {
         OptionBuilder.withDescription("Prefix to strip from checked file paths.");
         OptionBuilder.withArgName("path");
         OptionBuilder.hasArg();
-        OptionBuilder.withLongOpt(CliOptionsParser.OPT_PATH_PREFIX_LONG);
-        options.addOption(OptionBuilder.create(CliOptionsParser.OPT_PATH_PREFIX));
+        OptionBuilder.withLongOpt(OPT_PATH_PREFIX_LONG);
+        options.addOption(OptionBuilder.create(OPT_PATH_PREFIX));
 
         // w/o argument
-        options.addOption(CliOptionsParser.OPT_DEBUG, CliOptionsParser.OPT_DEBUG_LONG, false, "Enables debug output.");
-        options.addOption(CliOptionsParser.OPT_HELP, CliOptionsParser.OPT_HELP_LONG, false, "This help.");
-        options.addOption(CliOptionsParser.OPT_VERSION, CliOptionsParser.OPT_VERSION_LONG, false,
+        options.addOption(OPT_DEBUG, OPT_DEBUG_LONG, false, "Enables debug output.");
+        options.addOption(OPT_HELP, OPT_HELP_LONG, false, "This help.");
+        options.addOption(OPT_VERSION, OPT_VERSION_LONG, false,
                 "Show version information.");
     }
     

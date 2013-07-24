@@ -25,45 +25,6 @@ import org.apache.commons.lang3.Validate;
 final class CliOptionsParser {
 
     /**
-     * Short option for path prefix.
-     */
-    public static final String OPT_PATH_PREFIX = "p";
-
-    /**
-     * Short option to enable debug output.
-     */
-    public static final String OPT_DEBUG = "d";
-
-    /**
-     * Short option for help message.
-     */
-    public static final String OPT_HELP = "h";
-
-    /**
-     * Short option to show the version.
-     */
-    public static final String OPT_VERSION = "v";
-    /**
-     * Long option for path prefix.
-     */
-    public static final String OPT_PATH_PREFIX_LONG = "path-prefix";
-
-    /**
-     * Long option to enable debug output.
-     */
-    public static final String OPT_DEBUG_LONG = "debug";
-
-    /**
-     * Long option for help message.
-     */
-    public static final String OPT_HELP_LONG = "help";
-
-    /**
-     * Long option to show the version.
-     */
-    public static final String OPT_VERSION_LONG = "version";
-
-    /**
      * The parsed and found options.
      */
     private final CliOptionsConfiguration config;
@@ -103,10 +64,10 @@ final class CliOptionsParser {
     private void optPathPrefix(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
 
-        if (cmd.hasOption(OPT_PATH_PREFIX)) {
-            options.setPathPrefix(cmd.getOptionValue(OPT_PATH_PREFIX));
-        } else if (cmd.hasOption(OPT_PATH_PREFIX_LONG)) {
-            options.setPathPrefix(cmd.getOptionValue(OPT_PATH_PREFIX_LONG));
+        if (cmd.hasOption(CliOptionsConfiguration.OPT_PATH_PREFIX)) {
+            options.setPathPrefix(cmd.getOptionValue(CliOptionsConfiguration.OPT_PATH_PREFIX));
+        } else if (cmd.hasOption(CliOptionsConfiguration.OPT_PATH_PREFIX_LONG)) {
+            options.setPathPrefix(cmd.getOptionValue(CliOptionsConfiguration.OPT_PATH_PREFIX_LONG));
         }
     }
 
@@ -118,7 +79,8 @@ final class CliOptionsParser {
     private void optDebug(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
 
-        if (cmd.hasOption(OPT_DEBUG) || cmd.hasOption(OPT_DEBUG_LONG)) {
+        if (cmd.hasOption(CliOptionsConfiguration.OPT_DEBUG) || 
+            cmd.hasOption(CliOptionsConfiguration.OPT_DEBUG_LONG)) {
             options.setDebug(true);
         }
     }
@@ -130,7 +92,7 @@ final class CliOptionsParser {
      */
     private void optHelp(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
-        if (cmd.hasOption(OPT_HELP) || cmd.hasOption(OPT_HELP_LONG)) {
+        if (cmd.hasOption(CliOptionsConfiguration.OPT_HELP) || cmd.hasOption(CliOptionsConfiguration.OPT_HELP_LONG)) {
             options.setHelp(true);
         }
     }
@@ -143,7 +105,8 @@ final class CliOptionsParser {
     private void optVersion(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
 
-        if (cmd.hasOption(OPT_VERSION) || cmd.hasOption(OPT_VERSION_LONG)) {
+        if (cmd.hasOption(CliOptionsConfiguration.OPT_VERSION) || 
+            cmd.hasOption(CliOptionsConfiguration.OPT_VERSION_LONG)) {
             options.setVersion(true);
         }
     }
