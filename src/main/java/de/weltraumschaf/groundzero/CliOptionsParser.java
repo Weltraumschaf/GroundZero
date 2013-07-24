@@ -16,6 +16,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.lang3.Validate;
+import static de.weltraumschaf.groundzero.CliOptionsConfiguration.Option.*;
 
 /**
  * Parses the command line arguments.
@@ -64,10 +65,10 @@ final class CliOptionsParser {
     private void optPathPrefix(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
 
-        if (cmd.hasOption(CliOptionsConfiguration.OPT_PATH_PREFIX)) {
-            options.setPathPrefix(cmd.getOptionValue(CliOptionsConfiguration.OPT_PATH_PREFIX));
-        } else if (cmd.hasOption(CliOptionsConfiguration.OPT_PATH_PREFIX_LONG)) {
-            options.setPathPrefix(cmd.getOptionValue(CliOptionsConfiguration.OPT_PATH_PREFIX_LONG));
+        if (cmd.hasOption(PATH_PREFIX.getLongOption())) {
+            options.setPathPrefix(cmd.getOptionValue(PATH_PREFIX.getLongOption()));
+        } else if (cmd.hasOption(PATH_PREFIX.getShortOption())) {
+            options.setPathPrefix(cmd.getOptionValue(PATH_PREFIX.getShortOption()));
         }
     }
 
@@ -79,8 +80,7 @@ final class CliOptionsParser {
     private void optDebug(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
 
-        if (cmd.hasOption(CliOptionsConfiguration.OPT_DEBUG) || 
-            cmd.hasOption(CliOptionsConfiguration.OPT_DEBUG_LONG)) {
+        if (cmd.hasOption(DEBUG.getShortOption()) || cmd.hasOption(DEBUG.getLongOption())) {
             options.setDebug(true);
         }
     }
@@ -92,7 +92,7 @@ final class CliOptionsParser {
      */
     private void optHelp(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
-        if (cmd.hasOption(CliOptionsConfiguration.OPT_HELP) || cmd.hasOption(CliOptionsConfiguration.OPT_HELP_LONG)) {
+        if (cmd.hasOption(HELP.getShortOption()) || cmd.hasOption(HELP.getLongOption())) {
             options.setHelp(true);
         }
     }
@@ -105,8 +105,7 @@ final class CliOptionsParser {
     private void optVersion(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
 
-        if (cmd.hasOption(CliOptionsConfiguration.OPT_VERSION) || 
-            cmd.hasOption(CliOptionsConfiguration.OPT_VERSION_LONG)) {
+        if (cmd.hasOption(VERSION.getShortOption()) || cmd.hasOption(VERSION.getLongOption())) {
             options.setVersion(true);
         }
     }

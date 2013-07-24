@@ -16,52 +16,15 @@ import java.io.PrintWriter;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Configuration for {@link CliOptionsParser options parser}.
- * 
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 final class CliOptionsConfiguration {
-    /**
-     * Short option for path prefix.
-     */
-    static final String OPT_PATH_PREFIX = "p";
 
-    /**
-     * Short option to enable debug output.
-     */
-    static final String OPT_DEBUG = "d";
-
-    /**
-     * Short option for help message.
-     */
-    static final String OPT_HELP = "h";
-
-    /**
-     * Short option to show the version.
-     */
-    static final String OPT_VERSION = "v";
-    /**
-     * Long option for path prefix.
-     */
-    static final String OPT_PATH_PREFIX_LONG = "path-prefix";
-
-    /**
-     * Long option to enable debug output.
-     */
-    static final String OPT_DEBUG_LONG = "debug";
-
-    /**
-     * Long option for help message.
-     */
-    static final String OPT_HELP_LONG = "help";
-
-    /**
-     * Long option to show the version.
-     */
-    static final String OPT_VERSION_LONG = "version";
-    
     /**
      * URI to issue tracker.
      */
@@ -97,23 +60,37 @@ final class CliOptionsConfiguration {
      * Options configuration.
      */
     private final Options options = new Options();
-    
+
+    /**
+     * Initializes {@link #options} with all information the options parser needs.
+     */
     public CliOptionsConfiguration() {
         super();
         // w/ argument
-        OptionBuilder.withDescription("Prefix to strip from checked file paths.");
+        OptionBuilder.withDescription(Option.PATH_PREFIX.getDescription());
         OptionBuilder.withArgName("path");
         OptionBuilder.hasArg();
-        OptionBuilder.withLongOpt(OPT_PATH_PREFIX_LONG);
-        options.addOption(OptionBuilder.create(OPT_PATH_PREFIX));
+        OptionBuilder.withLongOpt(Option.PATH_PREFIX.getLongOption());
+        options.addOption(OptionBuilder.create(Option.PATH_PREFIX.getShortOption()));
 
         // w/o argument
-        options.addOption(OPT_DEBUG, OPT_DEBUG_LONG, false, "Enables debug output.");
-        options.addOption(OPT_HELP, OPT_HELP_LONG, false, "This help.");
-        options.addOption(OPT_VERSION, OPT_VERSION_LONG, false,
-                "Show version information.");
+        options.addOption(
+                Option.DEBUG.getShortOption(),
+                Option.DEBUG.getLongOption(),
+                false,
+                Option.DEBUG.getDescription());
+        options.addOption(
+                Option.HELP.getShortOption(),
+                Option.HELP.getLongOption(),
+                false,
+                Option.HELP.getDescription());
+        options.addOption(
+                Option.VERSION.getShortOption(),
+                Option.VERSION.getLongOption(),
+                false,
+                Option.VERSION.getDescription());
     }
-    
+
     /**
      * Get the configured options.
      *
@@ -146,4 +123,68 @@ final class CliOptionsConfiguration {
         writer.flush();
     }
 
+    /**
+     * Enumerates all available CLI options.
+     */
+    static enum Option {
+        /** Path prefix option. */
+        PATH_PREFIX("p", "path-prefix", "Prefix to strip from checked file paths."),
+        /** Debug option. */
+        DEBUG("d", "debug", "Enables debug output."),
+        /** Help option. */
+        HELP("h", "help", "This help."),
+        /** Version option. */
+        VERSION("v", "version", "Show version information.");
+
+        /** Short option w/o preceding -. */
+        private final String shortOption;
+        /** Long option w/o preceding --. */
+        private final String longOption;
+        /** Description text. */
+        private final String description;
+
+        /**
+         * Dedicated constructor.
+         *
+         * @param shortOption must not be {@code null} or empty
+         * @param longOption must not be {@code null} or empty
+         * @param description must not be {@code null} or empty
+         */
+        private Option(final String shortOption, final String longOption, final String description) {
+            Validate.notEmpty(shortOption, "Parameter shortOption must not be null or empty!");
+            Validate.notEmpty(longOption, "Parameter longOption must not be null or empty!");
+            Validate.notEmpty(description, "Parameter description must not be null or empty!");
+            this.shortOption = shortOption;
+            this.longOption = longOption;
+            this.description = description;
+        }
+
+        /**
+         * Get short option.
+         *
+         * @return never {@code null} or empty
+         */
+        public String getShortOption() {
+            return shortOption;
+        }
+
+        /**
+         * Get long option.
+         *
+         * @return never {@code null} or empty
+         */
+        public String getLongOption() {
+            return longOption;
+        }
+
+        /**
+         * Get description.
+         *
+         * @return never {@code null} or empty
+         */
+        public String getDescription() {
+            return description;
+        }
+
+    }
 }
