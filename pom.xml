@@ -295,6 +295,7 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
             <plugin>
