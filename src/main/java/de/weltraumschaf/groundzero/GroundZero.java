@@ -35,7 +35,7 @@ public class GroundZero extends InvokableAdapter {
     private final CliOptionsConfiguration cliOptionsConfiguration = new CliOptionsConfiguration();
     /**
      * Current command line options.
-     * 
+     *
      * Initialized with default object.
      */
     private CliOptions options = new CliOptions();
