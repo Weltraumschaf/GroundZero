@@ -24,7 +24,6 @@ import static org.junit.Assert.assertThat;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
-import org.mockito.Mockito;
 import org.xml.sax.SAXException;
 
 /**
