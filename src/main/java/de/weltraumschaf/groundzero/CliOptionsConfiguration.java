@@ -36,7 +36,7 @@ final class CliOptionsConfiguration {
     /**
      * Usage header.
      *
-     * FIXME Better formatting with newlines.
+     * TODO Better formatting with newlines.
      */
     private static final String HEADER = String.format("%n"
             + "A tool to generate line based suppression files for Checkstyle."
