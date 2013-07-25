@@ -29,27 +29,11 @@ public class CliOptionsParserTest {
     //CHECKSTYLE:OFF Must be public for JUnit's sake.
     @Rule public final ExpectedException thrown = ExpectedException.none();
     //CHECKSTYLE:ON
-
-    private CliOptions setUpSut(final String[] args) throws ParseException {
-        final CliOptions options = new CliOptions();
-        final CliOptionsParser parser = new CliOptionsParser(new CliOptionsConfiguration());
-        return parser.parse(args);
-    }
-
-    @Test
-    public void defaults() {
-        final CliOptions options = new CliOptions();
-        assertThat(options.isDebug(), is(false));
-        assertThat(options.isHelp(), is(false));
-        assertThat(options.isVersion(), is(false));
-        assertThat(options.hasReportFiles(), is(false));
-        assertThat(options.getReportFiles(), hasSize(0));
-        assertThat(options.getPathPrefix(), is(equalTo("")));
-    }
+    private final CliOptionsParser sut = new CliOptionsParser(new CliOptionsConfiguration());
 
     @Test
     public void parse_debugShortOptions() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"-d"});
+        final CliOptions options = sut.parse(new String[]{"-d"});
         assertThat(options.isDebug(), is(true));
         assertThat(options.isHelp(), is(false));
         assertThat(options.isVersion(), is(false));
@@ -57,7 +41,7 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_debugLongOptions() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"--debug"});
+        final CliOptions options = sut.parse(new String[]{"--debug"});
         assertThat(options.isDebug(), is(true));
         assertThat(options.isHelp(), is(false));
         assertThat(options.isVersion(), is(false));
@@ -65,7 +49,7 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_helpShortOptions() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"-h"});
+        final CliOptions options = sut.parse(new String[]{"-h"});
         assertThat(options.isHelp(), is(true));
         assertThat(options.isDebug(), is(false));
         assertThat(options.isVersion(), is(false));
@@ -73,7 +57,7 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_helpLongOptions() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"--help"});
+        final CliOptions options = sut.parse(new String[]{"--help"});
         assertThat(options.isHelp(), is(true));
         assertThat(options.isDebug(), is(false));
         assertThat(options.isVersion(), is(false));
@@ -81,7 +65,7 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_versionShortOptions() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"-v"});
+        final CliOptions options = sut.parse(new String[]{"-v"});
         assertThat(options.isVersion(), is(true));
         assertThat(options.isHelp(), is(false));
         assertThat(options.isDebug(), is(false));
@@ -89,7 +73,7 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_versionLongOptions() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"--version"});
+        final CliOptions options = sut.parse(new String[]{"--version"});
         assertThat(options.isVersion(), is(true));
         assertThat(options.isHelp(), is(false));
         assertThat(options.isDebug(), is(false));
@@ -98,26 +82,26 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_pathPrefixShortOptionWithArg() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"-p", "foo"});
+        final CliOptions options = sut.parse(new String[]{"-p", "foo"});
         assertThat(options.getPathPrefix(), is(equalTo("foo")));
     }
 
     @Test
     public void parse_pathPrefixShortOptionWithNoArg() throws ParseException {
         thrown.expect(MissingArgumentException.class);
-        setUpSut(new String[]{"-p"});
+        sut.parse(new String[]{"-p"});
     }
 
     @Test
     public void parse_pathPrefixLongOptionWithArg() throws ParseException {
-        final CliOptions options = setUpSut(new String[]{"--path-prefix", "foo"});
+        final CliOptions options = sut.parse(new String[]{"--path-prefix", "foo"});
         assertThat(options.getPathPrefix(), is(equalTo("foo")));
     }
 
     @Test
     public void parse_pathPrefixLongOptionWithNoArg() throws ParseException {
         thrown.expect(MissingArgumentException.class);
-        setUpSut(new String[]{"--path-prefix"});
+        sut.parse(new String[]{"--path-prefix"});
     }
 
 }
