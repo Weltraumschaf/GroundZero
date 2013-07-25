@@ -65,6 +65,9 @@ public class ReportProcessor {
      * Input encoding of report files.
      */
     private String encoding = DEFAULT_ENCODING;
+    /**
+     * PAth prefix to strip from reported file names.
+     */
     private String pathPrefix = "";
 
     /**
@@ -72,7 +75,6 @@ public class ReportProcessor {
      *
      * Set up the XML reader with the SAX handler.
      *
-     * @param encoding must not be {@code null} or empty
      * @throws ApplicationException if creation of XML reader fails
      */
     public ReportProcessor() throws ApplicationException {
@@ -199,6 +201,11 @@ public class ReportProcessor {
         this.io = io;
     }
 
+    /**
+     * Set the path prefix to strip from reported file names.
+     *
+     * @param pathPrefix must not be {@code null}
+     */
     public void setPathPrefix(final String pathPrefix) {
         Validate.notNull(pathPrefix);
         this.pathPrefix = pathPrefix;
