@@ -40,10 +40,11 @@ final class CliOptionsParser {
     }
 
     /**
-     * PArses the given command line arguments strings.
+     * Parses the given command line arguments strings.
      *
-     * @param args Array of argument strings.
-     * @throws ParseException On parse errors.
+     * @param args Array of argument strings
+     * @return never {@code null}
+     * @throws ParseException On parse errors
      */
     public CliOptions parse(final String[] args) throws ParseException {
         final CommandLineParser parser = new PosixParser();
@@ -60,10 +61,12 @@ final class CliOptionsParser {
     /**
      * Determines if path prefix option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd {@code must not be null}
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
      */
     private void optPathPrefix(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
+        Validate.notNull(options);
 
         if (cmd.hasOption(PATH_PREFIX.getLongOption())) {
             options.setPathPrefix(cmd.getOptionValue(PATH_PREFIX.getLongOption()));
@@ -75,10 +78,12 @@ final class CliOptionsParser {
     /**
      * Determines if debug option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd {@code must not be null}
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
      */
     private void optDebug(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
+        Validate.notNull(options);
 
         if (cmd.hasOption(DEBUG.getShortOption()) || cmd.hasOption(DEBUG.getLongOption())) {
             options.setDebug(true);
@@ -88,10 +93,13 @@ final class CliOptionsParser {
     /**
      * Determines if help option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd {@code must not be null}
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
      */
     private void optHelp(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
+        Validate.notNull(options);
+
         if (cmd.hasOption(HELP.getShortOption()) || cmd.hasOption(HELP.getLongOption())) {
             options.setHelp(true);
         }
@@ -100,10 +108,12 @@ final class CliOptionsParser {
     /**
      * Determines if version option is set and prepares the {@link CliOptions "options"} object.
      *
-     * @param cmd {@code must not be null}
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
      */
     private void optVersion(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
+        Validate.notNull(options);
 
         if (cmd.hasOption(VERSION.getShortOption()) || cmd.hasOption(VERSION.getLongOption())) {
             options.setVersion(true);
@@ -113,11 +123,13 @@ final class CliOptionsParser {
     /**
      * Set all left-over non-recognized options and arguments as file names to reports.
      *
-     * @param cmd {@code must not be null}
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
      */
     @SuppressWarnings("unchecked") // Commons CLI uses no generics.
     private void reportFileArguments(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
+        Validate.notNull(options);
         options.setReportFiles(cmd.getArgList());
     }
 
