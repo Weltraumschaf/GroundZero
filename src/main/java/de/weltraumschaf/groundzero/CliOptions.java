@@ -46,13 +46,6 @@ class CliOptions {
     private Collection<String> reportFiles = Collections.emptyList();
 
     /**
-     * Configures the {@link #options parse options}.
-     */
-    public CliOptions() {
-        super();
-    }
-
-    /**
      * Set path prefix option.
      *
      * @param pathPrefix must not be {@code null}
