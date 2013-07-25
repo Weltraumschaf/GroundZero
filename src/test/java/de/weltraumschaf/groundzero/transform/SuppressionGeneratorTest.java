@@ -29,7 +29,8 @@ import org.junit.rules.ExpectedException;
 public class SuppressionGeneratorTest {
 
     // CHECKSTYLE:OFF Must be public for JUnit.
-    @Rule public final ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
     // CHECKSTYLE:ON
     private final SuppressionGenerator sut = new SuppressionGenerator("UTF-8");
 
@@ -41,6 +42,9 @@ public class SuppressionGeneratorTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void generate_throwsExceptionIfNullPassedIn() {
         thrown.expect(NullPointerException.class);
         sut.generate(null);
@@ -220,5 +224,4 @@ public class SuppressionGeneratorTest {
         assertThat(SuppressionGenerator.extendFileName("foo.xml", ".suppressions"),
                 is(equalTo("foo.suppressions.xml")));
     }
-
 }
