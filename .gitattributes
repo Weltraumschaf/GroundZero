@@ -1,0 +1,21 @@
+* text=auto
+*.java diff=java
+
+#
+# The above will handle all files NOT found below
+#
+# These files are text and should be normalized (Convert crlf => lf)
+*.java text
+*.xml text
+*.txt text
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.jar binary -delta
+*.so binary -delta
+*.dll binary -delta
+*.zip binary -delta
+*.tar.gz binary -delta
+*.tar.bz2 binary -delta
+*.jpg binary -delta
+*.png binary -delta
