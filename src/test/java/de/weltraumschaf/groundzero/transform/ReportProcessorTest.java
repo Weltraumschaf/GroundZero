@@ -33,10 +33,11 @@ import static org.mockito.Mockito.*;
  */
 public class ReportProcessorTest {
 
-    private final ReportProcessor sut = new ReportProcessor("UTF-8", mock(IO.class));
+    private final ReportProcessor sut = new ReportProcessor();
 
     public ReportProcessorTest() throws ApplicationException {
         super();
+        sut.setIo(mock(IO.class));
     }
 
     @Test

@@ -28,7 +28,7 @@ final class CliOptionsConfiguration {
     /**
      * URI to issue tracker.
      */
-    static final String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
+    private static final String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
     /**
      * Name of the CLI executable.
      */
@@ -68,10 +68,15 @@ final class CliOptionsConfiguration {
         super();
         // w/ argument
         OptionBuilder.withDescription(Option.PATH_PREFIX.getDescription());
-        OptionBuilder.withArgName("path");
+        OptionBuilder.withArgName("PATH");
         OptionBuilder.hasArg();
         OptionBuilder.withLongOpt(Option.PATH_PREFIX.getLongOption());
         options.addOption(OptionBuilder.create(Option.PATH_PREFIX.getShortOption()));
+        OptionBuilder.withDescription(Option.INPUT_ENCODING.getDescription());
+        OptionBuilder.withArgName("ENCODING");
+        OptionBuilder.hasArg();
+        OptionBuilder.withLongOpt(Option.INPUT_ENCODING.getLongOption());
+        options.addOption(OptionBuilder.create(Option.INPUT_ENCODING.getShortOption()));
 
         // w/o argument
         options.addOption(
@@ -134,7 +139,9 @@ final class CliOptionsConfiguration {
         /** Help option. */
         HELP("h", "help", "This help."),
         /** Version option. */
-        VERSION("v", "version", "Show version information.");
+        VERSION("v", "version", "Show version information."),
+        /** File input encoding. */
+        INPUT_ENCODING("i", "input-encoding", "Input encoding of the report files.");
 
         /** Short option w/o preceding -. */
         private final String shortOption;

@@ -52,9 +52,11 @@ public class GroundZero extends InvokableAdapter {
      * Dedicated constructor.
      *
      * @param args command line arguments provided by JVM
+     * @throws ApplicationException if {@link #processor} can't be instantiated
      */
-    public GroundZero(final String[] args) {
+    public GroundZero(final String[] args) throws ApplicationException {
         super(args);
+        processor = new ReportProcessor();
     }
 
     /**
@@ -80,9 +82,6 @@ public class GroundZero extends InvokableAdapter {
 
     @Override
     public void execute() throws Exception {
-        Validate.notNull(processor, "The report processor must not be null! "
-                + "This is a serious program bug. Please report it at %s", CliOptionsConfiguration.ISSUE_TRACKER);
-        initializeVersionInformation();
         examineCommandLineOptions();
 
         if (options.isHelp()) {
@@ -91,11 +90,11 @@ public class GroundZero extends InvokableAdapter {
         }
 
         if (options.isVersion()) {
+            initializeVersionInformation();
             showVersionMessage();
             return;
         }
 
-        setProcessor(new ReportProcessor(options.getInputEncoding(), getIoStreams())); // FIXME Make input encoding a CLI option
         processReports();
     }
 
@@ -147,6 +146,9 @@ public class GroundZero extends InvokableAdapter {
             getIoStreams().println("Nothing to do.");
             return;
         }
+
+        processor.setEncoding(options.getInputEncoding());
+        processor.setIo(getIoStreams());
 
         for (final String reportFile : options.getReportFiles()) {
             processReport(reportFile);

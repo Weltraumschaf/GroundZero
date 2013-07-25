@@ -11,6 +11,7 @@
  */
 package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.CapturingOutputStream;
 import de.weltraumschaf.commons.IOStreams;
@@ -47,11 +48,11 @@ public class GroundZeroTest {
         super();
     }
 
-    private GroundZero createSut() {
+    private GroundZero createSut() throws ApplicationException {
         return createSut(new String[]{});
     }
 
-    private GroundZero createSut(final String[] args) {
+    private GroundZero createSut(final String[] args) throws ApplicationException {
         final GroundZero sut = new GroundZero(args);
         sut.setIoStreams(io);
         sut.setProcessor(processor);
@@ -65,6 +66,7 @@ public class GroundZeroTest {
         sut.execute();
         verify(sut, times(1)).showHelpMessage();
         verify(processor, never()).process(anyString());
+        verify(sut, never()).initializeVersionInformation();
         verify(sut, never()).showVersionMessage();
     }
 
@@ -74,6 +76,7 @@ public class GroundZeroTest {
         sut.execute();
         verify(processor, never()).process(anyString());
         verify(sut, times(1)).showHelpMessage();
+        verify(sut, never()).initializeVersionInformation();
         verify(sut, never()).showVersionMessage();
     }
 
@@ -97,6 +100,19 @@ public class GroundZeroTest {
         assertThat(out.getCapturedOutput(), is(equalTo(String.format("Version: TEST%n"))));
         verify(processor, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
+    }
+
+    @Test
+    public void inputEncoding_withShortOption() throws Exception {
+        final GroundZero sut = createSut(new String[]{"-i", "foo", "file"});
+        sut.execute();
+        verify(sut, never()).initializeVersionInformation();
+        verify(sut, never()).showVersionMessage();
+        verify(sut, never()).showHelpMessage();
+        verify(processor, times(1)).setEncoding("foo");
+        verify(processor, times(1)).process("file");
+        assertThat(out.getCapturedOutput(),
+                is(equalTo(String.format("Process report file ...%nAll 1 reports proccesed.%n"))));
     }
 
     @Test
@@ -134,25 +150,15 @@ public class GroundZeroTest {
     }
 
     @Test
-    public void setProcessor_throwsExceptionIfNull() {
+    public void setProcessor_throwsExceptionIfNull() throws ApplicationException {
         thrown.expect(NullPointerException.class);
         createSut().setProcessor(null);
-    }
-
-    @Test
-    public void execute_throwsExcpetionIfNoProcessorSet() throws Exception {
-        thrown.expect(NullPointerException.class);
-        thrown.expectMessage("The report processor must not be null! "
-                + "This is a serious program bug. Please report it at "
-                + "https://github.com/Weltraumschaf/GroundZero/issues");
-        new GroundZero(new String[] {}).execute();
     }
 
     @Test
     public void main() throws Exception {
         final GroundZero spy = createSut();
         GroundZero.main(spy);
-        verify(spy, times(1)).setProcessor(Mockito.<ReportProcessor>anyObject());
         verify(spy, times(1)).execute();
     }
 }

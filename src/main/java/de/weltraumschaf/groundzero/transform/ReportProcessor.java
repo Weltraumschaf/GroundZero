@@ -41,28 +41,29 @@ public class ReportProcessor {
     /**
      * Encoding of the generated suppressions file.
      */
-    private static final String OUTPUT_ENCODING = "UTF-8";
+    private static final String DEFAULT_ENCODING = "UTF-8";
 
-    /**
-     * Used to generate suppressions configuration.
-     */
-    private static final SuppressionGenerator GENERATOR = new SuppressionGenerator(OUTPUT_ENCODING);
     /**
      * Handler to intercept SAX parser events.
      */
     private final CheckstyleSaxHandler handler = new CheckstyleSaxHandler();
     /**
+     * Used to generate suppressions configuration.
+     */
+    private final SuppressionGenerator generator = new SuppressionGenerator(DEFAULT_ENCODING);
+    /**
      * XML reader.
      */
     private final XMLReader xmlReader;
     /**
-     * Input encoding of report files.
-     */
-    private final String encoding;
-    /**
      * Used to print to STDOUT.
      */
-    private final IO io;
+    private IO io;
+
+    /**
+     * Input encoding of report files.
+     */
+    private String encoding = DEFAULT_ENCODING;
 
     /**
      * Dedicated constructor.
@@ -73,7 +74,7 @@ public class ReportProcessor {
      * @param io must not be {@code null}
      * @throws ApplicationException if creation of XML reader fails
      */
-    public ReportProcessor(final String encoding, final IO io) throws ApplicationException {
+    public ReportProcessor() throws ApplicationException {
         super();
 
         try {
@@ -84,10 +85,6 @@ public class ReportProcessor {
 
         xmlReader.setContentHandler(handler);
         xmlReader.setErrorHandler(handler);
-        Validate.notEmpty(encoding);
-        this.encoding = encoding;
-        Validate.notNull(io);
-        this.io = io;
     }
 
     /**
@@ -141,7 +138,7 @@ public class ReportProcessor {
      * @return never {@code null}
      */
     private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
-        return GENERATOR.generate(report);
+        return generator.generate(report);
     }
 
     /**
@@ -155,7 +152,7 @@ public class ReportProcessor {
         io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, OUTPUT_ENCODING))) {
+            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, encoding))) {
                 br.write(suppression.getXmlContent());
                 br.flush();
             }
@@ -168,4 +165,26 @@ public class ReportProcessor {
                     ex);
         }
     }
+
+    /**
+     * Set output encoding of generated suppressions file.
+     *
+     * @param encoding must not be {@code null} or empty
+     */
+    public void setEncoding(final String encoding) {
+        Validate.notEmpty(encoding);
+        this.encoding = encoding;
+        this.generator.setEncoding(encoding);
+    }
+
+    /**
+     * Set IO streams.
+     *
+     * @param io must not be {@code null}
+     */
+    public void setIo(final IO io) {
+        Validate.notNull(io);
+        this.io = io;
+    }
+
 }

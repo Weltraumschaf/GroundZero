@@ -64,7 +64,7 @@ public class SuppressionGenerator {
     /**
      * Output encoding of suppressions.
      */
-    private final String encoding;
+    private String encoding;
 
     /**
      * Dedicated constructor.
@@ -173,5 +173,15 @@ public class SuppressionGenerator {
         final StringBuilder buffer = new StringBuilder(fileName);
         buffer.insert(fileName.lastIndexOf('.'), extension);
         return buffer.toString();
+    }
+
+    /**
+     * Set output encoding of generated suppressions file.
+     *
+     * @param encoding must not be {@code null} or empty
+     */
+    public void setEncoding(final String encoding) {
+        Validate.notEmpty(encoding);
+        this.encoding = encoding;
     }
 }

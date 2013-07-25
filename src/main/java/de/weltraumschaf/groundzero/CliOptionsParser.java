@@ -51,6 +51,7 @@ final class CliOptionsParser {
         final CommandLine cmd = parser.parse(config.getParseOptions(), args);
         final CliOptions options = new CliOptions();
         optPathPrefix(cmd, options);
+        optInputEncoding(cmd, options);
         optDebug(cmd, options);
         optHelp(cmd, options);
         optVersion(cmd, options);
@@ -133,4 +134,18 @@ final class CliOptionsParser {
         options.setReportFiles(cmd.getArgList());
     }
 
+    /**
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optInputEncoding(CommandLine cmd, CliOptions options) {
+        Validate.notNull(cmd);
+        Validate.notNull(options);
+
+        if (cmd.hasOption(INPUT_ENCODING.getLongOption())) {
+            options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getLongOption()));
+        } else if (cmd.hasOption(INPUT_ENCODING.getShortOption())) {
+            options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getShortOption()));
+        }
+    }
 }

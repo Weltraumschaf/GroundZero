@@ -104,4 +104,28 @@ public class CliOptionsParserTest {
         sut.parse(new String[]{"--path-prefix"});
     }
 
+    @Test
+    public void parse_inputEncodingShortOptionWithArg() throws ParseException {
+        final CliOptions options = sut.parse(new String[]{"-i", "foo"});
+        assertThat(options.getInputEncoding(), is(equalTo("foo")));
+    }
+
+    @Test
+    public void parse_inputEncodingShortOptionWithNoArg() throws ParseException {
+        thrown.expect(MissingArgumentException.class);
+        sut.parse(new String[]{"-i"});
+    }
+
+    @Test
+    public void parse_inputEncodingLongOptionWithArg() throws ParseException {
+        final CliOptions options = sut.parse(new String[]{"-input-encoding", "foo"});
+        assertThat(options.getInputEncoding(), is(equalTo("foo")));
+    }
+
+    @Test
+    public void parse_inputEncodingLongOptionWithNoArg() throws ParseException {
+        thrown.expect(MissingArgumentException.class);
+        sut.parse(new String[]{"-input-encoding"});
+    }
+
 }
