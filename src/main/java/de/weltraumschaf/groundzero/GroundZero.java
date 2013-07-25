@@ -11,7 +11,6 @@ package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.ApplicationException;
-import de.weltraumschaf.commons.IOStreams;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
@@ -158,6 +157,7 @@ public class GroundZero extends InvokableAdapter {
         }
 
         processor.setEncoding(options.getInputEncoding());
+        processor.setPathPrefix(options.getPathPrefix());
         processor.setIo(getIoStreams());
 
         for (final String reportFile : options.getReportFiles()) {

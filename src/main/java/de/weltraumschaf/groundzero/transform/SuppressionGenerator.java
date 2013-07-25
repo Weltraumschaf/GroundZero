@@ -11,6 +11,9 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.groundzero.filter.FilterChain;
+import de.weltraumschaf.groundzero.filter.PathPrefixRemover;
+import de.weltraumschaf.groundzero.filter.StringFilters;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
@@ -29,7 +32,6 @@ public class SuppressionGenerator {
      * Used to extend the report file name to generate the suppressions file name.
      */
     private static final String SUPPRESSIONS_FILE_EXTENSION = ".suppressions";
-
     /**
      * Format of a suppression tag.
      */
@@ -65,6 +67,7 @@ public class SuppressionGenerator {
      * Output encoding of suppressions.
      */
     private String encoding;
+    private final PathPrefixRemover pathPrefixRemover = StringFilters.pathPrefixRemover();
 
     /**
      * Dedicated constructor.
@@ -138,12 +141,21 @@ public class SuppressionGenerator {
      */
     private void generateErrorSupression(final StringBuilder buffer, final String fileName,
             final CheckstyleViolation violation) {
-        buffer.append(String.format(SUPRESS_TAG_FORMAT,
-                escapeFileName(fileName), violation.getLine(), violation.getColumn(), violation.getCheck())).append(NL);
+        String filteredFIleName = pathPrefixRemover.process(fileName);
+        filteredFIleName = escapeFileName(filteredFIleName);
+        buffer.append(
+                String.format(SUPRESS_TAG_FORMAT,
+                filteredFIleName,
+                violation.getLine(),
+                violation.getColumn(),
+                violation.getCheck()))
+                .append(NL);
     }
 
     /**
      * Escapes dots in given string with backslash.
+     *
+     * TODO Move into own filter.
      *
      * @param fileName must not be {@code null}
      * @return never {@code null}, maybe empty
@@ -183,5 +195,13 @@ public class SuppressionGenerator {
     public void setEncoding(final String encoding) {
         Validate.notEmpty(encoding);
         this.encoding = encoding;
+    }
+
+    /**
+     * @param prefix file path prefix to strip from file names, must not be {@code null}
+     */
+    public void setPathPrefix(final String pathPrefix) {
+        Validate.notNull(pathPrefix);
+        this.pathPrefixRemover.setPrefix(pathPrefix);
     }
 }

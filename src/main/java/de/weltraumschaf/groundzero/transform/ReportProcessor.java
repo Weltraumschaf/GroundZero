@@ -51,7 +51,7 @@ public class ReportProcessor {
     /**
      * Used to generate suppressions configuration.
      */
-    private final SuppressionGenerator generator = new SuppressionGenerator(DEFAULT_ENCODING);
+    private final SuppressionGenerator generator;
     /**
      * XML reader.
      */
@@ -65,6 +65,7 @@ public class ReportProcessor {
      * Input encoding of report files.
      */
     private String encoding = DEFAULT_ENCODING;
+    private String pathPrefix = "";
 
     /**
      * Dedicated constructor.
@@ -72,7 +73,6 @@ public class ReportProcessor {
      * Set up the XML reader with the SAX handler.
      *
      * @param encoding must not be {@code null} or empty
-     * @param io must not be {@code null}
      * @throws ApplicationException if creation of XML reader fails
      */
     public ReportProcessor() throws ApplicationException {
@@ -86,6 +86,7 @@ public class ReportProcessor {
 
         xmlReader.setContentHandler(handler);
         xmlReader.setErrorHandler(handler);
+        generator = new SuppressionGenerator(DEFAULT_ENCODING);
     }
 
     /**
@@ -148,6 +149,7 @@ public class ReportProcessor {
      * @return never {@code null}
      */
     private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
+        generator.setPathPrefix(pathPrefix);
         return generator.generate(report);
     }
 
@@ -195,6 +197,11 @@ public class ReportProcessor {
     public void setIo(final IO io) {
         Validate.notNull(io);
         this.io = io;
+    }
+
+    public void setPathPrefix(final String pathPrefix) {
+        Validate.notNull(pathPrefix);
+        this.pathPrefix = pathPrefix;
     }
 
 }
