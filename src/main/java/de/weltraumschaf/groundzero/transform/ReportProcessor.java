@@ -26,6 +26,7 @@ import java.io.Reader;
 import org.apache.commons.lang3.Validate;
 import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.commons.IO;
+import java.io.UnsupportedEncodingException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -112,15 +113,24 @@ public class ReportProcessor {
         try (final InputStream inputStream = new FileInputStream(input)) {
             final Reader reader = new InputStreamReader(inputStream, encoding);
             xmlReader.parse(new InputSource(reader));
+        } catch (final UnsupportedEncodingException ex) {
+            throw new ApplicationException(
+                    ExitCodeImpl.XML_INPUT_PARSE_ERROR,
+                    String.format("ERROR: Unsuported iput encoding '%s'!", encoding),
+                    ex);
         } catch (final IOException ex) {
             throw new ApplicationException(
                     ExitCodeImpl.XML_INPUT_PARSE_ERROR,
-                    String.format("ERROR: Excpetion thrown while parsing input file '%s'!", input.getAbsolutePath()),
+                    String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
+                        input.getAbsolutePath(),
+                        ex.getMessage()),
                     ex);
         } catch (final SAXException ex) {
             throw new ApplicationException(
                     ExitCodeImpl.XML_INPUT_FILE_READ_ERROR,
-                    String.format("ERROR: Excpetion thrown while reading input file '%s'!", input.getAbsolutePath()),
+                    String.format("ERROR: Excpetion thrown while reading input file '%s'! %s",
+                        input.getAbsolutePath(),
+                        ex.getMessage()),
                     ex);
         }
 

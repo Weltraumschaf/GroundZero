@@ -45,6 +45,10 @@ public enum ExitCodeImpl implements ExitCode {
      */
     BAD_ARGUMENTS(5),
     /**
+     * An unsupported input encoding was given as command line argument.
+     */
+    UNSUPPORTED_INPUT_ENCODING(6),
+    /**
      * Unspecified fatal error occurred.
      */
     FATAL(-1);

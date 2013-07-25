@@ -11,9 +11,11 @@ package de.weltraumschaf.groundzero;
 
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.commons.IOStreams;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.Validate;
@@ -65,7 +67,7 @@ public class GroundZero extends InvokableAdapter {
      * @param args command line arguments provided by JVM
      * @throws ApplicationException if errors occurs while creating report processor
      */
-    public static void main(final String[] args) throws ApplicationException {
+    public static void main(final String[] args) throws ApplicationException, UnsupportedEncodingException {
         main(new GroundZero(args));
     }
 
@@ -82,20 +84,28 @@ public class GroundZero extends InvokableAdapter {
 
     @Override
     public void execute() throws Exception {
-        examineCommandLineOptions();
+        try {
+            examineCommandLineOptions();
 
-        if (options.isHelp()) {
-            showHelpMessage();
-            return;
+            if (options.isHelp()) {
+                showHelpMessage();
+                return;
+            }
+
+            if (options.isVersion()) {
+                initializeVersionInformation();
+                showVersionMessage();
+                return;
+            }
+
+            processReports();
+        } catch (final Exception ex) {
+            if (options.isDebug()) {
+                getIoStreams().printStackTrace(ex);
+            }
+
+            throw ex;
         }
-
-        if (options.isVersion()) {
-            initializeVersionInformation();
-            showVersionMessage();
-            return;
-        }
-
-        processReports();
     }
 
     /**
@@ -171,8 +181,7 @@ public class GroundZero extends InvokableAdapter {
      * Processes a single report file.
      *
      * Exits the application with exit code != {@link ExitCodeImpl#OK}, if {@link org.xml.sax.SAXException.SAXException}
-     * or {@link IOException}
-     * was thrown.
+     * or {@link IOException} was thrown.
      *
      * @param reportFile file name of Checkstyle report
      * @throws ApplicationException if any I/O or XML parse error occurs
@@ -181,5 +190,4 @@ public class GroundZero extends InvokableAdapter {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
         processor.process(reportFile);
     }
-
 }
