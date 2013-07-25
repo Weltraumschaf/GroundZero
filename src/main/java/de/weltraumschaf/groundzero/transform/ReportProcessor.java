@@ -115,8 +115,8 @@ public class ReportProcessor {
             xmlReader.parse(new InputSource(reader));
         } catch (final UnsupportedEncodingException ex) {
             throw new ApplicationException(
-                    ExitCodeImpl.XML_INPUT_PARSE_ERROR,
-                    String.format("ERROR: Unsuported iput encoding '%s'!", encoding),
+                    ExitCodeImpl.UNSUPPORTED_INPUT_ENCODING,
+                    String.format("ERROR: Unsuported input encoding '%s'!", encoding),
                     ex);
         } catch (final IOException ex) {
             throw new ApplicationException(
