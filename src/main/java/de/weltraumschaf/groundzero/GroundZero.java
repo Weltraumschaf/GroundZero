@@ -17,7 +17,6 @@ import java.io.IOException;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.Validate;
-import sun.net.www.content.image.gif;
 
 /**
  * Main application class.
