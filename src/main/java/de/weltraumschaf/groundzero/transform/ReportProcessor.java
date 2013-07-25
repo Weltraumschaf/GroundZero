@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import org.apache.commons.lang3.Validate;
 import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.commons.IO;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -58,6 +59,10 @@ public class ReportProcessor {
      * Input encoding of report files.
      */
     private final String encoding;
+    /**
+     * Used to print to STDOUT.
+     */
+    private final IO io;
 
     /**
      * Dedicated constructor.
@@ -65,9 +70,10 @@ public class ReportProcessor {
      * Set up the XML reader with the SAX handler.
      *
      * @param encoding must not be {@code null} or empty
+     * @param io must not be {@code null}
      * @throws ApplicationException if creation of XML reader fails
      */
-    public ReportProcessor(final String encoding) throws ApplicationException {
+    public ReportProcessor(final String encoding, final IO io) throws ApplicationException {
         super();
 
         try {
@@ -80,6 +86,8 @@ public class ReportProcessor {
         xmlReader.setErrorHandler(handler);
         Validate.notEmpty(encoding);
         this.encoding = encoding;
+        Validate.notNull(io);
+        this.io = io;
     }
 
     /**
@@ -144,8 +152,7 @@ public class ReportProcessor {
      */
     private void saveSuppressionFile(final CheckstyleSuppressions suppression) throws ApplicationException {
         Validate.notNull(suppression);
-        // TODO Inject IO Streams.
-//        getIoStreams().println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
+        io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
             try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, OUTPUT_ENCODING))) {

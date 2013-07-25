@@ -17,6 +17,7 @@ import java.io.IOException;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.Validate;
+import sun.net.www.content.image.gif;
 
 /**
  * Main application class.
@@ -75,7 +76,7 @@ public class GroundZero extends InvokableAdapter {
      */
     static void main(final GroundZero app) throws ApplicationException {
         Validate.notNull(app);
-        app.setProcessor(new ReportProcessor("UTF-8")); // FIXME Make input encoding a CLI option
+        app.setProcessor(new ReportProcessor("UTF-8", app.getIoStreams())); // FIXME Make input encoding a CLI option
         InvokableAdapter.main(app);
     }
 

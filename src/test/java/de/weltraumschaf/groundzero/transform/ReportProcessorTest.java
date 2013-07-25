@@ -23,6 +23,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
 import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.commons.IO;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for {@link ReportProcessor}.
@@ -31,7 +33,7 @@ import de.weltraumschaf.commons.ApplicationException;
  */
 public class ReportProcessorTest {
 
-    private final ReportProcessor sut = new ReportProcessor("UTF-8");
+    private final ReportProcessor sut = new ReportProcessor("UTF-8", mock(IO.class));
 
     public ReportProcessorTest() throws ApplicationException {
         super();

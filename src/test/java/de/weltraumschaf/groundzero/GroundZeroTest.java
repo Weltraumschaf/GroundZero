@@ -20,6 +20,7 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
@@ -106,6 +107,7 @@ public class GroundZeroTest {
         verify(processor, never()).process(anyString());
         verify(sut, never()).showHelpMessage();
         verify(sut, never()).showVersionMessage();
+        assertThat(out.getCapturedOutput(), is(equalTo(String.format("Nothing to do.%n"))));
     }
 
     @Test
