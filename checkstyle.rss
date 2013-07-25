@@ -8,8 +8,8 @@
     <language>en-us</language>
     <copyright>&#169;2013</copyright>
     <item>
-      <title>File: 22,
-             Errors: 1,
+      <title>File: 35,
+             Errors: 6,
              Warnings: 0,
              Infos: 0
       </title>
@@ -29,21 +29,7 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleSuppressions.java">de/weltraumschaf/groundzero/model/CheckstyleSuppressions.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleFileTest.java">de/weltraumschaf/groundzero/model/CheckstyleFileTest.java</a>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.Filter.java">de/weltraumschaf/groundzero/filter/Filter.java</a>
                 </td>
                 <td>
                   0
@@ -71,6 +57,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.PathNormalizer.java">de/weltraumschaf/groundzero/filter/PathNormalizer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.CliOptions.java">de/weltraumschaf/groundzero/CliOptions.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.GroundZeroTest.java">de/weltraumschaf/groundzero/GroundZeroTest.java</a>
                 </td>
                 <td>
@@ -80,7 +94,259 @@
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.PathPrefixRemoverTest.java">de/weltraumschaf/groundzero/filter/PathPrefixRemoverTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleReportTest.java">de/weltraumschaf/groundzero/model/CheckstyleReportTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.StringFilters.java">de/weltraumschaf/groundzero/filter/StringFilters.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.FilterChainTest.java">de/weltraumschaf/groundzero/filter/FilterChainTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleViolation.java">de/weltraumschaf/groundzero/model/CheckstyleViolation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.version.properties">de/weltraumschaf/groundzero/version.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.PathPrefixRemover.java">de/weltraumschaf/groundzero/filter/PathPrefixRemover.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.CliOptionsConfiguration.java">de/weltraumschaf/groundzero/CliOptionsConfiguration.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.transform.SuppressionGenerator.java">de/weltraumschaf/groundzero/transform/SuppressionGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.package-info.java">de/weltraumschaf/groundzero/filter/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.package-info.java">de/weltraumschaf/groundzero/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleFile.java">de/weltraumschaf/groundzero/model/CheckstyleFile.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.transform.ReportProcessor.java">de/weltraumschaf/groundzero/transform/ReportProcessor.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.FilterChain.java">de/weltraumschaf/groundzero/filter/FilterChain.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleSuppressions.java">de/weltraumschaf/groundzero/model/CheckstyleSuppressions.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.CliOptionsParserTest.java">de/weltraumschaf/groundzero/CliOptionsParserTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleFileTest.java">de/weltraumschaf/groundzero/model/CheckstyleFileTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.CliOptionsParser.java">de/weltraumschaf/groundzero/CliOptionsParser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
                 </td>
               </tr>
                           <tr>
@@ -141,35 +407,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleReportTest.java">de/weltraumschaf/groundzero/model/CheckstyleReportTest.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleViolation.java">de/weltraumschaf/groundzero/model/CheckstyleViolation.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.version.properties">de/weltraumschaf/groundzero/version.properties</a>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.PathNormalizerTest.java">de/weltraumschaf/groundzero/filter/PathNormalizerTest.java</a>
                 </td>
                 <td>
                   0
@@ -225,20 +463,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.transform.SuppressionGenerator.java">de/weltraumschaf/groundzero/transform/SuppressionGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.GroundZero.java">de/weltraumschaf/groundzero/GroundZero.java</a>
                 </td>
                 <td>
@@ -281,49 +505,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.package-info.java">de/weltraumschaf/groundzero/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.model.CheckstyleFile.java">de/weltraumschaf/groundzero/model/CheckstyleFile.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.transform.CheckstyleSaxHandler.java">de/weltraumschaf/groundzero/transform/CheckstyleSaxHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.transform.ReportProcessor.java">de/weltraumschaf/groundzero/transform/ReportProcessor.java</a>
                 </td>
                 <td>
                   0
