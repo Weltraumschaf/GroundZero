@@ -23,6 +23,11 @@ import org.apache.commons.lang3.Validate;
 class CliOptions {
 
     /**
+     * Default encoding for whole application.
+     */
+    private final String DEFAULT_ENCODING = "UTF-8";
+
+    /**
      * Path prefix to stript of suppressed file names.
      */
     private String pathPrefix = "";
@@ -44,6 +49,10 @@ class CliOptions {
      * Collect all not recognized arguments as file pats.
      */
     private Collection<String> reportFiles = Collections.emptyList();
+    /**
+     * Input file encoding.
+     */
+    private String inputEncoding = DEFAULT_ENCODING;
 
     /**
      * Set path prefix option.
@@ -131,7 +140,7 @@ class CliOptions {
     /**
      * Set show help message.
      *
-     * @param onOrOff True enables, false disables (default).
+     * @param onOrOff True enables, false disables (default)
      */
     public void setHelp(final boolean onOrOff) {
         this.help = onOrOff;
@@ -140,10 +149,29 @@ class CliOptions {
     /**
      * Whether show help message is enabled or not.
      *
-     * @return Return true if show help message is enabled, unless false.
+     * @return Return true if show help message is enabled, unless false
      */
     public boolean isHelp() {
         return help;
+    }
+
+    /**
+     * Get the input encoding.
+     *
+     * @return by default it is {@link #DEFAULT_ENCODING}
+     */
+    public String getInputEncoding() {
+        return inputEncoding;
+    }
+
+    /**
+     * Set the input encoding.
+     *
+     * @param inputEncoding must not be {@code null} or empty
+     */
+    public void setInputEncoding(final String inputEncoding) {
+        Validate.notEmpty(inputEncoding);
+        this.inputEncoding = inputEncoding;
     }
 
 }
