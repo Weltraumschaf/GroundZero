@@ -11,7 +11,6 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
-import de.weltraumschaf.groundzero.filter.FilterChain;
 import de.weltraumschaf.groundzero.filter.PathPrefixRemover;
 import de.weltraumschaf.groundzero.filter.StringFilters;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
@@ -67,6 +66,9 @@ public class SuppressionGenerator {
      * Output encoding of suppressions.
      */
     private String encoding;
+    /**
+     * Filter to remove path prefix.
+     */
     private final PathPrefixRemover pathPrefixRemover = StringFilters.pathPrefixRemover();
 
     /**
@@ -198,7 +200,9 @@ public class SuppressionGenerator {
     }
 
     /**
-     * @param prefix file path prefix to strip from file names, must not be {@code null}
+     * Set path prefix to strip from file names.
+     *
+     * @param pathPrefix file must not be {@code null}
      */
     public void setPathPrefix(final String pathPrefix) {
         Validate.notNull(pathPrefix);

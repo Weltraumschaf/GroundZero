@@ -14,7 +14,6 @@ import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.Validate;
@@ -66,7 +65,7 @@ public class GroundZero extends InvokableAdapter {
      * @param args command line arguments provided by JVM
      * @throws ApplicationException if errors occurs while creating report processor
      */
-    public static void main(final String[] args) throws ApplicationException, UnsupportedEncodingException {
+    public static void main(final String[] args) throws ApplicationException {
         main(new GroundZero(args));
     }
 

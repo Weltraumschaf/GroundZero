@@ -25,7 +25,7 @@ class CliOptions {
     /**
      * Default encoding for whole application.
      */
-    private final String DEFAULT_ENCODING = "UTF-8";
+    private static final String DEFAULT_ENCODING = "UTF-8";
 
     /**
      * Path prefix to stript of suppressed file names.
