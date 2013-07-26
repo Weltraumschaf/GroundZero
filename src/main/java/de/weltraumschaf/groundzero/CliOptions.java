@@ -26,7 +26,6 @@ class CliOptions {
      * Default encoding for whole application.
      */
     private static final String DEFAULT_ENCODING = "UTF-8";
-
     /**
      * Path prefix to stript of suppressed file names.
      */
@@ -53,6 +52,10 @@ class CliOptions {
      * Input file encoding.
      */
     private String inputEncoding = DEFAULT_ENCODING;
+    /**
+     * Output file encoding.
+     */
+    private String outputEncoding = DEFAULT_ENCODING;
 
     /**
      * Set path prefix option.
@@ -174,4 +177,22 @@ class CliOptions {
         this.inputEncoding = inputEncoding;
     }
 
+    /**
+     * Get the output encoding.
+     *
+     * @return by default it is {@link #DEFAULT_ENCODING}
+     */
+    public String getOutputEncoding() {
+        return outputEncoding;
+    }
+
+    /**
+     * Set the output encoding.
+     *
+     * @param outputEncoding must not be {@code null} or empty
+     */
+    public void setOutputEncoding(final String outputEncoding) {
+        Validate.notEmpty(outputEncoding);
+        this.outputEncoding = outputEncoding;
+    }
 }

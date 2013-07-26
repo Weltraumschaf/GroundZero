@@ -52,6 +52,7 @@ final class CliOptionsParser {
         final CliOptions options = new CliOptions();
         optPathPrefix(cmd, options);
         optInputEncoding(cmd, options);
+        optOutputEncoding(cmd, options);
         optDebug(cmd, options);
         optHelp(cmd, options);
         optVersion(cmd, options);
@@ -135,10 +136,12 @@ final class CliOptionsParser {
     }
 
     /**
+     * Determine and set the input encoding of the read report files.
+     *
      * @param cmd must not be {@code null}
      * @param options must not be {@code null}
      */
-    private void optInputEncoding(CommandLine cmd, CliOptions options) {
+    private void optInputEncoding(final CommandLine cmd, final CliOptions options) {
         Validate.notNull(cmd);
         Validate.notNull(options);
 
@@ -146,6 +149,23 @@ final class CliOptionsParser {
             options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getLongOption()));
         } else if (cmd.hasOption(INPUT_ENCODING.getShortOption())) {
             options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getShortOption()));
+        }
+    }
+
+    /**
+     * Determine and set the output encoding of the written suppressions files.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optOutputEncoding(CommandLine cmd, CliOptions options) {
+        Validate.notNull(cmd);
+        Validate.notNull(options);
+
+        if (cmd.hasOption(OUTPUT_ENCODING.getLongOption())) {
+            options.setOutputEncoding(cmd.getOptionValue(OUTPUT_ENCODING.getLongOption()));
+        } else if (cmd.hasOption(OUTPUT_ENCODING.getShortOption())) {
+            options.setOutputEncoding(cmd.getOptionValue(OUTPUT_ENCODING.getShortOption()));
         }
     }
 }

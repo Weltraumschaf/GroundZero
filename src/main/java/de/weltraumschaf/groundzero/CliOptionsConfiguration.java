@@ -77,6 +77,11 @@ final class CliOptionsConfiguration {
         OptionBuilder.hasArg();
         OptionBuilder.withLongOpt(Option.INPUT_ENCODING.getLongOption());
         options.addOption(OptionBuilder.create(Option.INPUT_ENCODING.getShortOption()));
+        OptionBuilder.withDescription(Option.OUTPUT_ENCODING.getDescription());
+        OptionBuilder.withArgName("ENCODING");
+        OptionBuilder.hasArg();
+        OptionBuilder.withLongOpt(Option.OUTPUT_ENCODING.getLongOption());
+        options.addOption(OptionBuilder.create(Option.OUTPUT_ENCODING.getShortOption()));
 
         // w/o argument
         options.addOption(
@@ -141,7 +146,9 @@ final class CliOptionsConfiguration {
         /** Version option. */
         VERSION("v", "version", "Show version information."),
         /** File input encoding. */
-        INPUT_ENCODING("i", "input-encoding", "Input encoding of the report files.");
+        INPUT_ENCODING("i", "input-encoding", "Input encoding of the report files."),
+        /** File output encoding. */
+        OUTPUT_ENCODING("o", "output-encoding", "Output encoding of the suppressions files.");
 
         /** Short option w/o preceding -. */
         private final String shortOption;

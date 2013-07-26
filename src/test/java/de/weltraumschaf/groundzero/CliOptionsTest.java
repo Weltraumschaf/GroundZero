@@ -34,6 +34,7 @@ public class CliOptionsTest {
         assertThat(sut.getReportFiles(), hasSize(0));
         assertThat(sut.getPathPrefix(), is(equalTo("")));
         assertThat(sut.getInputEncoding(), is(equalTo("UTF-8")));
+        assertThat(sut.getOutputEncoding(), is(equalTo("UTF-8")));
     }
 
 }

@@ -118,14 +118,38 @@ public class CliOptionsParserTest {
 
     @Test
     public void parse_inputEncodingLongOptionWithArg() throws ParseException {
-        final CliOptions options = sut.parse(new String[]{"-input-encoding", "foo"});
+        final CliOptions options = sut.parse(new String[]{"--input-encoding", "foo"});
         assertThat(options.getInputEncoding(), is(equalTo("foo")));
     }
 
     @Test
     public void parse_inputEncodingLongOptionWithNoArg() throws ParseException {
         thrown.expect(MissingArgumentException.class);
-        sut.parse(new String[]{"-input-encoding"});
+        sut.parse(new String[]{"--input-encoding"});
+    }
+
+    @Test
+    public void parse_outputEncodingShortOptionWithArg() throws ParseException {
+        final CliOptions options = sut.parse(new String[]{"-o", "foo"});
+        assertThat(options.getOutputEncoding(), is(equalTo("foo")));
+    }
+
+    @Test
+    public void parse_outputEncodingShortOptionWithNoArg() throws ParseException {
+        thrown.expect(MissingArgumentException.class);
+        sut.parse(new String[]{"-o"});
+    }
+
+    @Test
+    public void parse_outputEncodingLongOptionWithArg() throws ParseException {
+        final CliOptions options = sut.parse(new String[]{"--output-encoding", "foo"});
+        assertThat(options.getOutputEncoding(), is(equalTo("foo")));
+    }
+
+    @Test
+    public void parse_outputEncodingLongOptionWithNoArg() throws ParseException {
+        thrown.expect(MissingArgumentException.class);
+        sut.parse(new String[]{"--output-encoding"});
     }
 
 }
