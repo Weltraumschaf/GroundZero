@@ -8,9 +8,9 @@
     <language>en-us</language>
     <copyright>&#169;2013</copyright>
     <item>
-      <title>File: 36,
+      <title>File: 40,
              Errors: 0,
-             Warnings: 0,
+             Warnings: 2,
              Infos: 0
       </title>
             <link>http://weltraumschaf.github.com/GroundZero//checkstyle.html</link>
@@ -30,6 +30,20 @@
                           <tr>
                 <td>
                   <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.CliOptionsTest.java">de/weltraumschaf/groundzero/CliOptionsTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.RegeExEscaperTest.java">de/weltraumschaf/groundzero/filter/RegeExEscaperTest.java</a>
                 </td>
                 <td>
                   0
@@ -71,6 +85,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.FileNameExtenderTest.java">de/weltraumschaf/groundzero/filter/FileNameExtenderTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.PathNormalizer.java">de/weltraumschaf/groundzero/filter/PathNormalizer.java</a>
                 </td>
                 <td>
@@ -85,7 +113,35 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.RegeExEscaper.java">de/weltraumschaf/groundzero/filter/RegeExEscaper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.CliOptions.java">de/weltraumschaf/groundzero/CliOptions.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://weltraumschaf.github.com/GroundZero//checkstyle.html#de.weltraumschaf.groundzero.filter.FileNameExtender.java">de/weltraumschaf/groundzero/filter/FileNameExtender.java</a>
                 </td>
                 <td>
                   0
@@ -287,7 +343,7 @@
                   0
                 </td>
                 <td>
-                  0
+                  2
                 </td>
                 <td>
                   0
