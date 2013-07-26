@@ -27,6 +27,10 @@ public final class StringFilters {
      * Reusable instance.
      */
     private static final PathNormalizer PATH_NORMALIZER = new PathNormalizer();
+    /**
+     * Reusable instance.
+     */
+    private static final RegeExEscaper REGEX_ESCAPER = new RegeExEscaper();
 
     /**
      * Hidden because pure static factory.
@@ -51,6 +55,15 @@ public final class StringFilters {
      */
     public static PathNormalizer pathNormalizer() {
         return PATH_NORMALIZER;
+    }
+
+    /**
+     * Get a regular expression escaper.
+     *
+     * @return always same instance
+     */
+    public static RegeExEscaper regeExEscaper() {
+        return REGEX_ESCAPER;
     }
 
 }
