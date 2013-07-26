@@ -185,10 +185,9 @@ public class ReportProcessor {
      *
      * @param encoding must not be {@code null} or empty
      */
-    public void setEncoding(final String encoding) {
+    public void setInputEncoding(final String encoding) {
         Validate.notEmpty(encoding);
         this.encoding = encoding;
-        this.generator.setEncoding(encoding);
     }
 
     /**
@@ -209,6 +208,16 @@ public class ReportProcessor {
     public void setPathPrefix(final String pathPrefix) {
         Validate.notNull(pathPrefix);
         this.pathPrefix = pathPrefix;
+    }
+
+    /**
+     * Set the output encoding.
+     *
+     * @param encoding must not be {@code null} or empty
+     */
+    public void setOutputEncoding(final String encoding) {
+        Validate.notEmpty(encoding);
+        this.generator.setEncoding(encoding);
     }
 
 }

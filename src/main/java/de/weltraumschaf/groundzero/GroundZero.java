@@ -155,7 +155,8 @@ public class GroundZero extends InvokableAdapter {
             return;
         }
 
-        processor.setEncoding(options.getInputEncoding());
+        processor.setInputEncoding(options.getInputEncoding());
+        processor.setOutputEncoding(options.getOutputEncoding());
         processor.setPathPrefix(options.getPathPrefix());
         processor.setIo(getIoStreams());
 

@@ -108,7 +108,7 @@ public class GroundZeroTest {
         verify(sut, never()).initializeVersionInformation();
         verify(sut, never()).showVersionMessage();
         verify(sut, never()).showHelpMessage();
-        verify(processor, times(1)).setEncoding("foo");
+        verify(processor, times(1)).setInputEncoding("foo");
         verify(processor, times(1)).process("file");
         assertThat(out.getCapturedOutput(),
                 is(equalTo(String.format("Process report file ...%nAll 1 reports proccesed.%n"))));
