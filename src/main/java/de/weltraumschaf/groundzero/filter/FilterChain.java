@@ -25,7 +25,7 @@ import org.apache.commons.lang3.Validate;
  * @param <T> type of processed value
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class FilterChain<T> implements Filter<T> {
+public final class FilterChain<T> implements Filter<T> {
 
     /**
      * Holds the filters.
