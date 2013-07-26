@@ -32,6 +32,13 @@ public class FilterChain<T> implements Filter<T> {
      */
     private final List<Filter<T>> filters = Lists.newArrayList();
 
+    /**
+     * Use {@link #newChain()} to get instances.
+     */
+    private FilterChain() {
+        super();
+    }
+
     @Override
     public T process(final T input) {
         Validate.notNull(input);
@@ -57,6 +64,16 @@ public class FilterChain<T> implements Filter<T> {
     public void add(final Filter<T> filter) {
         Validate.notNull(filter);
         filters.add(filter);
+    }
+
+    /**
+     * Create new instance.
+     *
+     * @param <T> filtered type
+     * @return always new instance
+     */
+    public static <T> FilterChain<T> newChain() {
+        return new FilterChain<T>();
     }
 
 }

@@ -29,7 +29,7 @@ public class FilterChainTest {
     //CHECKSTYLE:OFF
     @Rule public ExpectedException thrown = ExpectedException.none();
     //CHECKSTYLE:ON
-    private final FilterChain<Object> sut = new FilterChain<Object>();
+    private final FilterChain<Object> sut = FilterChain.newChain();
 
     @Test
     public void process_throwsExcpetionNoInput() {
