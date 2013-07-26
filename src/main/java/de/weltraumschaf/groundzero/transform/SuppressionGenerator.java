@@ -11,6 +11,7 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.groundzero.filter.FilterChain;
 import de.weltraumschaf.groundzero.filter.PathPrefixRemover;
 import de.weltraumschaf.groundzero.filter.StringFilters;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
@@ -67,9 +68,13 @@ public class SuppressionGenerator {
      */
     private String encoding;
     /**
-     * Filter to remove path prefix.
+     * Hold as a separate reference so that we can set the path prefix later.
      */
     private final PathPrefixRemover pathPrefixRemover = StringFilters.pathPrefixRemover();
+    /**
+     * Chain of filters to prepare reported file names.
+     */
+    private final FilterChain<String> filter = FilterChain.newChain();
 
     /**
      * Dedicated constructor.
@@ -80,6 +85,8 @@ public class SuppressionGenerator {
         super();
         Validate.notEmpty(encoding);
         this.encoding = encoding;
+        filter.add(pathPrefixRemover);
+        filter.add(StringFilters.regeExEscaper());
     }
 
     /**
@@ -143,28 +150,13 @@ public class SuppressionGenerator {
      */
     private void generateErrorSupression(final StringBuilder buffer, final String fileName,
             final CheckstyleViolation violation) {
-        String filteredFIleName = pathPrefixRemover.process(fileName);
-        filteredFIleName = escapeFileName(filteredFIleName);
         buffer.append(
                 String.format(SUPRESS_TAG_FORMAT,
-                filteredFIleName,
+                filter.process(fileName),
                 violation.getLine(),
                 violation.getColumn(),
                 violation.getCheck()))
                 .append(NL);
-    }
-
-    /**
-     * Escapes dots in given string with backslash.
-     *
-     * TODO Move into own filter.
-     *
-     * @param fileName must not be {@code null}
-     * @return never {@code null}, maybe empty
-     */
-    String escapeFileName(final String fileName) {
-        Validate.notNull(fileName);
-        return fileName.replace(".", "\\.");
     }
 
     /**
@@ -176,6 +168,8 @@ public class SuppressionGenerator {
      * extension == ".suppressions"
      *           -> "foo.suppressions.xml"
      * </pre>
+     *
+     * TODO Move into own filter.
      *
      * @param fileName must not be {@code null}
      * @param extension must not be {@code null}

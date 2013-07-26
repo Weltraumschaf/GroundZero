@@ -35,13 +35,6 @@ public class SuppressionGeneratorTest {
     private final SuppressionGenerator sut = new SuppressionGenerator("UTF-8");
 
     @Test
-    public void escapeFileName() {
-        assertThat(sut.escapeFileName("foo/bar.java"), is(equalTo("foo/bar\\.java")));
-        assertThat(sut.escapeFileName("foo.bar.java"), is(equalTo("foo\\.bar\\.java")));
-        assertThat(sut.escapeFileName("foo/bar"), is(equalTo("foo/bar")));
-    }
-
-    @Test
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(
             value = "NP_NULL_PARAM_DEREF",
             justification = "I want to test NPE.")
