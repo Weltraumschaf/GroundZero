@@ -36,7 +36,7 @@ public class SuppressionGenerator {
     /**
      * Format of a suppression tag.
      */
-    private static final char NL = '\n';
+    private static final String NL = String.format("%n");
     /**
      * Format string for suppress tag.
      */
