@@ -212,9 +212,4 @@ public class SuppressionGeneratorTest {
         assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
 
-    @Test
-    public void extendFileName() {
-        assertThat(SuppressionGenerator.extendFileName("foo.xml", ".suppressions"),
-                is(equalTo("foo.suppressions.xml")));
-    }
 }

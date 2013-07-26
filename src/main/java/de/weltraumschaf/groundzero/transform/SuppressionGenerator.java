@@ -11,6 +11,7 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.groundzero.filter.FileNameExtender;
 import de.weltraumschaf.groundzero.filter.FilterChain;
 import de.weltraumschaf.groundzero.filter.PathPrefixRemover;
 import de.weltraumschaf.groundzero.filter.StringFilters;
@@ -64,9 +65,9 @@ public class SuppressionGenerator {
      */
     private static final String TAG_EMPTY_SUPPRESSIONS = "<suppressions/>";
     /**
-     * Output encoding of suppressions.
+     * Used to extend file names.
      */
-    private String encoding;
+    private final FileNameExtender extender = new FileNameExtender();
     /**
      * Hold as a separate reference so that we can set the path prefix later.
      */
@@ -75,6 +76,10 @@ public class SuppressionGenerator {
      * Chain of filters to prepare reported file names.
      */
     private final FilterChain<String> filter = FilterChain.newChain();
+    /**
+     * Output encoding of suppressions.
+     */
+    private String encoding;
 
     /**
      * Dedicated constructor.
@@ -87,6 +92,7 @@ public class SuppressionGenerator {
         this.encoding = encoding;
         filter.add(pathPrefixRemover);
         filter.add(StringFilters.regeExEscaper());
+        extender.setExtension(SUPPRESSIONS_FILE_EXTENSION);
     }
 
     /**
@@ -109,7 +115,7 @@ public class SuppressionGenerator {
             buffer.append(TAG_EMPTY_SUPPRESSIONS).append(NL);
         }
 
-        final String targetFileName = extendFileName(report.getFileName(), SUPPRESSIONS_FILE_EXTENSION);
+        final String targetFileName = extender.process(report.getFileName());
         return new CheckstyleSuppressions(buffer.toString(), targetFileName);
     }
 
@@ -157,30 +163,6 @@ public class SuppressionGenerator {
                 violation.getColumn(),
                 violation.getCheck()))
                 .append(NL);
-    }
-
-    /**
-     * Extend a given file name with an extension before the actual file extension.
-     *
-     * Example:
-     * <pre>
-     * fileName  == "foo.xml"
-     * extension == ".suppressions"
-     *           -> "foo.suppressions.xml"
-     * </pre>
-     *
-     * TODO Move into own filter.
-     *
-     * @param fileName must not be {@code null}
-     * @param extension must not be {@code null}
-     * @return never {@code null} maybe empty
-     */
-    static String extendFileName(final String fileName, final String extension) {
-        Validate.notNull(fileName);
-        Validate.notNull(extension);
-        final StringBuilder buffer = new StringBuilder(fileName);
-        buffer.insert(fileName.lastIndexOf('.'), extension);
-        return buffer.toString();
     }
 
     /**

@@ -31,6 +31,10 @@ public final class StringFilters {
      * Reusable instance.
      */
     private static final RegeExEscaper REGEX_ESCAPER = new RegeExEscaper();
+    /**
+     * Reusable instance.
+     */
+    private static final FileNameExtender FILE_NAME_EXTENDER = new FileNameExtender();
 
     /**
      * Hidden because pure static factory.
@@ -64,6 +68,15 @@ public final class StringFilters {
      */
     public static RegeExEscaper regeExEscaper() {
         return REGEX_ESCAPER;
+    }
+
+    /**
+     * Get a file name extender.
+     *
+     * @return always same instance
+     */
+    public static FileNameExtender fileNameExtender() {
+        return FILE_NAME_EXTENDER;
     }
 
 }
