@@ -23,12 +23,12 @@ import java.util.Collections;
  *
  * Implements hard coded order of options as followed:
  * <ol>
- * <li>{@link PATH_PREFIX</li>
- * <li>{@link INPUT_ENCODING</li>
- * <li>{@link OUTPUT_ENCODING</li>
- * <li>{@link HELP</li>
- * <li>{@link VERSION</li>
- * <li>{@link DEBUG</li>
+ * <li>{@link PATH_PREFIX}</li>
+ * <li>{@link INPUT_ENCODING}</li>
+ * <li>{@link OUTPUT_ENCODING}</li>
+ * <li>{@link HELP}</li>
+ * <li>{@link VERSION}</li>
+ * <li>{@link DEBUG}</li>
  * </ol>
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
