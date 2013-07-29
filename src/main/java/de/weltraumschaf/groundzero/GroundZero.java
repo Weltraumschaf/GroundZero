@@ -32,7 +32,7 @@ public class GroundZero extends InvokableAdapter {
     /**
      * Formats help and usage.
      */
-    private static final HelpFormatter HELP_FORMATTER = new HelpFormatter();
+    private static final HelpFormatter HELP_FORMATTER = new CliHelpFormatter();
     static {
         HELP_FORMATTER.setOptionComparator(new CliOptionComparator());
     }
