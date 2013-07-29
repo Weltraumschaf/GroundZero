@@ -30,6 +30,13 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     /**
+     * Formats help and usage.
+     */
+    private static final HelpFormatter HELP_FORMATTER = new HelpFormatter();
+    static {
+        HELP_FORMATTER.setOptionComparator(new CliOptionComparator());
+    }
+    /**
      * Configured command line options.
      */
     private final CliOptionsConfiguration cliOptionsConfiguration = new CliOptionsConfiguration();
@@ -124,7 +131,7 @@ public class GroundZero extends InvokableAdapter {
      * Prints help and usage information on STDOUT.
      */
     void showHelpMessage() {
-        cliOptionsConfiguration.format(new HelpFormatter(), getIoStreams().getStdout());
+        cliOptionsConfiguration.format(HELP_FORMATTER, getIoStreams().getStdout());
     }
 
     /**
