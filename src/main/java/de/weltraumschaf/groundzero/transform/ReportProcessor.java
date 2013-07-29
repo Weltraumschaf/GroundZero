@@ -64,7 +64,7 @@ public class ReportProcessor {
     /**
      * Input encoding of report files.
      */
-    private String encoding = DEFAULT_ENCODING;
+    private String inputEncoding = DEFAULT_ENCODING;
     /**
      * PAth prefix to strip from reported file names.
      */
@@ -114,12 +114,12 @@ public class ReportProcessor {
         Validate.notNull(input);
 
         try (final InputStream inputStream = new FileInputStream(input)) {
-            final Reader reader = new InputStreamReader(inputStream, encoding);
+            final Reader reader = new InputStreamReader(inputStream, inputEncoding);
             xmlReader.parse(new InputSource(reader));
         } catch (final UnsupportedEncodingException ex) {
             throw new ApplicationException(
                     ExitCodeImpl.UNSUPPORTED_INPUT_ENCODING,
-                    String.format("ERROR: Unsuported input encoding '%s'!", encoding),
+                    String.format("ERROR: Unsuported input encoding '%s'!", inputEncoding),
                     ex);
         } catch (final IOException ex) {
             throw new ApplicationException(
@@ -166,7 +166,7 @@ public class ReportProcessor {
         io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, encoding))) {
+            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, inputEncoding))) {
                 br.write(suppression.getXmlContent());
                 br.flush();
             }
@@ -187,7 +187,7 @@ public class ReportProcessor {
      */
     public void setInputEncoding(final String encoding) {
         Validate.notEmpty(encoding);
-        this.encoding = encoding;
+        this.inputEncoding = encoding;
     }
 
     /**
