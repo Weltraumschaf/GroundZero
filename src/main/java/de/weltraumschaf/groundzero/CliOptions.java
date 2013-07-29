@@ -20,7 +20,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-class CliOptions {
+final class CliOptions {
 
     /**
      * Default encoding for whole application.

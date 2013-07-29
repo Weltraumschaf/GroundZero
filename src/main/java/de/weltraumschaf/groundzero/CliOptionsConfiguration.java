@@ -45,7 +45,7 @@ final class CliOptionsConfiguration {
             + "configurations are saved into files in the current working directory. The file "
             + "names are the same as the report filename with the addition of '.suppressions' "
             + "before the '.xml' file extension. So the report file 'foobar.xml' will produce "
-            + "a suppression file named 'foobar.suppressions.xml'.");
+            + "a suppression file named 'foobar.suppressions.xml'.%n%n");
 
     /**
      * Author name and email address.
@@ -199,6 +199,5 @@ final class CliOptionsConfiguration {
         public String getDescription() {
             return description;
         }
-
     }
 }

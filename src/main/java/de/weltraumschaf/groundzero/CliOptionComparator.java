@@ -33,7 +33,7 @@ import java.util.Collections;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CliOptionComparator implements Comparator<Option> {
+final class CliOptionComparator implements Comparator<Option> {
 
     /**
      * Signals that optionOne comes before optionTwo.
