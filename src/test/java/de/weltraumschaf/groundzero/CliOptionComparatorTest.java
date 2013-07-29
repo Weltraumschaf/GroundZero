@@ -18,7 +18,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-import org.junit.Ignore;
 
 /**
  * Tests for {@link CliOptionComparator}.
@@ -31,7 +30,7 @@ public class CliOptionComparatorTest {
     private static final Option FIXTURE_SHORT_OPT_OUTPUTENCODING = new Option("o", "");
     private static final Option FIXTURE_SHORT_OPT_HELP = new Option("h", "");
     private static final Option FIXTURE_SHORT_OPT_VERSION = new Option("v", "");
-    public static final Option FIXTURE_SHORT_OPT_DEBUG = new Option("d", "");
+    private static final Option FIXTURE_SHORT_OPT_DEBUG = new Option("d", "");
     private static final Option FIXTURE_LONG_OPT_PATHPREFIX = new Option("", "path-prefix", false, "");
     private static final Option FIXTURE_LONG_OPT_INPUTENCODING = new Option("", "input-encoding", false, "");
     private static final Option FIXTURE_LONG_OPT_OUTPUTENCODING = new Option("", "output-encoding", false, "");
