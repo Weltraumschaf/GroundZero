@@ -1,22 +1,49 @@
-#!/bin/bash
+#!/usr/bin/env sh
+
+##
+##  LICENSE
+##
+## "THE BEER-WARE LICENSE" (Revision 43):
+## "Sven Strittmatter" <weltraumschaf@googlemail.com> wrote this file.
+## As long as you retain this notice you can do whatever you want with
+## this stuff. If we meet some day, and you think this stuff is worth it,
+## you can buy me a non alcohol-free beer in return.
+##
+## Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
+##
 
 # JVM settings.
 JVM_MIN_HEAP_SPACE="128m"
 JVM_MAX_HEAP_SPACE="1024m"
+JVM_OPTIONS="-Xms${JVM_MIN_HEAP_SPACE} -Xmx${JVM_MAX_HEAP_SPACE}"
 
-# Find current working directory.
-CWD=$( cd -P -- "$(dirname -- "${0}")" && printf '%s\n' "$(pwd -P)/$(basename -- "${0}")" ) || exit 1
-CWD=`dirname "${CWD}"`
+PROGRAM="${0}"
 
-JAR="${CWD}/groundzero.jar"
+while [ -h "${PROGRAM}" ]; do
+  LS=`ls -ld "${PROGRAM}"`
+  LINK=`expr "${LS}" : '.*-> \(.*\)$'`
+
+  if expr "${LINK}" : '.*/.*' > /dev/null; then
+    PROGRAM="${LINK}"
+  else
+    PROGRAM=`dirname "${PROGRAM}"`/"${LINK}"
+  fi
+done
+
+PROGRAM_DIRECTORY=`dirname "${PROGRAM}"`
+
+# Set GROUNDZERO_HOME.
+if [ -z "${GROUNDZERO_HOME}" ] ; then
+    GROUNDZERO_HOME=`cd "${PROGRAM_DIRECTORY}" ; pwd`
+fi
+
+JAR="${GROUNDZERO_HOME}/groundzero.jar"
 
 if [ ! -f "${JAR}" ] ; then
-    PROJECT_DIR=`dirname "${CWD}"`
+    PROJECT_DIR=`dirname "${GROUNDZERO_HOME}"`
     echo "ERROR: JAR file ${JAR} not pressent!"
-    echo "Invoke 'mvn clean install' in the project base directory: ${PROJECT_DIR}."
+    echo "Invoke 'mvn clean install' in the project base directory: ${GROUNDZERO_HOME}."
     exit 1
 fi
 
-JVM_OPTIONS="-Xms${JVM_MIN_HEAP_SPACE} -Xmx${JVM_MAX_HEAP_SPACE}"
-java ${JVM_OPTIONS} -jar "${JAR}" $*
-
+java ${JVM_OPTIONS} -jar "${JAR}" $@
