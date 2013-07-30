@@ -29,4 +29,16 @@ final class CliHelpFormatter extends HelpFormatter {
         printWrapped(pw, width, fileArgs.indexOf(' ') + 1, fileArgs);
     }
 
+    @Override
+    public void printWrapped(PrintWriter pw, int width, int nextLineTabStop, String text) {
+        final StringBuffer sb = new StringBuffer(text.length());
+        renderWrappedText(sb, width, nextLineTabStop, text);
+        pw.print(sb.toString());
+    }
+
+    @Override
+    protected String rtrim(final String s) {
+        return s;
+    }
+
 }
