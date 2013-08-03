@@ -9,8 +9,9 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.commons;
 
+import de.weltraumschaf.groundzero.opt.CliOptions;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import org.apache.commons.cli.HelpFormatter;
@@ -23,39 +24,8 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class CliOptionsConfiguration {
+final class OptionsConfiguration {
 
-    /**
-     * URI to issue tracker.
-     */
-    private static final String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
-    /**
-     * Name of the CLI executable.
-     */
-    private static final String EXECUTABLE = "groundzero";
-    /**
-     * Usage header.
-     *
-     * TODO Better formatting with newlines.
-     */
-    private static final String HEADER = String.format("%n"
-            + "A tool to generate line based suppression files for Checkstyle. "
-            + "Parses the Checkstyle report files given as command line argument "
-            + "and generates suppression XML configuration files from them. The suppression "
-            + "configurations are saved into files in the current working directory. The file "
-            + "names are the same as the report filename with the addition of '.suppressions' "
-            + "before the '.xml' file extension. So the report file 'foobar.xml' will produce "
-            + "a suppression file named 'foobar.suppressions.xml'.%n%n");
-
-    /**
-     * Author name and email address.
-     */
-    private static final String AUTHOR = "Sven Strittmatter <weltraumschaf@googlemail.com>";
-    /**
-     * Usage footer.
-     */
-    private static final String FOOTER = String.format("%nWritten 2013 by %s%nReport bugs here %s",
-            AUTHOR, ISSUE_TRACKER);
     /**
      * Options configuration.
      */
@@ -64,7 +34,7 @@ final class CliOptionsConfiguration {
     /**
      * Initializes {@link #options} with all information the options parser needs.
      */
-    public CliOptionsConfiguration() {
+    public OptionsConfiguration() {
         super();
         // w/ argument
         OptionBuilder.withDescription(Option.PATH_PREFIX.getDescription());
@@ -123,12 +93,12 @@ final class CliOptionsConfiguration {
         formatter.printHelp(
                 writer,
                 HelpFormatter.DEFAULT_WIDTH,
-                EXECUTABLE,
-                HEADER,
+                CliOptions.EXECUTABLE,
+                CliOptions.HEADER + CliOptions.DESCRIPTION,
                 options,
                 HelpFormatter.DEFAULT_LEFT_PAD,
                 HelpFormatter.DEFAULT_DESC_PAD,
-                FOOTER,
+                CliOptions.FOOTER,
                 true);
         writer.flush();
     }

@@ -9,33 +9,34 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.commons;
 
+import de.weltraumschaf.groundzero.opt.CliOptions;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.lang3.Validate;
-import static de.weltraumschaf.groundzero.CliOptionsConfiguration.Option.*;
+import static de.weltraumschaf.groundzero.opt.commons.OptionsConfiguration.Option.*;
 
 /**
  * Parses the command line arguments.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class CliOptionsParser {
+final class OptionsParser {
 
     /**
      * The parsed and found options.
      */
-    private final CliOptionsConfiguration config;
+    private final OptionsConfiguration config;
 
     /**
      * Initializes the parser with a new options object.
      *
      * @param config Newly created options object.
      */
-    public CliOptionsParser(final CliOptionsConfiguration config) {
+    public OptionsParser(final OptionsConfiguration config) {
         this.config = config;
     }
 
@@ -49,7 +50,7 @@ final class CliOptionsParser {
     public CliOptions parse(final String[] args) throws ParseException {
         final CommandLineParser parser = new PosixParser();
         final CommandLine cmd = parser.parse(config.getParseOptions(), args);
-        final CliOptions options = new CliOptions();
+        final CliOptions options = new CommonsOptions();
         optPathPrefix(cmd, options);
         optInputEncoding(cmd, options);
         optOutputEncoding(cmd, options);

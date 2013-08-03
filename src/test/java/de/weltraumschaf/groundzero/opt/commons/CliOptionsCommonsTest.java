@@ -10,20 +10,21 @@
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
 
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.commons;
 
+import de.weltraumschaf.groundzero.opt.commons.CommonsOptions;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;;
 
 /**
- * Tests for {@link CliOptions}.
+ * Tests for {@link CommonsOptions}.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CliOptionsTest {
+public class CliOptionsCommonsTest {
 
-    private final CliOptions sut = new CliOptions();
+    private final CommonsOptions sut = new CommonsOptions();
 
     @Test
     public void defaults() {

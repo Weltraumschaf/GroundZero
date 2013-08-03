@@ -9,52 +9,57 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.jcommander;
 
 import java.util.Collection;
-import java.util.Collections;
 import org.apache.commons.lang3.Validate;
+import com.beust.jcommander.Parameter;
+import com.google.common.collect.Lists;
+import de.weltraumschaf.groundzero.opt.CliOptions;
 
 /**
  * Holds the given command line arguments.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class CliOptions {
+final class JCommanderOptions implements CliOptions {
 
-    /**
-     * Default encoding for whole application.
-     */
-    private static final String DEFAULT_ENCODING = "UTF-8";
     /**
      * Path prefix to stript of suppressed file names.
      */
+    @Parameter(names = {"-p", "--path-prefix" }, description = "Prefix to strip from checked file paths.")
     private String pathPrefix = "";
     /**
      * Print debug information or not.
      */
+    @Parameter(names = {"-d", "--debug" }, description = "Enables debug output.", hidden = true)
     private boolean debug;
     /**
      * Print help message or not.
      *
      * Ignores all other options.
      */
+    @Parameter(names = {"-h", "--help", "-?" }, description = "This help.", help = true)
     private boolean help;
     /**
      * Show version or net.
      */
+    @Parameter(names = {"-v", "--version" }, description = "Show version information.")
     private boolean version;
     /**
      * Collect all not recognized arguments as file pats.
      */
-    private Collection<String> reportFiles = Collections.emptyList();
+    @Parameter(description = "report1.xml [report2.xml ... reportN.xml]")
+    private Collection<String> reportFiles = Lists.newArrayList();
     /**
      * Input file encoding.
      */
+    @Parameter(names = {"-i", "--input-encoding" }, description = "Input encoding of the report files.")
     private String inputEncoding = DEFAULT_ENCODING;
     /**
      * Output file encoding.
      */
+    @Parameter(names = {"-o", "--output-encoding" }, description = "Output encoding of the suppressions files.")
     private String outputEncoding = DEFAULT_ENCODING;
 
     /**
@@ -62,6 +67,7 @@ final class CliOptions {
      *
      * @param pathPrefix must not be {@code null}
      */
+    @Override
     public void setPathPrefix(final String pathPrefix) {
         Validate.notNull(pathPrefix);
         this.pathPrefix = pathPrefix;
@@ -72,6 +78,7 @@ final class CliOptions {
      *
      * @return never {@code null} maybe empty
      */
+    @Override
     public String getPathPrefix() {
         return pathPrefix;
     }
@@ -81,6 +88,7 @@ final class CliOptions {
      *
      * @param files must not be {@code null}
      */
+    @Override
     public void setReportFiles(final Collection<String> files) {
         Validate.notNull(files);
         reportFiles = files;
@@ -91,6 +99,7 @@ final class CliOptions {
      *
      * @return {@code true} if {@link #getReportFiles()} is not empty, else {@code false}
      */
+    @Override
     public boolean hasReportFiles() {
         return !reportFiles.isEmpty();
     }
@@ -100,6 +109,7 @@ final class CliOptions {
      *
      * @return never {@code null} maybe empty
      */
+    @Override
     public Collection<String> getReportFiles() {
         return reportFiles;
     }
@@ -109,6 +119,7 @@ final class CliOptions {
      *
      * @param onOrOff True enables, false disables (default).
      */
+    @Override
     public void setDebug(final boolean onOrOff) {
         this.debug = onOrOff;
     }
@@ -118,6 +129,7 @@ final class CliOptions {
      *
      * @return Return true if debug is enabled, unless false.
      */
+    @Override
     public boolean isDebug() {
         return debug;
     }
@@ -127,6 +139,7 @@ final class CliOptions {
      *
      * @param onOrOff True will shows version, false not.
      */
+    @Override
     public void setVersion(final boolean onOrOff) {
         this.version = onOrOff;
     }
@@ -136,6 +149,7 @@ final class CliOptions {
      *
      * @return Return true if show version is enabled, unless false.
      */
+    @Override
     public boolean isVersion() {
         return version;
     }
@@ -145,6 +159,7 @@ final class CliOptions {
      *
      * @param onOrOff True enables, false disables (default)
      */
+    @Override
     public void setHelp(final boolean onOrOff) {
         this.help = onOrOff;
     }
@@ -154,6 +169,7 @@ final class CliOptions {
      *
      * @return Return true if show help message is enabled, unless false
      */
+    @Override
     public boolean isHelp() {
         return help;
     }
@@ -163,6 +179,7 @@ final class CliOptions {
      *
      * @return by default it is {@link #DEFAULT_ENCODING}
      */
+    @Override
     public String getInputEncoding() {
         return inputEncoding;
     }
@@ -172,6 +189,7 @@ final class CliOptions {
      *
      * @param inputEncoding must not be {@code null} or empty
      */
+    @Override
     public void setInputEncoding(final String inputEncoding) {
         Validate.notEmpty(inputEncoding);
         this.inputEncoding = inputEncoding;
@@ -182,6 +200,7 @@ final class CliOptions {
      *
      * @return by default it is {@link #DEFAULT_ENCODING}
      */
+    @Override
     public String getOutputEncoding() {
         return outputEncoding;
     }
@@ -191,8 +210,20 @@ final class CliOptions {
      *
      * @param outputEncoding must not be {@code null} or empty
      */
+    @Override
     public void setOutputEncoding(final String outputEncoding) {
         Validate.notEmpty(outputEncoding);
         this.outputEncoding = outputEncoding;
+    }
+
+    @Override
+    public String toString() {
+        return    "  pathPrefix:     " + pathPrefix + "\n"
+                + "  debug:          " + debug + "\n"
+                + "  help:           " + help + "\n"
+                + "  version:        " + version + "\n"
+                + "  reportFiles:    " + reportFiles + "\n"
+                + "  inputEncoding:  " + inputEncoding + "\n"
+                + "  outputEncoding: " + outputEncoding;
     }
 }

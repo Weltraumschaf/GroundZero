@@ -9,13 +9,13 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.commons;
 
 import com.google.common.collect.Lists;
 import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.cli.Option;
-import static de.weltraumschaf.groundzero.CliOptionsConfiguration.Option.*;
+import static de.weltraumschaf.groundzero.opt.commons.OptionsConfiguration.Option.*;
 import java.util.Collections;
 
 /**
@@ -23,17 +23,17 @@ import java.util.Collections;
  *
  * Implements hard coded order of options as followed:
  * <ol>
- *  <li>{@link de.weltraumschaf.groundzero.CliOptionsConfiguration.Option#PATH_PREFIX}</li>
- *  <li>{@link de.weltraumschaf.groundzero.CliOptionsConfiguration.Option#INPUT_ENCODING}</li>
- *  <li>{@link de.weltraumschaf.groundzero.CliOptionsConfiguration.Option#OUTPUT_ENCODING}</li>
- *  <li>{@link de.weltraumschaf.groundzero.CliOptionsConfiguration.Option#HELP}</li>
- *  <li>{@link de.weltraumschaf.groundzero.CliOptionsConfiguration.Option#VERSION}</li>
- *  <li>{@link de.weltraumschaf.groundzero.CliOptionsConfiguration.Option#DEBUG}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#PATH_PREFIX}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#INPUT_ENCODING}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#OUTPUT_ENCODING}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#HELP}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#VERSION}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#DEBUG}</li>
  * </ol>
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class CliOptionComparator implements Comparator<Option> {
+final class OptionComparator implements Comparator<Option> {
 
     /**
      * Signals that optionOne comes before optionTwo.
@@ -50,9 +50,9 @@ final class CliOptionComparator implements Comparator<Option> {
     /**
      * Holds the options in their order.
      */
-    private static final List<CliOptionsConfiguration.Option> ORDER;
+    private static final List<OptionsConfiguration.Option> ORDER;
     static {
-        final List<CliOptionsConfiguration.Option> l = Lists.newArrayList();
+        final List<OptionsConfiguration.Option> l = Lists.newArrayList();
         l.add(PATH_PREFIX);
         l.add(INPUT_ENCODING);
         l.add(OUTPUT_ENCODING);
@@ -91,7 +91,7 @@ final class CliOptionComparator implements Comparator<Option> {
         final String shortOption = option.getOpt();
         final String longOption = option.getLongOpt();
 
-        for (CliOptionsConfiguration.Option config : ORDER) {
+        for (OptionsConfiguration.Option config : ORDER) {
             if (config.getShortOption().equals(shortOption) || config.getLongOption().equals(longOption)) {
                 return ORDER.indexOf(config);
             }

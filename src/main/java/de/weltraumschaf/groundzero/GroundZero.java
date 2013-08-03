@@ -9,13 +9,14 @@
  */
 package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.groundzero.opt.CliOptions;
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
+import de.weltraumschaf.groundzero.opt.CliOptionsSetup;
+import de.weltraumschaf.groundzero.opt.CliStrategy;
 import java.io.IOException;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -30,23 +31,6 @@ public class GroundZero extends InvokableAdapter {
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
     /**
-     * Formats help and usage.
-     */
-    private static final HelpFormatter HELP_FORMATTER = new CliHelpFormatter();
-    static {
-        HELP_FORMATTER.setOptionComparator(new CliOptionComparator());
-    }
-    /**
-     * Configured command line options.
-     */
-    private final CliOptionsConfiguration cliOptionsConfiguration = new CliOptionsConfiguration();
-    /**
-     * Current command line options.
-     *
-     * Initialized with default object.
-     */
-    private CliOptions options = new CliOptions();
-    /**
      * Processes the report files.
      */
     private ReportProcessor processor;
@@ -54,6 +38,8 @@ public class GroundZero extends InvokableAdapter {
      * Version of the application.
      */
     private Version version;
+    private CliOptionsSetup optionsSetup;
+    private CliOptions options;
 
     /**
      * Dedicated constructor.
@@ -119,11 +105,26 @@ public class GroundZero extends InvokableAdapter {
      * @throws ApplicationException if command line arguments were not possible to parse
      */
     private void examineCommandLineOptions() throws ApplicationException {
-        try {
-            final CliOptionsParser parser = new CliOptionsParser(cliOptionsConfiguration);
-            options = parser.parse(getArgs());
-        } catch (ParseException ex) {
-            throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
+        final String envStrategy = System.getenv("GROUNDZERO_OPTIONS_STRATEGY");
+
+        final CliStrategy strategy;
+
+        if ("commons".equalsIgnoreCase(envStrategy)) {
+            strategy = CliStrategy.COMMONS;
+        } else if ("jcommander".equalsIgnoreCase(envStrategy)) {
+            strategy = CliStrategy.JCOMMANDER;
+        } else {
+            strategy = CliStrategy.COMMONS;
+            getIoStreams().errorln(
+                    String.format("Warning: Unsupported strategy '%s' Fall back to '%s'.",
+                    envStrategy, strategy));
+        }
+
+        optionsSetup = CliOptionsSetup.create(strategy);
+        options = optionsSetup.parse(getArgs());
+
+        if (options.isDebug()) {
+            getIoStreams().println(String.format("Used CLI options:\n%s", options));
         }
     }
 
@@ -131,7 +132,7 @@ public class GroundZero extends InvokableAdapter {
      * Prints help and usage information on STDOUT.
      */
     void showHelpMessage() {
-        cliOptionsConfiguration.format(HELP_FORMATTER, getIoStreams().getStdout());
+        getIoStreams().print(optionsSetup.help());
     }
 
     /**

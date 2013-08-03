@@ -9,8 +9,9 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.commons;
 
+import de.weltraumschaf.groundzero.opt.CliOptions;
 import org.apache.commons.cli.MissingArgumentException;
 import org.apache.commons.cli.ParseException;
 import static org.junit.Assert.*;
@@ -20,16 +21,16 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 /**
- * Tests for {@link CliOptionsParser}.
+ * Tests for {@link OptionsParser}.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CliOptionsParserTest {
+public class OptionsParserTest {
 
     //CHECKSTYLE:OFF Must be public for JUnit's sake.
     @Rule public final ExpectedException thrown = ExpectedException.none();
     //CHECKSTYLE:ON
-    private final CliOptionsParser sut = new CliOptionsParser(new CliOptionsConfiguration());
+    private final OptionsParser sut = new OptionsParser(new OptionsConfiguration());
 
     @Test
     public void parse_debugShortOptions() throws ParseException {

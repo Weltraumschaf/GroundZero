@@ -10,8 +10,9 @@
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
 
-package de.weltraumschaf.groundzero;
+package de.weltraumschaf.groundzero.opt.commons;
 
+import de.weltraumschaf.groundzero.opt.commons.OptionComparator;
 import org.apache.commons.cli.Option;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Tests for {@link CliOptionComparator}.
+ * Tests for {@link OptionComparator}.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
@@ -42,7 +43,7 @@ public class CliOptionComparatorTest {
     @Rule public final ExpectedException thrown = ExpectedException.none();
     //CHECKSTYLE:ON
 
-    private final CliOptionComparator sut = new CliOptionComparator();
+    private final OptionComparator sut = new OptionComparator();
 
     @Test
     public void findPositionForKey_throwsExceptionIfNullPassedIn() {
