@@ -30,6 +30,7 @@ final class CustomHelpFormatter extends HelpFormatter {
     /**
      * Overrides the default delimiter with an empty string.
      */
+    @SuppressWarnings("deprecation")
     public CustomHelpFormatter() {
         super();
         defaultNewLine = "";
