@@ -13,9 +13,17 @@
 package de.weltraumschaf.groundzero.opt;
 
 /**
+ * Enumerates the implementation strategies for command line parsing.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public enum Strategy {
-    COMMONS, JCOMMANDER;
+    /**
+     * Apache Commons CLI.
+     */
+    COMMONS,
+    /**
+     * JCommander.
+     */
+    JCOMMANDER;
 }

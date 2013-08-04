@@ -38,7 +38,13 @@ public class GroundZero extends InvokableAdapter {
      * Version of the application.
      */
     private Version version;
+    /**
+     * USed to parse CLI options and generate help message.
+     */
     private OptionsSetup optionsSetup;
+    /**
+     * Holds the parsed CLI options.
+     */
     private CliOptions options;
 
     /**

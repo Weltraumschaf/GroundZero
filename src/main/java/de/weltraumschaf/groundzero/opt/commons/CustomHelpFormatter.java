@@ -22,17 +22,25 @@ import org.apache.commons.cli.Options;
  */
 final class CustomHelpFormatter extends HelpFormatter {
 
-    private static final String NL = String.format("%n");
+    /**
+     * Used for new line for all platforms.
+     */
+    private static final String NL = "\n";
 
+    /**
+     * Overrides the default delimiter with an empty string.
+     */
     public CustomHelpFormatter() {
         super();
         defaultNewLine = "";
     }
 
     @Override
+    //CHECKSTYLE:OFF
     public void printHelp(final PrintWriter pw, final int width, final String cmdLineSyntax,
             final String header, final Options options, final int leftPad,
             final int descPad, final String footer, final boolean autoUsage) {
+        //CHECKSTYLE:ON
         super.printHelp(pw, width, cmdLineSyntax, header + NL + NL, options, leftPad, descPad, footer + NL, autoUsage);
     }
 

@@ -17,8 +17,9 @@ package de.weltraumschaf.groundzero.opt;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
+//CHECKSTYLE:OFF
 public interface LongOptions {
-
+//CHECKSTYLE:ON
     /**
      * Prefix for all switches.
      */
