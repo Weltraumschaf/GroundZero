@@ -19,6 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Implementation based on Apache Commons CLI.
@@ -45,6 +46,12 @@ public final class CommonsImplementation extends OptionsSetup {
 
     @Override
     public CliOptions parse(final String[] args) throws ApplicationException {
+        Validate.notNull(args);
+
+        if (args.length == 0) {
+            return new CommonsOptions();
+        }
+
         try {
             return PARSER.parse(args);
         } catch (ParseException ex) {

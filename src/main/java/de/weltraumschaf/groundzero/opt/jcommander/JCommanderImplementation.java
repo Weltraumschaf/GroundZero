@@ -14,6 +14,7 @@ package de.weltraumschaf.groundzero.opt.jcommander;
 import com.beust.jcommander.JCommander;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.CliOptions;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Implementation based on JCommander.
@@ -25,23 +26,33 @@ public class JCommanderImplementation extends OptionsSetup {
     /**
      * Used to parse arguments and create help message.
      */
-    private static final JCommander COMMANDER = new JCommander();
-    static {
-        COMMANDER.setProgramName(CliOptions.EXECUTABLE);
+    private final JCommander commander = new JCommander();
+
+    /**
+     * Sets the executable name for JCommander.
+     */
+    public JCommanderImplementation() {
+        super();
+        commander.setProgramName(CliOptions.EXECUTABLE);
     }
 
     @Override
     public CliOptions parse(final String[] args) {
+        Validate.notNull(args);
         final CliOptions options = new JCommanderOptions();
-        COMMANDER.addObject(options);
-        COMMANDER.parse(args);
+
+        if (args.length > 0) {
+            commander.addObject(options);
+            commander.parse(args);
+        }
+
         return options;
     }
 
     @Override
     public String help() {
         final StringBuilder buffer = new StringBuilder();
-        COMMANDER.usage(buffer);
+        commander.usage(buffer);
         final int offset = buffer.indexOf("\n");
         buffer.insert(offset, CliOptions.DESCRIPTION);
         buffer.insert(0, CliOptions.HEADER + "\n");
