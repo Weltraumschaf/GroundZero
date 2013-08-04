@@ -30,6 +30,10 @@ final class OptionsParser {
      * The parsed and found options.
      */
     private final OptionsConfiguration config;
+    /**
+     * Used to parse arguments.
+     */
+    private final CommandLineParser parser = new PosixParser();
 
     /**
      * Initializes the parser with a new options object.
@@ -41,14 +45,15 @@ final class OptionsParser {
     }
 
     /**
-     * Parses the given command line arguments strings.
+     * Parses the given command line arguments strings into options object.
      *
-     * @param args Array of argument strings
-     * @return never {@code null}
+     * @param args must not be {@code null}
+     * @param options must not be {@code null}
      * @throws ParseException On parse errors
      */
     public void parse(final String[] args, final CliOptions options) throws ParseException {
-        final CommandLineParser parser = new PosixParser();
+        Validate.notNull(args, "Parameter 'args' must not be null!");
+        Validate.notNull(options, "Parameter 'options' must not be null!");
         final CommandLine cmd = parser.parse(config.getParseOptions(), args);
         optPathPrefix(cmd, options);
         optInputEncoding(cmd, options);
