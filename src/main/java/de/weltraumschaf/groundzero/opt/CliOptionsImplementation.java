@@ -9,51 +9,70 @@
  *
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
-package de.weltraumschaf.groundzero.opt.commons;
+package de.weltraumschaf.groundzero.opt;
 
-import de.weltraumschaf.groundzero.opt.CliOptions;
 import java.util.Collection;
-import java.util.Collections;
 import org.apache.commons.lang3.Validate;
+import com.beust.jcommander.Parameter;
+import com.google.common.collect.Lists;
 
 /**
  * Holds the given command line arguments.
  *
- * Implementation for Apache Commons CLI.
+ * Implementation for JComander.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class CommonsOptions implements CliOptions {
+public final class CliOptionsImplementation implements CliOptions {
 
     /**
      * Path prefix to stript of suppressed file names.
      */
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.PATH_PREFIX,
+        LongOptions.PFX + LongOptions.PATH_PREFIX },
+        description = OptionDescriptions.PATH_PREFIX)
     private String pathPrefix = "";
     /**
      * Print debug information or not.
      */
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.DEBUG,
+        LongOptions.PFX + LongOptions.DEBUG },
+        description = OptionDescriptions.DEBUG)
     private boolean debug;
     /**
      * Print help message or not.
      *
      * Ignores all other options.
      */
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.HELP,
+        LongOptions.PFX + LongOptions.HELP },
+        description = OptionDescriptions.HELP, help = true)
     private boolean help;
     /**
      * Show version or net.
      */
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.VERSION,
+        LongOptions.PFX + LongOptions.VERSION },
+        description = OptionDescriptions.VERSION)
     private boolean version;
     /**
      * Collect all not recognized arguments as file pats.
      */
-    private Collection<String> reportFiles = Collections.emptyList();
+    @Parameter(description = "report1.xml [report2.xml ... reportN.xml]")
+    private Collection<String> reportFiles = Lists.newArrayList();
     /**
      * Input file encoding.
      */
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.INPUT_ENCODING,
+        LongOptions.PFX + LongOptions.INPUT_ENCODING },
+        description = OptionDescriptions.INPUT_ENCODING)
     private String inputEncoding = DEFAULT_ENCODING;
     /**
      * Output file encoding.
      */
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.OUTPUT_ENCODING,
+        LongOptions.PFX + LongOptions.OUTPUT_ENCODING },
+        description = OptionDescriptions.OUTPUT_ENCODING)
     private String outputEncoding = DEFAULT_ENCODING;
 
     /**
@@ -212,7 +231,7 @@ final class CommonsOptions implements CliOptions {
 
     @Override
     public String toString() {
-        return    "  pathPrefix:     " + pathPrefix + "\n"
+        return "  pathPrefix:     " + pathPrefix + "\n"
                 + "  debug:          " + debug + "\n"
                 + "  help:           " + help + "\n"
                 + "  version:        " + version + "\n"
@@ -220,5 +239,4 @@ final class CommonsOptions implements CliOptions {
                 + "  inputEncoding:  " + inputEncoding + "\n"
                 + "  outputEncoding: " + outputEncoding;
     }
-
 }

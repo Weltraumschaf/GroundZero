@@ -11,6 +11,7 @@
  */
 package de.weltraumschaf.groundzero.opt.jcommander;
 
+import de.weltraumschaf.groundzero.opt.CliOptionsImplementation;
 import com.beust.jcommander.JCommander;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.CliOptions;
@@ -39,7 +40,7 @@ public class JCommanderImplementation extends OptionsSetup {
     @Override
     public CliOptions parse(final String[] args) {
         Validate.notNull(args);
-        final CliOptions options = new JCommanderOptions();
+        final CliOptions options = new CliOptionsImplementation();
 
         if (args.length > 0) {
             commander.addObject(options);
