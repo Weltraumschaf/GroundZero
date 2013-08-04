@@ -15,6 +15,7 @@ import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSeverity;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
+import de.weltraumschaf.groundzero.transform.CheckstyleSaxHandler.ReportTags;
 import java.io.IOException;
 import java.io.StringReader;
 import org.junit.Before;
@@ -25,6 +26,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
 
 /**
  * Test for {@link CheckstyleSaxHandler}.
@@ -146,5 +148,27 @@ public class CheckstyleSaxHandlerTest {
         expectedFile.addViolation(expectedViolation3);
 
         assertThat(sut.getReport(), is(equalTo(expectedReport)));
+    }
+
+    @Test @Ignore
+    public void parseError_withInvalidLineAttributeValue_throwsNumberFormatException() {}
+
+    @Test @Ignore
+    public void parseError_withInvalidLineAttributeValue_throwsIllegalArgumentException() {}
+
+    @Test @Ignore
+    public void parseError_withInvalidColumnAttributeValue_throwsNumberFormatException() {}
+
+    @Test @Ignore
+    public void parseError_withInvalidColumnAttributeValue_throwsIllegalArgumentException() {}
+
+    @Test @Ignore
+    public void recognizeTag_throwsExceptionIfNullPassedIn() {
+
+    }
+
+    @Test
+    public void reportTags_forTagName_retunNullForUnknownTag() {
+        assertThat(ReportTags.forTagName("foobar"), is(nullValue()));
     }
 }

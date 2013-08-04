@@ -67,7 +67,7 @@ class CheckstyleSaxHandler extends DefaultHandler {
      *
      * @param tagName must not be {@code null} or empty
      */
-    private void recognizeTag(final String tagName) {
+    void recognizeTag(final String tagName) {
         Validate.notEmpty(tagName);
         final ReportTags tag = ReportTags.forTagName(tagName);
 
@@ -150,7 +150,7 @@ class CheckstyleSaxHandler extends DefaultHandler {
     /**
      * Enumerates the report XML tags.
      */
-    private enum ReportTags {
+    enum ReportTags {
 
         /**
          * Tag {@literal <checkstyle>}.
