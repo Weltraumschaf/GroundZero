@@ -212,4 +212,16 @@ public class SuppressionGeneratorTest {
         assertThat(suppressions.getFileName(), is(equalTo("foo.suppressions.xml")));
     }
 
+    @Test
+    public void setEncoding_throwsExceptionIfNull() {
+        thrown.expect(NullPointerException.class);
+        sut.setEncoding(null);
+    }
+
+    @Test
+    public void setEncoding_throwsExceptionIfEmpty() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.setEncoding("");
+    }
+
 }
