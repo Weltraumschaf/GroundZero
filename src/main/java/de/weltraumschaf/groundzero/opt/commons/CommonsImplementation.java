@@ -15,6 +15,7 @@ import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.groundzero.ExitCodeImpl;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.CliOptions;
+import de.weltraumschaf.groundzero.opt.jcommander.JCommanderOptions;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.apache.commons.cli.HelpFormatter;
@@ -36,6 +37,7 @@ public final class CommonsImplementation extends OptionsSetup {
      * Formats help and usage.
      */
     private static final HelpFormatter HELP_FORMATTER = new HelpFormatter();
+
     static {
         HELP_FORMATTER.setOptionComparator(new OptionComparator());
     }
@@ -47,16 +49,17 @@ public final class CommonsImplementation extends OptionsSetup {
     @Override
     public CliOptions parse(final String[] args) throws ApplicationException {
         Validate.notNull(args);
+        final JCommanderOptions options = new JCommanderOptions();
 
-        if (args.length == 0) {
-            return new CommonsOptions();
+        if (args.length > 0) {
+            try {
+                PARSER.parse(args, options);
+            } catch (ParseException ex) {
+                throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
+            }
         }
 
-        try {
-            return PARSER.parse(args);
-        } catch (ParseException ex) {
-            throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
-        }
+        return options;
     }
 
     @Override

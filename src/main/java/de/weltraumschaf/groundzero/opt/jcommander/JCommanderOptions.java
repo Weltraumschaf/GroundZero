@@ -27,7 +27,7 @@ import de.weltraumschaf.groundzero.opt.ShortOptions;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class JCommanderOptions implements CliOptions {
+public final class JCommanderOptions implements CliOptions {
 
     /**
      * Path prefix to stript of suppressed file names.

@@ -47,10 +47,9 @@ final class OptionsParser {
      * @return never {@code null}
      * @throws ParseException On parse errors
      */
-    public CliOptions parse(final String[] args) throws ParseException {
+    public void parse(final String[] args, final CliOptions options) throws ParseException {
         final CommandLineParser parser = new PosixParser();
         final CommandLine cmd = parser.parse(config.getParseOptions(), args);
-        final CliOptions options = new CommonsOptions();
         optPathPrefix(cmd, options);
         optInputEncoding(cmd, options);
         optOutputEncoding(cmd, options);
@@ -58,7 +57,6 @@ final class OptionsParser {
         optHelp(cmd, options);
         optVersion(cmd, options);
         reportFileArguments(cmd, options);
-        return options;
     }
 
     /**
