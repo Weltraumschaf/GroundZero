@@ -20,7 +20,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 /**
- * Configuration for {@link CliOptionsParser options parser}.
+ * Configuration for {@link OptionsParser options parser}.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
