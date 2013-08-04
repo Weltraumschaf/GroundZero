@@ -184,9 +184,29 @@ public class CommonsImplementationTest {
         assertThat(options.isVersion(), is(false));
     }
 
-    @Test @Ignore
+    @Test
     public void help() {
-        assertThat(sut.help(), is(equalTo("")));
+        assertThat(sut.help(),
+                is(equalTo("usage: groundzero [-p <PATH>] [-i <ENCODING>] [-o <ENCODING>] [-h] [-v]\n"
+                + "       [-d]\n"
+                + "A tool to generate line based suppression files for Checkstyle.\n"
+                + "Parses the Checkstyle report files given as command line argument and\n"
+                + "generates suppression XML configuration files from them. The suppression\n"
+                + "configurations are saved into files in the current working directory.\n"
+                + "The file names are the same as the report filename with the addition of\n"
+                + "'.suppressions' before the '.xml' file extension. So the report file\n"
+                + "'foobar.xml' will produce a suppression file named\n"
+                + "'foobar.suppressions.xml'.\n"
+                + " -p,--path-prefix <PATH>           Prefix to strip from checked file\n"
+                + "                                   paths.\n"
+                + " -i,--input-encoding <ENCODING>    Input encoding of the report files.\n"
+                + " -o,--output-encoding <ENCODING>   Output encoding of the suppressions\n"
+                + "                                   files.\n"
+                + " -h,--help                         This help.\n"
+                + " -v,--version                      Show version information.\n"
+                + " -d,--debug                        Enables debug output.\n\n"
+                + "Written 2013 by Sven Strittmatter <weltraumschaf@googlemail.com>\n"
+                + "Report bugs here https://github.com/Weltraumschaf/GroundZero/issues\n")));
     }
 
 }
