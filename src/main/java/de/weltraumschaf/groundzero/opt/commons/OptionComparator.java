@@ -12,10 +12,10 @@
 package de.weltraumschaf.groundzero.opt.commons;
 
 import com.google.common.collect.Lists;
+import de.weltraumschaf.groundzero.opt.OptionDescriptor;
 import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.cli.Option;
-import static de.weltraumschaf.groundzero.opt.commons.OptionsConfiguration.Option.*;
 import java.util.Collections;
 
 /**
@@ -23,12 +23,12 @@ import java.util.Collections;
  *
  * Implements hard coded order of options as followed:
  * <ol>
- *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#PATH_PREFIX}</li>
- *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#INPUT_ENCODING}</li>
- *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#OUTPUT_ENCODING}</li>
- *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#HELP}</li>
- *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#VERSION}</li>
- *  <li>{@link de.weltraumschaf.groundzero.OptionsConfiguration.Option#DEBUG}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.opt.OptionDescriptor#PATH_PREFIX}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.opt.OptionDescriptor#INPUT_ENCODING}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.opt.OptionDescriptor#OUTPUT_ENCODING}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.opt.OptionDescriptor#HELP}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.opt.OptionDescriptor#VERSION}</li>
+ *  <li>{@link de.weltraumschaf.groundzero.opt.OptionDescriptor#DEBUG}</li>
  * </ol>
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
@@ -50,15 +50,15 @@ final class OptionComparator implements Comparator<Option> {
     /**
      * Holds the options in their order.
      */
-    private static final List<OptionsConfiguration.Option> ORDER;
+    private static final List<OptionDescriptor> ORDER;
     static {
-        final List<OptionsConfiguration.Option> l = Lists.newArrayList();
-        l.add(PATH_PREFIX);
-        l.add(INPUT_ENCODING);
-        l.add(OUTPUT_ENCODING);
-        l.add(HELP);
-        l.add(VERSION);
-        l.add(DEBUG);
+        final List<OptionDescriptor> l = Lists.newArrayList();
+        l.add(OptionDescriptor.PATH_PREFIX);
+        l.add(OptionDescriptor.INPUT_ENCODING);
+        l.add(OptionDescriptor.OUTPUT_ENCODING);
+        l.add(OptionDescriptor.HELP);
+        l.add(OptionDescriptor.VERSION);
+        l.add(OptionDescriptor.DEBUG);
         ORDER = Collections.unmodifiableList(l);
     }
 
@@ -91,9 +91,9 @@ final class OptionComparator implements Comparator<Option> {
         final String shortOption = option.getOpt();
         final String longOption = option.getLongOpt();
 
-        for (OptionsConfiguration.Option config : ORDER) {
-            if (config.getShortOption().equals(shortOption) || config.getLongOption().equals(longOption)) {
-                return ORDER.indexOf(config);
+        for (OptionDescriptor desc : ORDER) {
+            if (desc.getShortOption().equals(shortOption) || desc.getLongOption().equals(longOption)) {
+                return ORDER.indexOf(desc);
             }
         }
 

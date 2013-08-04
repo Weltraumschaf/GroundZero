@@ -17,7 +17,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.lang3.Validate;
-import static de.weltraumschaf.groundzero.opt.commons.OptionsConfiguration.Option.*;
+import static de.weltraumschaf.groundzero.opt.OptionDescriptor.*;
 
 /**
  * Parses the command line arguments.
