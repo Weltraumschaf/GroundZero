@@ -76,8 +76,6 @@ final class OptionsParser {
 
         if (cmd.hasOption(PATH_PREFIX.getLongOption())) {
             options.setPathPrefix(cmd.getOptionValue(PATH_PREFIX.getLongOption()));
-        } else if (cmd.hasOption(PATH_PREFIX.getShortOption())) {
-            options.setPathPrefix(cmd.getOptionValue(PATH_PREFIX.getShortOption()));
         }
     }
 
@@ -151,8 +149,6 @@ final class OptionsParser {
 
         if (cmd.hasOption(INPUT_ENCODING.getLongOption())) {
             options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getLongOption()));
-        } else if (cmd.hasOption(INPUT_ENCODING.getShortOption())) {
-            options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getShortOption()));
         }
     }
 
@@ -168,8 +164,6 @@ final class OptionsParser {
 
         if (cmd.hasOption(OUTPUT_ENCODING.getLongOption())) {
             options.setOutputEncoding(cmd.getOptionValue(OUTPUT_ENCODING.getLongOption()));
-        } else if (cmd.hasOption(OUTPUT_ENCODING.getShortOption())) {
-            options.setOutputEncoding(cmd.getOptionValue(OUTPUT_ENCODING.getShortOption()));
-        }
+        } 
     }
 }
