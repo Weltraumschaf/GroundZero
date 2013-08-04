@@ -22,27 +22,27 @@ public enum OptionDescriptor {
     /**
      * Path prefix option.
      */
-    PATH_PREFIX("p", "path-prefix", "Prefix to strip from checked file paths."),
+    PATH_PREFIX(ShortOptions.PATH_PREFIX, LongOptions.PATH_PREFIX, OptionDescriptions.PATH_PREFIX),
     /**
      * Debug option.
      */
-    DEBUG("d", "debug", "Enables debug output."),
+    DEBUG(ShortOptions.DEBUG, LongOptions.DEBUG, OptionDescriptions.DEBUG),
     /**
      * Help option.
      */
-    HELP("h", "help", "This help."),
+    HELP(ShortOptions.HELP, LongOptions.HELP, OptionDescriptions.HELP),
     /**
      * Version option.
      */
-    VERSION("v", "version", "Show version information."),
+    VERSION(ShortOptions.VERSION, LongOptions.VERSION, OptionDescriptions.VERSION),
     /**
      * File input encoding.
      */
-    INPUT_ENCODING("i", "input-encoding", "Input encoding of the report files."),
+    INPUT_ENCODING(ShortOptions.INPUT_ENCODING, LongOptions.INPUT_ENCODING, OptionDescriptions.INPUT_ENCODING),
     /**
      * File output encoding.
      */
-    OUTPUT_ENCODING("o", "output-encoding", "Output encoding of the suppressions files.");
+    OUTPUT_ENCODING(ShortOptions.OUTPUT_ENCODING, LongOptions.OUTPUT_ENCODING, OptionDescriptions.OUTPUT_ENCODING);
     /**
      * Short option w/o preceding -.
      */
@@ -98,4 +98,5 @@ public enum OptionDescriptor {
     public String getDescription() {
         return description;
     }
+
 }

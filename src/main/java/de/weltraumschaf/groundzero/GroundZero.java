@@ -14,8 +14,8 @@ import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
-import de.weltraumschaf.groundzero.opt.CliOptionsSetup;
-import de.weltraumschaf.groundzero.opt.CliStrategy;
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
+import de.weltraumschaf.groundzero.opt.Strategy;
 import java.io.IOException;
 import org.apache.commons.lang3.Validate;
 
@@ -38,7 +38,7 @@ public class GroundZero extends InvokableAdapter {
      * Version of the application.
      */
     private Version version;
-    private CliOptionsSetup optionsSetup;
+    private OptionsSetup optionsSetup;
     private CliOptions options;
 
     /**
@@ -107,20 +107,20 @@ public class GroundZero extends InvokableAdapter {
     private void examineCommandLineOptions() throws ApplicationException {
         final String envStrategy = System.getenv("GROUNDZERO_OPTIONS_STRATEGY");
 
-        final CliStrategy strategy;
+        final Strategy strategy;
 
         if ("commons".equalsIgnoreCase(envStrategy)) {
-            strategy = CliStrategy.COMMONS;
+            strategy = Strategy.COMMONS;
         } else if ("jcommander".equalsIgnoreCase(envStrategy)) {
-            strategy = CliStrategy.JCOMMANDER;
+            strategy = Strategy.JCOMMANDER;
         } else {
-            strategy = CliStrategy.COMMONS;
+            strategy = Strategy.COMMONS;
             getIoStreams().errorln(
                     String.format("Warning: Unsupported strategy '%s' Fall back to '%s'.",
                     envStrategy, strategy));
         }
 
-        optionsSetup = CliOptionsSetup.create(strategy);
+        optionsSetup = OptionsSetup.create(strategy);
         options = optionsSetup.parse(getArgs());
 
         if (options.isDebug()) {

@@ -10,12 +10,28 @@
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
 
-package de.weltraumschaf.groundzero.opt;
+package de.weltraumschaf.groundzero.opt.commons;
+
+import org.junit.Test;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
+;
 
 /**
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public enum CliStrategy {
-    COMMONS, JCOMMANDER;
+public class CommonsImplementationTest {
+
+    private final CommonsImplementation sut = new CommonsImplementation();
+
+    @Test @Ignore
+    public void parse() throws Exception {
+    }
+
+    @Test @Ignore
+    public void help() {
+    }
+
 }

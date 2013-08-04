@@ -12,37 +12,41 @@
 package de.weltraumschaf.groundzero.opt.jcommander;
 
 import com.beust.jcommander.JCommander;
-import de.weltraumschaf.groundzero.opt.CliOptionsSetup;
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.CliOptions;
 
 /**
+ * Implementation based on JCommander.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class JCommanderImplementation extends CliOptionsSetup {
+public class JCommanderImplementation extends OptionsSetup {
 
-    private final CliOptions options = new JCommanderOptions();
-    private final JCommander commander = new JCommander(options);
-
-    public JCommanderImplementation() {
-        super();
-        commander.setProgramName(CliOptions.EXECUTABLE);
+    /**
+     * Used to parse arguments and create help message.
+     */
+    private static final JCommander COMMANDER = new JCommander();
+    static {
+        COMMANDER.setProgramName(CliOptions.EXECUTABLE);
     }
 
     @Override
     public CliOptions parse(final String[] args) {
-        commander.parse(args);
+        final CliOptions options = new JCommanderOptions();
+        COMMANDER.addObject(options);
+        COMMANDER.parse(args);
         return options;
     }
 
     @Override
     public String help() {
         final StringBuilder buffer = new StringBuilder();
-        commander.usage(buffer);
+        COMMANDER.usage(buffer);
         final int offset = buffer.indexOf("\n");
         buffer.insert(offset, CliOptions.DESCRIPTION);
         buffer.insert(0, CliOptions.HEADER + "\n");
         buffer.append(CliOptions.FOOTER).append('\n');
         return buffer.toString();
     }
+
 }

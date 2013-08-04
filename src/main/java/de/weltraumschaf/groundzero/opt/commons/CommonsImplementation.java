@@ -13,7 +13,7 @@ package de.weltraumschaf.groundzero.opt.commons;
 
 import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.groundzero.ExitCodeImpl;
-import de.weltraumschaf.groundzero.opt.CliOptionsSetup;
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.CliOptions;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -21,11 +21,15 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 
 /**
+ * Implementation based on Apache Commons CLI.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public final class CommonsImplementation extends CliOptionsSetup {
+public final class CommonsImplementation extends OptionsSetup {
 
+    /**
+     * Holds the options configuration.
+     */
     private static final OptionsConfiguration CONFIGURATION = new OptionsConfiguration();
     /**
      * Formats help and usage.
@@ -34,6 +38,9 @@ public final class CommonsImplementation extends CliOptionsSetup {
     static {
         HELP_FORMATTER.setOptionComparator(new OptionComparator());
     }
+    /**
+     * Parses the options.
+     */
     private static final OptionsParser PARSER = new OptionsParser(CONFIGURATION);
 
     @Override

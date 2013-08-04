@@ -14,6 +14,7 @@ package de.weltraumschaf.groundzero.opt;
 import java.util.Collection;
 
 /**
+ * Describes the interface for all necessary command line options.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
@@ -31,6 +32,9 @@ public interface CliOptions {
      * Name of the CLI executable.
      */
     String EXECUTABLE = "groundzero";
+    /**
+     * Description one liner.
+     */
     String HEADER = "A tool to generate line based suppression files for Checkstyle.\n";
     /**
      * Usage header.

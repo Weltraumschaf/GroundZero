@@ -12,7 +12,6 @@
 
 package de.weltraumschaf.groundzero.opt.commons;
 
-import de.weltraumschaf.groundzero.opt.commons.CommonsOptions;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;;
@@ -22,7 +21,7 @@ import static org.hamcrest.Matchers.*;;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CliOptionsCommonsTest {
+public class CommonsOptionsTest {
 
     private final CommonsOptions sut = new CommonsOptions();
 

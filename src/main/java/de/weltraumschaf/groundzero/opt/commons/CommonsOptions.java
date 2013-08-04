@@ -19,6 +19,8 @@ import org.apache.commons.lang3.Validate;
 /**
  * Holds the given command line arguments.
  *
+ * Implementation for Apache Commons CLI.
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 final class CommonsOptions implements CliOptions {

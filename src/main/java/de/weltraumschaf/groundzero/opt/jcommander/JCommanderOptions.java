@@ -16,9 +16,14 @@ import org.apache.commons.lang3.Validate;
 import com.beust.jcommander.Parameter;
 import com.google.common.collect.Lists;
 import de.weltraumschaf.groundzero.opt.CliOptions;
+import de.weltraumschaf.groundzero.opt.OptionDescriptions;
+import de.weltraumschaf.groundzero.opt.LongOptions;
+import de.weltraumschaf.groundzero.opt.ShortOptions;
 
 /**
  * Holds the given command line arguments.
+ *
+ * Implementation for JComander.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
@@ -27,24 +32,32 @@ final class JCommanderOptions implements CliOptions {
     /**
      * Path prefix to stript of suppressed file names.
      */
-    @Parameter(names = {"-p", "--path-prefix" }, description = "Prefix to strip from checked file paths.")
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.PATH_PREFIX,
+        LongOptions.PFX + LongOptions.PATH_PREFIX },
+        description = OptionDescriptions.PATH_PREFIX)
     private String pathPrefix = "";
     /**
      * Print debug information or not.
      */
-    @Parameter(names = {"-d", "--debug" }, description = "Enables debug output.", hidden = true)
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.DEBUG,
+        LongOptions.PFX + LongOptions.DEBUG },
+        description = OptionDescriptions.DEBUG)
     private boolean debug;
     /**
      * Print help message or not.
      *
      * Ignores all other options.
      */
-    @Parameter(names = {"-h", "--help", "-?" }, description = "This help.", help = true)
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.HELP,
+        LongOptions.PFX + LongOptions.HELP },
+        description = OptionDescriptions.HELP, help = true)
     private boolean help;
     /**
      * Show version or net.
      */
-    @Parameter(names = {"-v", "--version" }, description = "Show version information.")
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.VERSION,
+        LongOptions.PFX + LongOptions.VERSION },
+        description = OptionDescriptions.VERSION)
     private boolean version;
     /**
      * Collect all not recognized arguments as file pats.
@@ -54,12 +67,16 @@ final class JCommanderOptions implements CliOptions {
     /**
      * Input file encoding.
      */
-    @Parameter(names = {"-i", "--input-encoding" }, description = "Input encoding of the report files.")
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.INPUT_ENCODING,
+        LongOptions.PFX + LongOptions.INPUT_ENCODING },
+        description = OptionDescriptions.INPUT_ENCODING)
     private String inputEncoding = DEFAULT_ENCODING;
     /**
      * Output file encoding.
      */
-    @Parameter(names = {"-o", "--output-encoding" }, description = "Output encoding of the suppressions files.")
+    @Parameter(names = {ShortOptions.PFX + ShortOptions.OUTPUT_ENCODING,
+        LongOptions.PFX + LongOptions.OUTPUT_ENCODING },
+        description = OptionDescriptions.OUTPUT_ENCODING)
     private String outputEncoding = DEFAULT_ENCODING;
 
     /**
@@ -218,7 +235,7 @@ final class JCommanderOptions implements CliOptions {
 
     @Override
     public String toString() {
-        return    "  pathPrefix:     " + pathPrefix + "\n"
+        return "  pathPrefix:     " + pathPrefix + "\n"
                 + "  debug:          " + debug + "\n"
                 + "  help:           " + help + "\n"
                 + "  version:        " + version + "\n"

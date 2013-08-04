@@ -12,7 +12,6 @@
 
 package de.weltraumschaf.groundzero.opt.commons;
 
-import de.weltraumschaf.groundzero.opt.commons.OptionComparator;
 import org.apache.commons.cli.Option;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,7 +24,7 @@ import static org.hamcrest.Matchers.*;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class CliOptionComparatorTest {
+public class OptionComparatorTest {
     private static final Option FIXTURE_SHORT_OPT_PATHPREFIX = new Option("p", "");
     private static final Option FIXTURE_SHORT_OPT_INPUTENCODING = new Option("i", "");
     private static final Option FIXTURE_SHORT_OPT_OUTPUTENCODING = new Option("o", "");

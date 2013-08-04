@@ -13,21 +13,45 @@
 package de.weltraumschaf.groundzero.opt;
 
 import de.weltraumschaf.commons.ApplicationException;
-import static de.weltraumschaf.groundzero.opt.CliStrategy.COMMONS;
-import static de.weltraumschaf.groundzero.opt.CliStrategy.JCOMMANDER;
+import static de.weltraumschaf.groundzero.opt.Strategy.COMMONS;
+import static de.weltraumschaf.groundzero.opt.Strategy.JCOMMANDER;
 import de.weltraumschaf.groundzero.opt.commons.CommonsImplementation;
 import de.weltraumschaf.groundzero.opt.jcommander.JCommanderImplementation;
+import org.apache.commons.lang3.Validate;
 
 /**
+ * Abstract base setup for command line option parsing.
+ *
+ * Concrete implementation {@link Strategy strategies} must provide functionality.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public abstract class CliOptionsSetup {
+public abstract class OptionsSetup {
 
+    /**
+     * Parse the given command line arguments.
+     *
+     * @param args must not be {@code null}
+     * @return new object initialized with recognized options
+     * @throws ApplicationException if parse error occurs
+     */
     public abstract CliOptions parse(String[] args) throws ApplicationException;
+    /**
+     * Creates and returns the help message string.
+     *
+     * @return constant string
+     */
     public abstract String help();
 
-    public static CliOptionsSetup create(final CliStrategy strategy) {
+    /**
+     * Factory method to create concrete implementation.
+     *
+     * @param strategy must not be {@code null}
+     * @return always new instance
+     */
+    public static OptionsSetup create(final Strategy strategy) {
+        Validate.notNull(strategy, "Strategy must not be null!");
+
         switch (strategy) {
             case COMMONS:
                 return new CommonsImplementation();
