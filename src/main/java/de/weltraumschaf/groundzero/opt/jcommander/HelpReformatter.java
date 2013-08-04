@@ -47,7 +47,7 @@ public class HelpReformatter {
     /**
      * Forwards to {@link #setInput(java.lang.String)}.
      *
-     * @param input must not be {@link null}
+     * @param input must not be {@code null}
      */
     public void setInput(final StringBuilder input) {
         Validate.notNull(input);
@@ -58,7 +58,7 @@ public class HelpReformatter {
     /**
      * Splits input string by line brakes and sets {@link #input}.
      *
-     * @param raw must not be {@link null}
+     * @param raw must not be {@code null}
      */
     public void setInput(final String raw) {
         Validate.notNull(raw);

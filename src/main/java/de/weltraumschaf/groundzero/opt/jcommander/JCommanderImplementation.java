@@ -28,7 +28,14 @@ public class JCommanderImplementation extends OptionsSetup {
      * Used to parse arguments and create help message.
      */
     private final JCommander commander = new JCommander();
+    /**
+     * Reused to parse options into.
+     */
     private final CliOptions options = new CliOptionsImplementation();
+    /**
+     * Helper for help message reformatting.
+     */
+    private final HelpReformatter formatter = new HelpReformatter();
 
     /**
      * Sets the executable name for JCommander.
@@ -49,7 +56,6 @@ public class JCommanderImplementation extends OptionsSetup {
 
         return options;
     }
-    private final HelpReformatter formatter = new HelpReformatter();
 
     @Override
     public String help() {
