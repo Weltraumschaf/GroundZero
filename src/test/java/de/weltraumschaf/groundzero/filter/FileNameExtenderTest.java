@@ -41,6 +41,9 @@ public class FileNameExtenderTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void process_throwExcpetionIfNull() {
         thrown.expect(NullPointerException.class);
         sut.process(null);

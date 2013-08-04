@@ -45,6 +45,9 @@ public class OptionComparatorTest {
     private final OptionComparator sut = new OptionComparator();
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void findPositionForKey_throwsExceptionIfNullPassedIn() {
         thrown.expect(NullPointerException.class);
         sut.findPositionForKey(null);

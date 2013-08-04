@@ -33,6 +33,9 @@ public class JCommanderImplementationTest {
     private final JCommanderImplementation sut = new JCommanderImplementation();
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void parse_null() throws Exception {
         thrown.expect(NullPointerException.class);
         sut.parse(null);

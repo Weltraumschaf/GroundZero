@@ -31,6 +31,9 @@ public class RegeExEscaperTest {
     private final RegeExEscaper sut = new RegeExEscaper();
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void process_throwsExceptionIfNull() {
         thrown.expect(NullPointerException.class);
         sut.process(null);
