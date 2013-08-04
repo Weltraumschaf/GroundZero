@@ -184,9 +184,38 @@ public class JCommanderImplementationTest {
         assertThat(options.isVersion(), is(false));
     }
 
-    @Test @Ignore
+    @Test
     public void help() {
-        assertThat(sut.help(), is(equalTo("")));
+        assertThat(sut.help(),
+                is(equalTo("A tool to generate line based suppression files for Checkstyle.\n\n"
+                + "Usage: groundzero [options] report1.xml [report2.xml ... reportN.xml]\n\n"
+                + "Parses the Checkstyle report files given as command line argument and\n"
+                + "generates suppression XML configuration files from them. The suppression\n"
+                + "configurations are saved into files in the current working directory.\n"
+                + "The file names are the same as the report filename with the addition of\n"
+                + "'.suppressions' before the '.xml' file extension. So the report file\n"
+                + "'foobar.xml' will produce a suppression file named 'foobar.suppressions.xml'.\n\n"
+                + "  Options:\n"
+                + "    -d, --debug\n"
+                + "       Enables debug output.\n"
+                + "       Default: false\n"
+                + "    -h, --help\n"
+                + "       This help.\n"
+                + "       Default: false\n"
+                + "    -i, --input-encoding\n"
+                + "       Input encoding of the report files.\n"
+                + "       Default: UTF-8\n"
+                + "    -o, --output-encoding\n"
+                + "       Output encoding of the suppressions files.\n"
+                + "       Default: UTF-8\n"
+                + "    -p, --path-prefix\n"
+                + "       Prefix to strip from checked file paths.\n"
+                + "       Default: <empty string>\n"
+                + "    -v, --version\n"
+                + "       Show version information.\n"
+                + "       Default: false\n\n"
+                + "Written 2013 by Sven Strittmatter <weltraumschaf@googlemail.com>\n"
+                + "Report bugs here https://github.com/Weltraumschaf/GroundZero/issues\n")));
     }
 
 }

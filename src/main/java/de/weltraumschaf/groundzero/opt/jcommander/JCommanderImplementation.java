@@ -28,6 +28,7 @@ public class JCommanderImplementation extends OptionsSetup {
      * Used to parse arguments and create help message.
      */
     private final JCommander commander = new JCommander();
+    private final CliOptions options = new CliOptionsImplementation();
 
     /**
      * Sets the executable name for JCommander.
@@ -35,15 +36,14 @@ public class JCommanderImplementation extends OptionsSetup {
     public JCommanderImplementation() {
         super();
         commander.setProgramName(CliOptions.EXECUTABLE);
+        commander.addObject(options);
     }
 
     @Override
     public CliOptions parse(final String[] args) {
         Validate.notNull(args);
-        final CliOptions options = new CliOptionsImplementation();
 
         if (args.length > 0) {
-            commander.addObject(options);
             commander.parse(args);
         }
 

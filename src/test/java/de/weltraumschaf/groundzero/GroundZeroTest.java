@@ -156,6 +156,7 @@ public class GroundZeroTest {
 
     @Test
     public void main() throws Exception {
+        // TODO Do not log to STDOUT/STDERR
         final GroundZero spy = createSut();
         GroundZero.main(spy);
         verify(spy, times(1)).execute();
