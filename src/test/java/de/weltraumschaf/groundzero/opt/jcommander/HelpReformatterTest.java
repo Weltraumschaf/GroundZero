@@ -84,7 +84,7 @@ public class HelpReformatterTest {
                 is(equalTo("")));
     }
 
-    @Test @Ignore
+    @Test
     public void getOptions() {
         sut.setInput(INPUT);
         assertThat(sut.getOptions(),
@@ -94,7 +94,7 @@ public class HelpReformatterTest {
                 + "    -i, --input-encoding     Input encoding of the report files. Default: UTF-8\n"
                 + "    -o, --output-encoding    Output encoding of the suppressions files. Default: UTF-8\n"
                 + "    -p, --path-prefix        Prefix to strip from checked file paths. Default: <empty string>\n"
-                + "    -v, --version            Show version information. Default: false")));
+                + "    -v, --version            Show version information. Default: false\n")));
     }
 
     @Test public void rightPad_throwsExceptionIfLengthLessThanZero() {

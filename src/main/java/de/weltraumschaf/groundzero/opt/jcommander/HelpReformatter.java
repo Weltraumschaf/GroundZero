@@ -28,7 +28,7 @@ import org.apache.commons.lang3.Validate;
 public class HelpReformatter {
 
     private static final String NEWLINE_REGEX = "\\r?\\n";
-    private static final char NL = '\n';
+    static final char NL = '\n';
     private List<String> input = Collections.emptyList();
 
     public void setInput(final StringBuilder input) {
@@ -48,7 +48,7 @@ public class HelpReformatter {
             return "";
         }
 
-        return input.get(0);
+        return input.get(0).trim();
     }
 
     public String getOptions() {
@@ -57,14 +57,13 @@ public class HelpReformatter {
         }
 
         final StringBuilder buffer = new StringBuilder();
-        buffer.append(input.get(0).trim()).append(NL);
         buffer.append(input.get(1).trim()).append(NL);
 
         final Entries entries = extractEntries(input.subList(2, input.size()));
-        final int switchPadLength = entries.maxSwitchesLength();
+        final int switchPadLength = entries.maxSwitchesLength() + 4;
 
         for (final Entry e : entries.getEntries()) {
-            buffer.append(rightPad(e.getSwitches(), switchPadLength))
+            buffer.append("    ").append(rightPad(e.getSwitches(), switchPadLength))
                     .append(e.getDescription()).append(' ')
                     .append(e.getDefaultValue()).append(NL);
         }
@@ -72,14 +71,14 @@ public class HelpReformatter {
         return buffer.toString();
     }
 
-    private Entries extractEntries(final Collection<String> input) {
+    private Entries extractEntries(final Collection<String> lines) {
         final Entries entries = new Entries();
         int i = 0;
         String switches = "";
         String description = "";
         String defaultValue = "";
 
-        for (final String line : input) {
+        for (final String line : lines) {
             if (0 == i) {
                 switches = line.trim();
                 ++i;

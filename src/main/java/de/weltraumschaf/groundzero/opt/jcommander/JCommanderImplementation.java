@@ -49,16 +49,20 @@ public class JCommanderImplementation extends OptionsSetup {
 
         return options;
     }
+    private final HelpReformatter formatter = new HelpReformatter();
 
     @Override
     public String help() {
+        final StringBuilder usage = new StringBuilder();
+        commander.usage(usage);
+        formatter.setInput(usage);
+
         final StringBuilder buffer = new StringBuilder();
-        commander.usage(buffer);
-        final int offset = buffer.indexOf("\n");
-        buffer.insert(offset, CliOptions.DESCRIPTION);
-        buffer.insert(0, CliOptions.HEADER + "\n");
-        buffer.append(CliOptions.FOOTER).append('\n');
+        buffer.append(CliOptions.HEADER)
+                .append(formatter.getUsage()).append(HelpReformatter.NL).append(HelpReformatter.NL)
+                .append(CliOptions.DESCRIPTION)
+                .append(formatter.getOptions()).append(HelpReformatter.NL)
+                .append(CliOptions.FOOTER).append(HelpReformatter.NL);
         return buffer.toString();
     }
-
 }

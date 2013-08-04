@@ -98,7 +98,7 @@ final class OptionsConfiguration {
                 options,
                 HelpFormatter.DEFAULT_LEFT_PAD,
                 HelpFormatter.DEFAULT_DESC_PAD,
-                CliOptions.FOOTER,
+                "\n" + CliOptions.FOOTER,
                 true);
         writer.flush();
     }

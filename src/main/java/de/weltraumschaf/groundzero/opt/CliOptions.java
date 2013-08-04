@@ -35,17 +35,17 @@ public interface CliOptions {
     /**
      * Description one liner.
      */
-    String HEADER = "A tool to generate line based suppression files for Checkstyle.\n";
+    String HEADER = "A tool to generate line based suppression files for Checkstyle.\n\n";
     /**
      * Usage header.
      */
-    String DESCRIPTION = "\n\n"
-            + "Parses the Checkstyle report files given as command line argument and\n"
+    String DESCRIPTION =
+            "Parses the Checkstyle report files given as command line argument and\n"
             + "generates suppression XML configuration files from them. The suppression\n"
             + "configurations are saved into files in the current working directory.\n"
             + "The file names are the same as the report filename with the addition of\n"
             + "'.suppressions' before the '.xml' file extension. So the report file\n"
-            + "'foobar.xml' will produce a suppression file named 'foobar.suppressions.xml'.\n";
+            + "'foobar.xml' will produce a suppression file named 'foobar.suppressions.xml'.\n\n";
     /**
      * Author name and email address.
      */
@@ -53,7 +53,7 @@ public interface CliOptions {
     /**
      * Usage footer.
      */
-    String FOOTER = String.format("%nWritten 2013 by %s%nReport bugs here %s", AUTHOR, ISSUE_TRACKER);
+    String FOOTER = String.format("Written 2013 by %s\nReport bugs here %s", AUTHOR, ISSUE_TRACKER);
 
     /**
      * Get the input encoding.
