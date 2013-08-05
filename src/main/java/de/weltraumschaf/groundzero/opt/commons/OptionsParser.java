@@ -164,6 +164,6 @@ final class OptionsParser {
 
         if (cmd.hasOption(OUTPUT_ENCODING.getLongOption())) {
             options.setOutputEncoding(cmd.getOptionValue(OUTPUT_ENCODING.getLongOption()));
-        } 
+        }
     }
 }

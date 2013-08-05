@@ -178,7 +178,7 @@ public class SuppressionGenerator {
     /**
      * Get the output encoding.
      *
-     * @return never {@link null} or empty
+     * @return never {@code null} or empty
      */
     String getEncoding() {
         return encoding;
