@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FilterChain.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.filter</a> &gt; <span class="el_source">FilterChain.java</span></div><h1>FilterChain.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+
+package de.weltraumschaf.groundzero.filter;
+
+import com.google.common.collect.Lists;
+import java.util.List;
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Combine {@link Filter filters} to a chain.
+ *
+ * The filters will be executed in the order they were added.
+ * The output of a filter is passed to as input to the next.
+ *
+ * @param &lt;T&gt; type of processed value
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public final class FilterChain&lt;T&gt; implements Filter&lt;T&gt; {
+
+    /**
+     * Holds the filters.
+     */
+<span class="fc" id="L33">    private final List&lt;Filter&lt;T&gt;&gt; filters = Lists.newArrayList();</span>
+
+    /**
+     * Use {@link #newChain()} to get instances.
+     */
+    private FilterChain() {
+<span class="fc" id="L39">        super();</span>
+<span class="fc" id="L40">    }</span>
+
+    @Override
+    public T process(final T input) {
+<span class="fc" id="L44">        Validate.notNull(input);</span>
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (filters.isEmpty()) {</span>
+<span class="fc" id="L47">            return input;</span>
+        }
+
+<span class="fc" id="L50">        T output = input;</span>
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (final Filter&lt;T&gt; filter : filters) {</span>
+<span class="fc" id="L53">            output = filter.process(output);</span>
+<span class="fc" id="L54">        }</span>
+
+<span class="fc" id="L56">        return output;</span>
+    }
+
+    /**
+     * Add a filter.
+     *
+     * @param filter must not be {@code null}
+     */
+    public void add(final Filter&lt;T&gt; filter) {
+<span class="fc" id="L65">        Validate.notNull(filter);</span>
+<span class="fc" id="L66">        filters.add(filter);</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Create new instance.
+     *
+     * @param &lt;T&gt; filtered type
+     * @return always new instance
+     */
+    public static &lt;T&gt; FilterChain&lt;T&gt; newChain() {
+<span class="fc" id="L76">        return new FilterChain&lt;T&gt;();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

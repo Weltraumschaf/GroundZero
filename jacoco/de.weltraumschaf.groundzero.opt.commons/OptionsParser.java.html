@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OptionsParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.opt.commons</a> &gt; <span class="el_source">OptionsParser.java</span></div><h1>OptionsParser.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.opt.commons;
+
+import de.weltraumschaf.groundzero.opt.CliOptions;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
+import org.apache.commons.lang3.Validate;
+import static de.weltraumschaf.groundzero.opt.OptionDescriptor.*;
+
+/**
+ * Parses the command line arguments.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+class OptionsParser {
+
+    /**
+     * The parsed and found options.
+     */
+    private final OptionsConfiguration config;
+    /**
+     * Used to parse arguments.
+     */
+<span class="fc" id="L36">    private final CommandLineParser parser = new PosixParser();</span>
+
+    /**
+     * Initializes the parser with a new options object.
+     *
+     * @param config Newly created options object.
+     */
+<span class="fc" id="L43">    public OptionsParser(final OptionsConfiguration config) {</span>
+<span class="fc" id="L44">        this.config = config;</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Parses the given command line arguments strings into options object.
+     *
+     * @param args must not be {@code null}
+     * @param options must not be {@code null}
+     * @throws ParseException On parse errors
+     */
+    public void parse(final String[] args, final CliOptions options) throws ParseException {
+<span class="fc" id="L55">        Validate.notNull(args, &quot;Parameter 'args' must not be null!&quot;);</span>
+<span class="fc" id="L56">        Validate.notNull(options, &quot;Parameter 'options' must not be null!&quot;);</span>
+<span class="fc" id="L57">        final CommandLine cmd = parser.parse(config.getParseOptions(), args);</span>
+<span class="fc" id="L58">        optPathPrefix(cmd, options);</span>
+<span class="fc" id="L59">        optInputEncoding(cmd, options);</span>
+<span class="fc" id="L60">        optOutputEncoding(cmd, options);</span>
+<span class="fc" id="L61">        optDebug(cmd, options);</span>
+<span class="fc" id="L62">        optHelp(cmd, options);</span>
+<span class="fc" id="L63">        optVersion(cmd, options);</span>
+<span class="fc" id="L64">        reportFileArguments(cmd, options);</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Determines if path prefix option is set and prepares the {@link CliOptions &quot;options&quot;} object.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optPathPrefix(final CommandLine cmd, final CliOptions options) {
+<span class="fc" id="L74">        Validate.notNull(cmd);</span>
+<span class="fc" id="L75">        Validate.notNull(options);</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (cmd.hasOption(PATH_PREFIX.getLongOption())) {</span>
+<span class="fc" id="L78">            options.setPathPrefix(cmd.getOptionValue(PATH_PREFIX.getLongOption()));</span>
+        }
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Determines if debug option is set and prepares the {@link CliOptions &quot;options&quot;} object.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optDebug(final CommandLine cmd, final CliOptions options) {
+<span class="fc" id="L89">        Validate.notNull(cmd);</span>
+<span class="fc" id="L90">        Validate.notNull(options);</span>
+
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">        if (cmd.hasOption(DEBUG.getShortOption()) || cmd.hasOption(DEBUG.getLongOption())) {</span>
+<span class="fc" id="L93">            options.setDebug(true);</span>
+        }
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * Determines if help option is set and prepares the {@link CliOptions &quot;options&quot;} object.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optHelp(final CommandLine cmd, final CliOptions options) {
+<span class="fc" id="L104">        Validate.notNull(cmd);</span>
+<span class="fc" id="L105">        Validate.notNull(options);</span>
+
+<span class="pc bpc" id="L107" title="1 of 4 branches missed.">        if (cmd.hasOption(HELP.getShortOption()) || cmd.hasOption(HELP.getLongOption())) {</span>
+<span class="fc" id="L108">            options.setHelp(true);</span>
+        }
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Determines if version option is set and prepares the {@link CliOptions &quot;options&quot;} object.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optVersion(final CommandLine cmd, final CliOptions options) {
+<span class="fc" id="L119">        Validate.notNull(cmd);</span>
+<span class="fc" id="L120">        Validate.notNull(options);</span>
+
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">        if (cmd.hasOption(VERSION.getShortOption()) || cmd.hasOption(VERSION.getLongOption())) {</span>
+<span class="fc" id="L123">            options.setVersion(true);</span>
+        }
+<span class="fc" id="L125">    }</span>
+
+    /**
+     * Set all left-over non-recognized options and arguments as file names to reports.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    @SuppressWarnings(&quot;unchecked&quot;) // Commons CLI uses no generics.
+    private void reportFileArguments(final CommandLine cmd, final CliOptions options) {
+<span class="fc" id="L135">        Validate.notNull(cmd);</span>
+<span class="fc" id="L136">        Validate.notNull(options);</span>
+<span class="fc" id="L137">        options.setReportFiles(cmd.getArgList());</span>
+<span class="fc" id="L138">    }</span>
+
+    /**
+     * Determine and set the input encoding of the read report files.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optInputEncoding(final CommandLine cmd, final CliOptions options) {
+<span class="fc" id="L147">        Validate.notNull(cmd);</span>
+<span class="fc" id="L148">        Validate.notNull(options);</span>
+
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (cmd.hasOption(INPUT_ENCODING.getLongOption())) {</span>
+<span class="fc" id="L151">            options.setInputEncoding(cmd.getOptionValue(INPUT_ENCODING.getLongOption()));</span>
+        }
+<span class="fc" id="L153">    }</span>
+
+    /**
+     * Determine and set the output encoding of the written suppressions files.
+     *
+     * @param cmd must not be {@code null}
+     * @param options must not be {@code null}
+     */
+    private void optOutputEncoding(CommandLine cmd, CliOptions options) {
+<span class="fc" id="L162">        Validate.notNull(cmd);</span>
+<span class="fc" id="L163">        Validate.notNull(options);</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (cmd.hasOption(OUTPUT_ENCODING.getLongOption())) {</span>
+<span class="fc" id="L166">            options.setOutputEncoding(cmd.getOptionValue(OUTPUT_ENCODING.getLongOption()));</span>
+        }
+<span class="fc" id="L168">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

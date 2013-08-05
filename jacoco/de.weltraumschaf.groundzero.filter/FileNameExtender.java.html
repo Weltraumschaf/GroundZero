@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FileNameExtender.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.filter</a> &gt; <span class="el_source">FileNameExtender.java</span></div><h1>FileNameExtender.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.filter;
+
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Extend a given file name with an extension before the actual file extension.
+ *
+ * Example:
+ * &lt;pre&gt;
+ * input     == &quot;foo.xml&quot;
+ * extension == &quot;.suppressions&quot;
+ *           -&gt; &quot;foo.suppressions.xml&quot;
+ * &lt;/pre&gt;
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+<span class="fc" id="L28">public class FileNameExtender implements Filter&lt;String&gt; {</span>
+
+    /**
+     * Used to be inserted into the string.
+     */
+<span class="fc" id="L33">    private String extension = &quot;&quot;;</span>
+
+    /**
+     * Sets the used extension string.
+     *
+     * B default it is an empty string.
+     *
+     * @param extension must not be {@code null}
+     */
+    public void setExtension(final String extension) {
+<span class="fc" id="L43">        Validate.notNull(extension);</span>
+<span class="fc" id="L44">        this.extension = extension;</span>
+<span class="fc" id="L45">    }</span>
+
+    @Override
+    public String process(final String input) {
+<span class="fc" id="L49">        Validate.notNull(input);</span>
+<span class="fc" id="L50">        final StringBuilder buffer = new StringBuilder(input);</span>
+<span class="fc" id="L51">        buffer.insert(input.lastIndexOf('.'), extension);</span>
+<span class="fc" id="L52">        return buffer.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

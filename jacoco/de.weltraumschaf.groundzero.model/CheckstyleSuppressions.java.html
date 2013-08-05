@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CheckstyleSuppressions.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.model</a> &gt; <span class="el_source">CheckstyleSuppressions.java</span></div><h1>CheckstyleSuppressions.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.model;
+
+import com.google.common.base.Objects;
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Represents a Checkstyle suppressions configuration.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public final class CheckstyleSuppressions {
+
+    /**
+     * The XML suppressions configuration as String.
+     */
+    private final String xmlContent;
+    /**
+     * File name of the suppression configuration.
+     */
+    private final String fileName;
+
+    /**
+     * Dedicated constructor.
+     *
+     * @param xmlContent must not be {@code null} or empty
+     * @param fileName must not be {@code null} or empty
+     */
+    public CheckstyleSuppressions(final String xmlContent, final String fileName) {
+<span class="fc" id="L40">        super();</span>
+<span class="fc" id="L41">        Validate.notEmpty(xmlContent);</span>
+<span class="fc" id="L42">        Validate.notEmpty(fileName);</span>
+<span class="fc" id="L43">        this.xmlContent = xmlContent;</span>
+<span class="fc" id="L44">        this.fileName = fileName;</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Get the formatted suppressions XML as string.
+     *
+     * @return never {@code null} nor empty
+     */
+    public String getXmlContent() {
+<span class="fc" id="L53">        return xmlContent;</span>
+    }
+
+    /**
+     * Get the file name of the suppressions file.
+     *
+     * @return never {@code null} nor empty
+     */
+    public String getFileName() {
+<span class="fc" id="L62">        return fileName;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L67">        return Objects.hashCode(xmlContent, fileName);</span>
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (!(obj instanceof CheckstyleSuppressions)) {</span>
+<span class="fc" id="L73">            return false;</span>
+        }
+
+<span class="fc" id="L76">        final CheckstyleSuppressions other = (CheckstyleSuppressions) obj;</span>
+<span class="pc bpc" id="L77" title="1 of 4 branches missed.">        return Objects.equal(xmlContent, other.xmlContent) &amp;&amp; Objects.equal(fileName, other.fileName);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L82">        return Objects.toStringHelper(this)</span>
+                .add(&quot;xmlContent&quot;, xmlContent)
+                .add(&quot;fileName&quot;, fileName)
+                .toString();
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

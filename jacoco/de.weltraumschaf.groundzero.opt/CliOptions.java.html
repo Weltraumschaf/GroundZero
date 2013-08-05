@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CliOptions.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.opt</a> &gt; <span class="el_source">CliOptions.java</span></div><h1>CliOptions.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.opt;
+
+import java.util.Collection;
+
+/**
+ * Describes the interface for all necessary command line options.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public interface CliOptions {
+
+    /**
+     * Default encoding for whole application.
+     */
+    String DEFAULT_ENCODING = &quot;UTF-8&quot;;
+    /**
+     * Default path prefix.
+     */
+    String DEFAULT_PATH_PREFIX = &quot;&quot;;
+    /**
+     * Default for debug switch.
+     */
+    boolean DEFAULT_DEBUG = false;
+    /**
+     * Default for help switch.
+     */
+    boolean DEFAULT_HELP = false;
+    /**
+     * Default for version switch.
+     */
+    boolean DEFAULT_VERSION = false;
+    /**
+     * URI to issue tracker.
+     */
+    String ISSUE_TRACKER = &quot;https://github.com/Weltraumschaf/GroundZero/issues&quot;;
+    /**
+     * Name of the CLI executable.
+     */
+    String EXECUTABLE = &quot;groundzero&quot;;
+    /**
+     * Description one liner.
+     */
+    String HEADER = &quot;A tool to generate line based suppression files for Checkstyle.\n\n&quot;;
+    /**
+     * Usage header.
+     */
+    String DESCRIPTION =
+            &quot;Parses the Checkstyle report files given as command line argument and\n&quot;
+            + &quot;generates suppression XML configuration files from them. The suppression\n&quot;
+            + &quot;configurations are saved into files in the current working directory.\n&quot;
+            + &quot;The file names are the same as the report filename with the addition of\n&quot;
+            + &quot;'.suppressions' before the '.xml' file extension. So the report file\n&quot;
+            + &quot;'foobar.xml' will produce a suppression file named 'foobar.suppressions.xml'.\n\n&quot;;
+    /**
+     * Author name and email address.
+     */
+    String AUTHOR = &quot;Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;&quot;;
+    /**
+     * Usage footer.
+     */
+<span class="fc" id="L72">    String FOOTER = String.format(&quot;Written 2013 by %s\nReport bugs here %s&quot;, AUTHOR, ISSUE_TRACKER);</span>
+
+    /**
+     * Get the input encoding.
+     *
+     * @return by default it is {@link #DEFAULT_ENCODING}
+     */
+    String getInputEncoding();
+
+    /**
+     * Get the output encoding.
+     *
+     * @return by default it is {@link #DEFAULT_ENCODING}
+     */
+    String getOutputEncoding();
+
+    /**
+     * Get the path prefix option.
+     *
+     * @return never {@code null} maybe empty
+     */
+    String getPathPrefix();
+
+    /**
+     * Get report files.
+     *
+     * @return never {@code null} maybe empty
+     */
+    Collection&lt;String&gt; getReportFiles();
+
+    /**
+     * Whether there are report files or not.
+     *
+     * @return {@code true} if {@link #getReportFiles()} is not empty, else {@code false}
+     */
+    boolean hasReportFiles();
+
+    /**
+     * Whether debug is enabled or not.
+     *
+     * @return Return true if debug is enabled, unless false.
+     */
+    boolean isDebug();
+
+    /**
+     * Whether show help message is enabled or not.
+     *
+     * @return Return true if show help message is enabled, unless false
+     */
+    boolean isHelp();
+
+    /**
+     * Whether show version information is enabled or not.
+     *
+     * @return Return true if show version is enabled, unless false.
+     */
+    boolean isVersion();
+
+    /**
+     * Set print debugging.
+     *
+     * @param onOrOff True enables, false disables (default).
+     */
+    void setDebug(final boolean onOrOff);
+
+    /**
+     * Set show help message.
+     *
+     * @param onOrOff True enables, false disables (default)
+     */
+    void setHelp(final boolean onOrOff);
+
+    /**
+     * Set the input encoding.
+     *
+     * @param inputEncoding must not be {@code null} or empty
+     */
+    void setInputEncoding(final String inputEncoding);
+
+    /**
+     * Set the output encoding.
+     *
+     * @param outputEncoding must not be {@code null} or empty
+     */
+    void setOutputEncoding(final String outputEncoding);
+
+    /**
+     * Set path prefix option.
+     *
+     * @param pathPrefix must not be {@code null}
+     */
+    void setPathPrefix(final String pathPrefix);
+
+    /**
+     * Set report files.
+     *
+     * @param files must not be {@code null}
+     */
+    void setReportFiles(final Collection&lt;String&gt; files);
+
+    /**
+     * Set version output option.
+     *
+     * @param onOrOff True will shows version, false not.
+     */
+    void setVersion(final boolean onOrOff);
+
+    /**
+     * Signals if the options object only has default values.
+     *
+     * @return {@code true} if only default values are set, else {@code true}
+     */
+    boolean hasOnlyDefaultOptions();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

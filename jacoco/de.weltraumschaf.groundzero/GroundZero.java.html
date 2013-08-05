@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>GroundZero.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero</a> &gt; <span class="el_source">GroundZero.java</span></div><h1>GroundZero.java</h1><pre class="source lang-java linenums">/*
+ * LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 42):
+ * &quot;Sven Strittmatter&quot; &lt;ich@weltraumschaf.de&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a beer in return.
+ */
+package de.weltraumschaf.groundzero;
+
+import de.weltraumschaf.groundzero.opt.CliOptions;
+import de.weltraumschaf.groundzero.transform.ReportProcessor;
+import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.commons.InvokableAdapter;
+import de.weltraumschaf.commons.Version;
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
+import de.weltraumschaf.groundzero.opt.Strategy;
+import java.io.IOException;
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Main application class.
+ *
+ * @author Sven Strittmatter &lt;ich@weltraumschaf.de&gt;
+ */
+public class GroundZero extends InvokableAdapter {
+
+    /**
+     * Name of environment variable to choose CLI option parser strategy.
+     */
+    static final String OPTIONS_STRATEGY_ENV = &quot;GROUNDZERO_OPTIONS_STRATEGY&quot;;
+    /**
+     * JAR relative path to version property file.
+     */
+    private static final String VERSION_FILE = &quot;/de/weltraumschaf/groundzero/version.properties&quot;;
+    /**
+     * Processes the report files.
+     */
+    private ReportProcessor processor;
+    /**
+     * Version of the application.
+     */
+    private Version version;
+    /**
+     * USed to parse CLI options and generate help message.
+     */
+    private OptionsSetup optionsSetup;
+    /**
+     * Holds the parsed CLI options.
+     */
+    private CliOptions options;
+
+    /**
+     * Dedicated constructor.
+     *
+     * @param args command line arguments provided by JVM
+     * @throws ApplicationException if {@link #processor} can't be instantiated
+     */
+    public GroundZero(final String[] args) throws ApplicationException {
+<span class="fc" id="L61">        super(args);</span>
+<span class="fc" id="L62">        processor = new ReportProcessor();</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * Main entry point of application invoked by JVM.
+     *
+     * @param args command line arguments provided by JVM
+     * @throws ApplicationException if errors occurs while creating report processor
+     */
+    public static void main(final String[] args) throws ApplicationException {
+<span class="nc" id="L72">        main(new GroundZero(args));</span>
+<span class="nc" id="L73">    }</span>
+
+    /**
+     * Setup and invokes the application.
+     *
+     * @param app invoked application, must not be {@code}
+     * @throws ApplicationException if errors occurs while creating report processor
+     */
+    static void main(final GroundZero app) throws ApplicationException {
+<span class="fc" id="L82">        Validate.notNull(app);</span>
+<span class="fc" id="L83">        InvokableAdapter.main(app);</span>
+<span class="fc" id="L84">    }</span>
+
+    @Override
+    public void execute() throws Exception {
+        try {
+<span class="fc" id="L89">            examineCommandLineOptions();</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            if (options.isHelp()) {</span>
+<span class="fc" id="L92">                showHelpMessage();</span>
+<span class="fc" id="L93">                return;</span>
+            }
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (options.isVersion()) {</span>
+<span class="fc" id="L97">                initializeVersionInformation();</span>
+<span class="fc" id="L98">                showVersionMessage();</span>
+<span class="fc" id="L99">                return;</span>
+            }
+
+<span class="fc" id="L102">            processReports();</span>
+<span class="nc" id="L103">        } catch (final Exception ex) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            if (options.isDebug()) {</span>
+<span class="nc" id="L105">                getIoStreams().printStackTrace(ex);</span>
+            }
+
+<span class="nc" id="L108">            throw ex;</span>
+<span class="fc" id="L109">        }</span>
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Find the command line arguments.
+     *
+     * @throws ApplicationException if command line arguments were not possible to parse
+     */
+    void examineCommandLineOptions() throws ApplicationException {
+<span class="fc" id="L118">        final String envStrategy = getEnv();</span>
+
+        final Strategy strategy;
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (Strategy.COMMONS.toString().equalsIgnoreCase(envStrategy)) {</span>
+<span class="fc" id="L123">            strategy = Strategy.COMMONS;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        } else if (Strategy.JCOMMANDER.toString().equalsIgnoreCase(envStrategy)) {</span>
+<span class="fc" id="L125">            strategy = Strategy.JCOMMANDER;</span>
+        } else {
+<span class="fc" id="L127">            strategy = Strategy.COMMONS;</span>
+<span class="fc" id="L128">            getIoStreams().errorln(</span>
+                    String.format(&quot;Warning: Unsupported strategy '%s' Fall back to '%s'.&quot;,
+                    envStrategy, strategy));
+        }
+
+<span class="fc" id="L133">        optionsSetup = OptionsSetup.create(strategy);</span>
+<span class="fc" id="L134">        options = optionsSetup.parse(getArgs());</span>
+
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (options.isDebug()) {</span>
+<span class="nc" id="L137">            getIoStreams().println(String.format(&quot;Used CLI options:\n%s&quot;, options));</span>
+        }
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Get the options setup implementation determined and initialized by {@link #examineCommandLineOptions()}.
+     *
+     * @return may be {@code null} if {@link #examineCommandLineOptions()} not one time invoked before.
+     */
+    OptionsSetup getOptionsSetup() {
+<span class="fc" id="L147">        return optionsSetup;</span>
+    }
+
+    /**
+     * Prints help and usage information on STDOUT.
+     */
+    void showHelpMessage() {
+<span class="fc" id="L154">        getIoStreams().print(optionsSetup.help());</span>
+<span class="fc" id="L155">    }</span>
+
+    /**
+     * Prints version information on STDOUT.
+     */
+    void showVersionMessage() {
+<span class="fc" id="L161">        getIoStreams().println(String.format(&quot;Version: %s&quot;, version.getVersion()));</span>
+<span class="fc" id="L162">    }</span>
+
+    /**
+     * Load version information from {@link #VERSION_FILE properties}.
+     *
+     * @throws IOException if properties can't be load
+     */
+    void initializeVersionInformation() throws IOException {
+<span class="fc" id="L170">        version = new Version(VERSION_FILE);</span>
+<span class="fc" id="L171">        version.load();</span>
+<span class="fc" id="L172">    }</span>
+
+    /**
+     * Process all given report files.
+     *
+     * @throws ApplicationException if any I/O or XML parse error occurs
+     */
+    void processReports() throws ApplicationException {
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        if (!options.hasReportFiles()) {</span>
+<span class="fc" id="L181">            getIoStreams().println(&quot;Nothing to do.&quot;);</span>
+<span class="fc" id="L182">            return;</span>
+        }
+
+<span class="fc" id="L185">        processor.setInputEncoding(options.getInputEncoding());</span>
+<span class="fc" id="L186">        processor.setOutputEncoding(options.getOutputEncoding());</span>
+<span class="fc" id="L187">        processor.setPathPrefix(options.getPathPrefix());</span>
+<span class="fc" id="L188">        processor.setIo(getIoStreams());</span>
+
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        for (final String reportFile : options.getReportFiles()) {</span>
+<span class="fc" id="L191">            processReport(reportFile);</span>
+<span class="fc" id="L192">        }</span>
+
+<span class="fc" id="L194">        getIoStreams().println(String.format(&quot;All %d reports proccesed.&quot;, options.getReportFiles().size()));</span>
+<span class="fc" id="L195">    }</span>
+
+    /**
+     * Injection point for report processor.
+     *
+     * @param processor must not be {@code null}
+     */
+    public void setProcessor(final ReportProcessor processor) {
+<span class="fc" id="L203">        Validate.notNull(processor);</span>
+<span class="fc" id="L204">        this.processor = processor;</span>
+<span class="fc" id="L205">    }</span>
+
+    /**
+     * Processes a single report file.
+     *
+     * Exits the application with exit code != {@link ExitCodeImpl#OK}, if {@link org.xml.sax.SAXException.SAXException}
+     * or {@link IOException} was thrown.
+     *
+     * @param reportFile file name of Checkstyle report
+     * @throws ApplicationException if any I/O or XML parse error occurs
+     */
+    private void processReport(final String reportFile) throws ApplicationException {
+<span class="fc" id="L217">        getIoStreams().println(String.format(&quot;Process report %s ...&quot;, reportFile));</span>
+<span class="fc" id="L218">        processor.process(reportFile);</span>
+<span class="fc" id="L219">    }</span>
+
+    /**
+     * Wraps non side effect free method for mocking in tests.
+     *
+     * @return the string value of the variable, or {@code null}
+     *         if the variable is not defined in the system environment
+     */
+    String getEnv() {
+<span class="fc" id="L228">        return System.getenv(OPTIONS_STRATEGY_ENV);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

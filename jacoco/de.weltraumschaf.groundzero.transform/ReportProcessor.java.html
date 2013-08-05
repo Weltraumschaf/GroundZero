@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ReportProcessor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.transform</a> &gt; <span class="el_source">ReportProcessor.java</span></div><h1>ReportProcessor.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.transform;
+
+import de.weltraumschaf.groundzero.ExitCodeImpl;
+import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import org.apache.commons.lang3.Validate;
+import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.commons.IO;
+import java.io.UnsupportedEncodingException;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+/**
+ * Process a single Checkstyle report file.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public class ReportProcessor {
+
+    /**
+     * Encoding of the generated suppressions file.
+     */
+    private static final String DEFAULT_ENCODING = &quot;UTF-8&quot;;
+
+    /**
+     * Handler to intercept SAX parser events.
+     */
+<span class="fc" id="L50">    private final CheckstyleSaxHandler handler = new CheckstyleSaxHandler();</span>
+    /**
+     * Used to generate suppressions configuration.
+     */
+    private final SuppressionGenerator generator;
+    /**
+     * XML reader.
+     */
+    private final XMLReader xmlReader;
+    /**
+     * Used to print to STDOUT.
+     */
+    private IO io;
+
+    /**
+     * Input encoding of report files.
+     */
+<span class="fc" id="L67">    private String inputEncoding = DEFAULT_ENCODING;</span>
+    /**
+     * PAth prefix to strip from reported file names.
+     */
+<span class="fc" id="L71">    private String pathPrefix = &quot;&quot;;</span>
+
+    /**
+     * Dedicated constructor.
+     *
+     * Set up the XML reader with the SAX handler.
+     *
+     * @throws ApplicationException if creation of XML reader fails
+     */
+    public ReportProcessor() throws ApplicationException {
+<span class="fc" id="L81">        super();</span>
+
+        try {
+<span class="fc" id="L84">            xmlReader = XMLReaderFactory.createXMLReader();</span>
+<span class="nc" id="L85">        } catch (final SAXException ex) {</span>
+<span class="nc" id="L86">            throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, &quot;&quot;, ex);</span>
+<span class="fc" id="L87">        }</span>
+
+<span class="fc" id="L89">        xmlReader.setContentHandler(handler);</span>
+<span class="fc" id="L90">        xmlReader.setErrorHandler(handler);</span>
+<span class="fc" id="L91">        generator = new SuppressionGenerator(DEFAULT_ENCODING);</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Process the report given as file name.
+     *
+     * @param reportFileName file name of the report, must not be {@code null} or empty
+     * @throws ApplicationException if file I/O or XML parse errors occurs
+     * @return always new instance, never {@code null}
+     */
+    public CheckstyleReport process(final String reportFileName) throws ApplicationException {
+<span class="nc" id="L102">        Validate.notEmpty(reportFileName);</span>
+<span class="nc" id="L103">        return process(new File(reportFileName));</span>
+    }
+
+    /**
+     * Process the report given as file.
+     *
+     * @param input file name of the report, must not be {@code null}
+     * @throws ApplicationException if file I/O or XML parse errors occurs
+     * @return always new instance, never {@code null}
+     */
+    public CheckstyleReport process(final File input) throws ApplicationException {
+<span class="fc" id="L114">        Validate.notNull(input);</span>
+
+<span class="pc" id="L116">        try (final InputStream inputStream = new FileInputStream(input)) {</span>
+<span class="fc" id="L117">            final Reader reader = new InputStreamReader(inputStream, inputEncoding);</span>
+<span class="fc" id="L118">            xmlReader.parse(new InputSource(reader));</span>
+<span class="pc bpc" id="L119" title="6 of 8 branches missed.">        } catch (final UnsupportedEncodingException ex) {</span>
+<span class="nc" id="L120">            throw new ApplicationException(</span>
+                    ExitCodeImpl.UNSUPPORTED_INPUT_ENCODING,
+                    String.format(&quot;ERROR: Unsuported input encoding '%s'!&quot;, inputEncoding),
+                    ex);
+<span class="nc" id="L124">        } catch (final IOException ex) {</span>
+<span class="nc" id="L125">            throw new ApplicationException(</span>
+                    ExitCodeImpl.XML_INPUT_PARSE_ERROR,
+                    String.format(&quot;ERROR: Excpetion thrown while parsing input file '%s'! %s&quot;,
+                        input.getAbsolutePath(),
+                        ex.getMessage()),
+                    ex);
+<span class="nc" id="L131">        } catch (final SAXException ex) {</span>
+<span class="nc" id="L132">            throw new ApplicationException(</span>
+                    ExitCodeImpl.XML_INPUT_FILE_READ_ERROR,
+                    String.format(&quot;ERROR: Excpetion thrown while reading input file '%s'! %s&quot;,
+                        input.getAbsolutePath(),
+                        ex.getMessage()),
+                    ex);
+<span class="fc" id="L138">        }</span>
+
+<span class="fc" id="L140">        final CheckstyleReport report = handler.getReport();</span>
+<span class="fc" id="L141">        report.setFileName(input.getAbsolutePath());</span>
+<span class="fc" id="L142">        final CheckstyleSuppressions suppression = generateSuppression(report);</span>
+<span class="fc" id="L143">        saveSuppressionFile(suppression);</span>
+<span class="fc" id="L144">        return report;</span>
+    }
+
+    /**
+     * Generate suppressions configuration from report.
+     *
+     * @param report must not be {@code null}
+     * @return never {@code null}
+     */
+    private CheckstyleSuppressions generateSuppression(final CheckstyleReport report) {
+<span class="fc" id="L154">        generator.setPathPrefix(pathPrefix);</span>
+<span class="fc" id="L155">        return generator.generate(report);</span>
+    }
+
+    /**
+     * Save suppressions configuration to file.
+     *
+     * @param suppression must not be {@code null}
+     * @throws ApplicationException if an error occurs while writing suppressions configuration to file
+     */
+    private void saveSuppressionFile(final CheckstyleSuppressions suppression) throws ApplicationException {
+<span class="fc" id="L165">        Validate.notNull(suppression);</span>
+<span class="fc" id="L166">        io.println(String.format(&quot;Save suppressions configuration %s ...&quot;, suppression.getFileName()));</span>
+
+<span class="pc" id="L168">        try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {</span>
+<span class="pc" id="L169">            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, inputEncoding))) {</span>
+<span class="fc" id="L170">                br.write(suppression.getXmlContent());</span>
+<span class="fc" id="L171">                br.flush();</span>
+<span class="pc bpc" id="L172" title="6 of 8 branches missed.">            }</span>
+<span class="fc" id="L173">            fos.flush();</span>
+<span class="pc bpc" id="L174" title="6 of 8 branches missed.">        } catch (final IOException ex) {</span>
+<span class="nc" id="L175">            throw new ApplicationException(</span>
+                    ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR,
+                    String.format(&quot;ERROR: Excpetion thrown while writing suppresions file '%s'!&quot;,
+                    suppression.getFileName()),
+                    ex);
+<span class="fc" id="L180">        }</span>
+<span class="fc" id="L181">    }</span>
+
+    /**
+     * Set output encoding of generated suppressions file.
+     *
+     * @param encoding must not be {@code null} or empty
+     */
+    public void setInputEncoding(final String encoding) {
+<span class="nc" id="L189">        Validate.notEmpty(encoding);</span>
+<span class="nc" id="L190">        this.inputEncoding = encoding;</span>
+<span class="nc" id="L191">    }</span>
+
+    /**
+     * Set IO streams.
+     *
+     * @param io must not be {@code null}
+     */
+    public void setIo(final IO io) {
+<span class="fc" id="L199">        Validate.notNull(io);</span>
+<span class="fc" id="L200">        this.io = io;</span>
+<span class="fc" id="L201">    }</span>
+
+    /**
+     * Set the path prefix to strip from reported file names.
+     *
+     * @param pathPrefix must not be {@code null}
+     */
+    public void setPathPrefix(final String pathPrefix) {
+<span class="nc" id="L209">        Validate.notNull(pathPrefix);</span>
+<span class="nc" id="L210">        this.pathPrefix = pathPrefix;</span>
+<span class="nc" id="L211">    }</span>
+
+    /**
+     * Set the output encoding.
+     *
+     * @param encoding must not be {@code null} or empty
+     */
+    public void setOutputEncoding(final String encoding) {
+<span class="nc" id="L219">        Validate.notEmpty(encoding);</span>
+<span class="nc" id="L220">        this.generator.setEncoding(encoding);</span>
+<span class="nc" id="L221">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

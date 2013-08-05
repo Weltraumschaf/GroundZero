@@ -1,0 +1,35 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Ground Zero,de.weltraumschaf.groundzero.transform,SuppressionGenerator,0,197,0,6,0,40,0,12,0,9
+Ground Zero,de.weltraumschaf.groundzero.transform,CheckstyleSaxHandler.ErrorTagAttribute,9,73,0,0,0,11,2,3,2,3
+Ground Zero,de.weltraumschaf.groundzero.transform,CheckstyleSaxHandler.FileTagAttribute,9,29,0,0,0,7,2,3,2,3
+Ground Zero,de.weltraumschaf.groundzero.transform,CheckstyleSaxHandler,0,158,1,11,0,42,1,12,0,7
+Ground Zero,de.weltraumschaf.groundzero.transform,CheckstyleSaxHandler.CheckstyleTagAttribute,9,29,0,0,0,7,2,3,2,3
+Ground Zero,de.weltraumschaf.groundzero.transform,CheckstyleSaxHandler.ReportTags,5,92,0,4,0,16,1,7,1,5
+Ground Zero,de.weltraumschaf.groundzero.transform,ReportProcessor,204,163,18,6,19,37,16,5,4,5
+Ground Zero,de.weltraumschaf.groundzero,GroundZero,29,214,3,13,7,55,3,18,1,12
+Ground Zero,de.weltraumschaf.groundzero.model,CheckstyleFile,1,108,1,11,0,23,1,13,0,8
+Ground Zero,de.weltraumschaf.groundzero.model,CheckstyleViolation,0,190,1,15,0,32,1,22,0,15
+Ground Zero,de.weltraumschaf.groundzero.model,CheckstyleReport,0,139,1,15,0,27,1,17,0,10
+Ground Zero,de.weltraumschaf.groundzero.model,CheckstyleSuppressions,0,71,1,5,0,14,1,8,0,6
+Ground Zero,de.weltraumschaf.groundzero.model,CheckstyleSeverity,0,71,0,0,0,10,0,5,0,5
+Ground Zero,de.weltraumschaf.groundzero.opt,OptionsSetup.new Object() {...},2,17,0,0,0,1,0,1,0,1
+Ground Zero,de.weltraumschaf.groundzero.opt,OptionDescriptor,9,123,0,0,0,18,2,5,2,5
+Ground Zero,de.weltraumschaf.groundzero.opt,CliOptionsImplementation,0,180,0,16,0,47,0,26,0,18
+Ground Zero,de.weltraumschaf.groundzero.opt,Strategy,5,33,0,0,0,3,1,3,1,3
+Ground Zero,de.weltraumschaf.groundzero.opt,OptionsSetup,12,22,1,2,0,6,1,3,0,2
+Ground Zero,de.weltraumschaf.groundzero.opt,CliOptions,0,14,0,0,0,1,0,1,0,1
+Ground Zero,de.weltraumschaf.groundzero.filter,FileNameExtender,0,32,0,0,0,9,0,3,0,3
+Ground Zero,de.weltraumschaf.groundzero.filter,PathNormalizer,0,25,0,4,0,9,0,4,0,2
+Ground Zero,de.weltraumschaf.groundzero.filter,PathPrefixRemover,0,26,0,2,0,9,0,4,0,3
+Ground Zero,de.weltraumschaf.groundzero.filter,FilterChain,0,48,0,4,0,15,0,6,0,4
+Ground Zero,de.weltraumschaf.groundzero.filter,RegeExEscaper,0,11,0,0,0,3,0,2,0,2
+Ground Zero,de.weltraumschaf.groundzero.filter,StringFilters,3,25,0,0,2,8,1,5,1,5
+Ground Zero,de.weltraumschaf.groundzero.opt.jcommander,JCommanderImplementation,0,83,0,2,0,17,0,4,0,3
+Ground Zero,de.weltraumschaf.groundzero.opt.jcommander,HelpReformatter,0,203,1,19,0,48,1,16,0,7
+Ground Zero,de.weltraumschaf.groundzero.opt.jcommander,HelpReformatter.Entry,0,39,0,0,0,11,0,4,0,4
+Ground Zero,de.weltraumschaf.groundzero.opt.jcommander,HelpReformatter.Entries,0,43,0,4,0,12,0,6,0,4
+Ground Zero,de.weltraumschaf.groundzero.opt.commons,CustomHelpFormatter,66,0,0,0,15,0,6,0,6,0
+Ground Zero,de.weltraumschaf.groundzero.opt.commons,OptionComparator,0,96,0,10,0,24,0,9,0,4
+Ground Zero,de.weltraumschaf.groundzero.opt.commons,OptionsParser,0,185,3,15,0,49,3,15,0,9
+Ground Zero,de.weltraumschaf.groundzero.opt.commons,OptionsConfiguration,0,131,0,0,0,26,0,3,0,3
+Ground Zero,de.weltraumschaf.groundzero.opt.commons,CommonsImplementation,0,73,0,2,0,21,0,6,0,5

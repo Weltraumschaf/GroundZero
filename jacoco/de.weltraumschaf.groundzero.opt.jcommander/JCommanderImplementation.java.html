@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JCommanderImplementation.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.opt.jcommander</a> &gt; <span class="el_source">JCommanderImplementation.java</span></div><h1>JCommanderImplementation.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.opt.jcommander;
+
+import de.weltraumschaf.groundzero.opt.CliOptionsImplementation;
+import com.beust.jcommander.JCommander;
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
+import de.weltraumschaf.groundzero.opt.CliOptions;
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Implementation based on JCommander.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public class JCommanderImplementation extends OptionsSetup {
+
+    /**
+     * Used to parse arguments and create help message.
+     */
+<span class="fc" id="L30">    private final JCommander commander = new JCommander();</span>
+    /**
+     * Reused to parse options into.
+     */
+<span class="fc" id="L34">    private final CliOptions options = new CliOptionsImplementation();</span>
+    /**
+     * Helper for help message reformatting.
+     */
+<span class="fc" id="L38">    private final HelpReformatter formatter = new HelpReformatter();</span>
+
+    /**
+     * Sets the executable name for JCommander.
+     */
+    public JCommanderImplementation() {
+<span class="fc" id="L44">        super();</span>
+<span class="fc" id="L45">        commander.setProgramName(CliOptions.EXECUTABLE);</span>
+<span class="fc" id="L46">        commander.addObject(options);</span>
+<span class="fc" id="L47">    }</span>
+
+    @Override
+    public CliOptions parse(final String[] args) {
+<span class="fc" id="L51">        Validate.notNull(args);</span>
+
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (args.length &gt; 0) {</span>
+<span class="fc" id="L54">            commander.parse(args);</span>
+        }
+
+<span class="fc" id="L57">        return options;</span>
+    }
+
+    @Override
+    public String help() {
+<span class="fc" id="L62">        final StringBuilder usage = new StringBuilder();</span>
+<span class="fc" id="L63">        commander.usage(usage);</span>
+<span class="fc" id="L64">        formatter.setInput(usage);</span>
+
+<span class="fc" id="L66">        final StringBuilder buffer = new StringBuilder();</span>
+<span class="fc" id="L67">        buffer.append(CliOptions.HEADER)</span>
+                .append(formatter.getUsage()).append(HelpReformatter.NL).append(HelpReformatter.NL)
+                .append(CliOptions.DESCRIPTION)
+                .append(formatter.getOptions()).append(HelpReformatter.NL)
+                .append(CliOptions.FOOTER).append(HelpReformatter.NL);
+<span class="fc" id="L72">        return buffer.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

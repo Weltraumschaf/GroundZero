@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SuppressionGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.transform</a> &gt; <span class="el_source">SuppressionGenerator.java</span></div><h1>SuppressionGenerator.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.transform;
+
+import de.weltraumschaf.groundzero.filter.FileNameExtender;
+import de.weltraumschaf.groundzero.filter.FilterChain;
+import de.weltraumschaf.groundzero.filter.PathPrefixRemover;
+import de.weltraumschaf.groundzero.filter.StringFilters;
+import de.weltraumschaf.groundzero.model.CheckstyleFile;
+import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
+import de.weltraumschaf.groundzero.model.CheckstyleViolation;
+import java.util.Collection;
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Generates a suppression XML for a {@link CheckstyleReport report}.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public class SuppressionGenerator {
+
+    /**
+     * Used to extend the report file name to generate the suppressions file name.
+     */
+    private static final String SUPPRESSIONS_FILE_EXTENSION = &quot;.suppressions&quot;;
+    /**
+     * Format of a suppression tag.
+     */
+<span class="fc" id="L39">    private static final String NL = String.format(&quot;%n&quot;);</span>
+    /**
+     * Format string for suppress tag.
+     */
+    private static final String SUPRESS_TAG_FORMAT =
+            &quot;    &lt;suppress files=\&quot;%s$\&quot; lines=\&quot;%s\&quot; columns=\&quot;%s\&quot; checks=\&quot;%s\&quot;/&gt;&quot;;
+    /**
+     * XML preamble string.
+     */
+    private static final String XML_PREAMBLE_FORMAT = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;%s\&quot;?&gt;&quot;;
+    /**
+     * DTD for Checkstyle suppression file.
+     */
+    private static final String XML_DTD = &quot;&lt;!DOCTYPE suppressions PUBLIC &quot;
+            + &quot;\&quot;-//Puppy Crawl//DTD Suppressions 1.1//EN\&quot; &quot;
+            + &quot;\&quot;http://www.puppycrawl.com/dtds/suppressions_1_1.dtd\&quot;&gt;&quot;;
+    /**
+     * Open root tag.
+     */
+    private static final String TAG_OPEN_SUPPRESSIONS = &quot;&lt;suppressions&gt;&quot;;
+    /**
+     * Close root tag.
+     */
+    private static final String TAG_CLOSE_SUPPRESSIONS = &quot;&lt;/suppressions&gt;&quot;;
+    /**
+     * Empty root tag.
+     */
+    private static final String TAG_EMPTY_SUPPRESSIONS = &quot;&lt;suppressions/&gt;&quot;;
+    /**
+     * Used to extend file names.
+     */
+<span class="fc" id="L70">    private final FileNameExtender extender = new FileNameExtender();</span>
+    /**
+     * Hold as a separate reference so that we can set the path prefix later.
+     */
+<span class="fc" id="L74">    private final PathPrefixRemover pathPrefixRemover = StringFilters.pathPrefixRemover();</span>
+    /**
+     * Chain of filters to prepare reported file names.
+     */
+<span class="fc" id="L78">    private final FilterChain&lt;String&gt; filter = FilterChain.newChain();</span>
+    /**
+     * Output encoding of suppressions.
+     */
+    private String encoding;
+
+    /**
+     * Dedicated constructor.
+     *
+     * @param encoding file output encoding, must not be {@code null} or empty
+     */
+    public SuppressionGenerator(final String encoding) {
+<span class="fc" id="L90">        super();</span>
+<span class="fc" id="L91">        Validate.notEmpty(encoding);</span>
+<span class="fc" id="L92">        this.encoding = encoding;</span>
+<span class="fc" id="L93">        filter.add(pathPrefixRemover);</span>
+<span class="fc" id="L94">        filter.add(StringFilters.regeExEscaper());</span>
+<span class="fc" id="L95">        extender.setExtension(SUPPRESSIONS_FILE_EXTENSION);</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Generates the report string.
+     *
+     * @param report must not be {@code null}
+     * @return never {@code null}.
+     */
+    public CheckstyleSuppressions generate(final CheckstyleReport report) {
+<span class="fc" id="L105">        Validate.notNull(report);</span>
+<span class="fc" id="L106">        final StringBuilder buffer = new StringBuilder();</span>
+<span class="fc" id="L107">        buffer.append(String.format(XML_PREAMBLE_FORMAT, encoding)).append(NL)</span>
+                .append(XML_DTD).append(NL);
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (report.hasFiles()) {</span>
+<span class="fc" id="L111">            buffer.append(TAG_OPEN_SUPPRESSIONS).append(NL);</span>
+<span class="fc" id="L112">            generateFileSuppressions(buffer, report.getFiles());</span>
+<span class="fc" id="L113">            buffer.append(TAG_CLOSE_SUPPRESSIONS).append(NL);</span>
+        } else {
+<span class="fc" id="L115">            buffer.append(TAG_EMPTY_SUPPRESSIONS).append(NL);</span>
+        }
+
+<span class="fc" id="L118">        final String targetFileName = extender.process(report.getFileName());</span>
+<span class="fc" id="L119">        return new CheckstyleSuppressions(buffer.toString(), targetFileName);</span>
+    }
+
+    /**
+     * Generate suppressions for a collection of {@code CheckstyleFile reported files}.
+     *
+     * @param buffer used to collect generated XML
+     * @param files must not be {@code null}
+     */
+    private void generateFileSuppressions(final StringBuilder buffer, final Collection&lt;CheckstyleFile&gt; files) {
+<span class="fc" id="L129">        Validate.notNull(files);</span>
+
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (final CheckstyleFile file : files) {</span>
+<span class="fc" id="L132">            generateFileSuppression(buffer, file);</span>
+<span class="fc" id="L133">        }</span>
+<span class="fc" id="L134">    }</span>
+
+    /**
+     * Generate suppressions for a {@code CheckstyleFile reported file}.
+     *
+     * @param buffer used to collect generated XML
+     * @param file must not be {@code null}
+     */
+    private void generateFileSuppression(final StringBuilder buffer, final CheckstyleFile file) {
+<span class="fc" id="L143">        Validate.notNull(file);</span>
+
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        for (final CheckstyleViolation violation : file.getViolations()) {</span>
+<span class="fc" id="L146">            generateErrorSupression(buffer, file.getFileName(), violation);</span>
+<span class="fc" id="L147">        }</span>
+<span class="fc" id="L148">    }</span>
+
+    /**
+     * Generates the suppress tag for a violation.
+     *
+     * @param buffer used to collect generated XML
+     * @param fileName name of reported file which has the violation
+     * @param violation violation of the file
+     */
+    private void generateErrorSupression(final StringBuilder buffer, final String fileName,
+            final CheckstyleViolation violation) {
+<span class="fc" id="L159">        buffer.append(</span>
+                String.format(SUPRESS_TAG_FORMAT,
+                filter.process(fileName),
+                violation.getLine(),
+                violation.getColumn(),
+                violation.getCheck()))
+                .append(NL);
+<span class="fc" id="L166">    }</span>
+
+    /**
+     * Set output encoding of generated suppressions file.
+     *
+     * @param encoding must not be {@code null} or empty
+     */
+    public void setEncoding(final String encoding) {
+<span class="fc" id="L174">        Validate.notEmpty(encoding);</span>
+<span class="fc" id="L175">        this.encoding = encoding;</span>
+<span class="fc" id="L176">    }</span>
+
+    /**
+     * Get the output encoding.
+     *
+     * @return never {@code null} or empty
+     */
+    String getEncoding() {
+<span class="fc" id="L184">        return encoding;</span>
+    }
+
+
+    /**
+     * Set path prefix to strip from file names.
+     *
+     * @param pathPrefix file must not be {@code null}
+     */
+    public void setPathPrefix(final String pathPrefix) {
+<span class="fc" id="L194">        Validate.notNull(pathPrefix);</span>
+<span class="fc" id="L195">        this.pathPrefixRemover.setPrefix(pathPrefix);</span>
+<span class="fc" id="L196">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

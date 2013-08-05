@@ -1,4 +1,7 @@
 de.weltraumschaf.groundzero
 de.weltraumschaf.groundzero.filter
 de.weltraumschaf.groundzero.model
+de.weltraumschaf.groundzero.opt
+de.weltraumschaf.groundzero.opt.commons
+de.weltraumschaf.groundzero.opt.jcommander
 de.weltraumschaf.groundzero.transform

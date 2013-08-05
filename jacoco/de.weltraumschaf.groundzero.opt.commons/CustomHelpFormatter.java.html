@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CustomHelpFormatter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.opt.commons</a> &gt; <span class="el_source">CustomHelpFormatter.java</span></div><h1>CustomHelpFormatter.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.opt.commons;
+
+import java.io.PrintWriter;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+
+/**
+ * Custom help formatter.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+final class CustomHelpFormatter extends HelpFormatter {
+
+    /**
+     * Used for new line for all platforms.
+     */
+    private static final String NL = &quot;\n&quot;;
+
+    /**
+     * Overrides the default delimiter with an empty string.
+     */
+    @SuppressWarnings(&quot;deprecation&quot;)
+    public CustomHelpFormatter() {
+<span class="nc" id="L35">        super();</span>
+<span class="nc" id="L36">        defaultNewLine = &quot;&quot;;</span>
+<span class="nc" id="L37">    }</span>
+
+    @Override
+    //CHECKSTYLE:OFF
+    public void printHelp(final PrintWriter pw, final int width, final String cmdLineSyntax,
+            final String header, final Options options, final int leftPad,
+            final int descPad, final String footer, final boolean autoUsage) {
+        //CHECKSTYLE:ON
+<span class="nc" id="L45">        super.printHelp(pw, width, cmdLineSyntax, header + NL + NL, options, leftPad, descPad, footer + NL, autoUsage);</span>
+<span class="nc" id="L46">    }</span>
+
+    @Override
+    public void printUsage(final PrintWriter pw, final int width, final String app, final Options options) {
+<span class="nc" id="L50">        super.printUsage(pw, width, app, options);</span>
+<span class="nc" id="L51">        final String fileArgs = &quot; report1.xml [report2.xml ... reportN.xml]&quot; + NL + NL;</span>
+<span class="nc" id="L52">        printWrapped(pw, 0, 0, fileArgs);</span>
+<span class="nc" id="L53">    }</span>
+
+    @Override
+    public void printOptions(PrintWriter pw, int width, Options options, int leftPad, int descPad) {
+<span class="nc" id="L57">        super.printOptions(pw, width, options, leftPad, descPad);</span>
+<span class="nc" id="L58">        pw.print(NL);</span>
+<span class="nc" id="L59">    }</span>
+
+
+    @Override
+    public void printWrapped(final PrintWriter pw, final int width, final int nextLineTabStop, final String text) {
+<span class="nc" id="L64">        pw.print(text);</span>
+<span class="nc" id="L65">    }</span>
+
+    @Override
+    protected String rtrim(final String s) {
+<span class="nc" id="L69">        return s;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

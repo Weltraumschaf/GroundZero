@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CheckstyleSaxHandler.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.transform</a> &gt; <span class="el_source">CheckstyleSaxHandler.java</span></div><h1>CheckstyleSaxHandler.java</h1><pre class="source lang-java linenums">/*
+ * LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 42):
+ * &quot;Sven Strittmatter&quot; &lt;ich@weltraumschaf.de&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a beer in return.
+ */
+package de.weltraumschaf.groundzero.transform;
+
+import com.google.common.collect.Maps;
+import de.weltraumschaf.groundzero.model.CheckstyleFile;
+import de.weltraumschaf.groundzero.model.CheckstyleReport;
+import de.weltraumschaf.groundzero.model.CheckstyleSeverity;
+import de.weltraumschaf.groundzero.model.CheckstyleViolation;
+import java.util.Map;
+import org.apache.commons.lang3.Validate;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.DefaultHandler;
+
+/**
+ * SAX based parser for Checkstyle log files.
+ *
+ * Format of log:
+ * &lt;pre&gt;
+ *      &amp;lt;checkstyle version=&quot;5.4&quot;&amp;gt;
+ *          &amp;lt;file name=&quot;...&quot;&amp;gt;
+ *              &amp;lt;error line=&quot;2&quot; column=&quot;22&quot; severity=&quot;error&quot; message=&quot;Line contains a tab character.&quot;
+ *                  source=&quot;com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck&quot;/&amp;gt;
+ *              ...
+ *          &amp;lt;/file&amp;gt;
+ *          ...
+ *      &amp;lt;/checkstyle&amp;gt;
+ * &lt;/pre&gt;
+ *
+ * @author Sven Strittmatter &lt;ich@weltraumschaf.de&gt;
+ */
+<span class="fc" id="L39">class CheckstyleSaxHandler extends DefaultHandler {</span>
+
+    /**
+     * The current parsed tag.
+     */
+    private ReportTags currentTag;
+    /**
+     * Current parsed report.
+     */
+    private CheckstyleReport currentReport;
+    /**
+     * Current parsed file tag data.
+     */
+    private CheckstyleFile currentFile;
+
+    /**
+     * Get the current parsed report.
+     *
+     * @return may return {@code null}, if nothing parsed
+     */
+    public CheckstyleReport getReport() {
+<span class="fc" id="L60">        return currentReport;</span>
+    }
+
+    /**
+     * Tries to recognize the {@link ReportTags tag} by it's name and set it as {@link #currentTag}.
+     *
+     * Throws a {@link IllegalStateException} if a unrecognizable tag name was given.
+     *
+     * @param tagName must not be {@code null} or empty
+     */
+    void recognizeTag(final String tagName) {
+<span class="fc" id="L71">        Validate.notEmpty(tagName);</span>
+<span class="fc" id="L72">        final ReportTags tag = ReportTags.forTagName(tagName);</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (null == tag) {</span>
+<span class="fc" id="L75">            throw new IllegalStateException(String.format(&quot;Unrecognized tag &lt;%s&gt;!&quot;, tagName));</span>
+        } else {
+<span class="fc" id="L77">            currentTag = tag;</span>
+        }
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * Whether the {@link #currentTag} is of a particular {@link ReportTags tag}.
+     *
+     * @param tag must not be {@code null}
+     * @return {@code true} if {@link #currentTag} is same as given tag, else {@code false}
+     */
+    private boolean isCurrentTag(final ReportTags tag) {
+<span class="fc" id="L88">        Validate.notNull(tag);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        return currentTag == tag;</span>
+    }
+
+    @Override
+    public void startElement(final String uri, final String name, final String qName, final Attributes atts) {
+<span class="fc" id="L94">        recognizeTag(qName);</span>
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (isCurrentTag(ReportTags.CHECKSTYLE)) {</span>
+<span class="fc" id="L97">            currentReport = new CheckstyleReport(atts.getValue(CheckstyleTagAttribute.VERSION.getName()));</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        } else if (isCurrentTag(ReportTags.FILE)) {</span>
+<span class="fc" id="L99">            final String fileName = atts.getValue(FileTagAttribute.NAME.getName());</span>
+<span class="fc" id="L100">            currentFile = new CheckstyleFile(fileName);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        } else if (isCurrentTag(ReportTags.ERROR)) {</span>
+<span class="fc" id="L102">            parseError(atts);</span>
+        }
+<span class="fc" id="L104">    }</span>
+
+    @Override
+    public void endElement(final String uri, final String name, final String qName) {
+<span class="fc" id="L108">        recognizeTag(qName);</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (isCurrentTag(ReportTags.FILE)) {</span>
+<span class="fc" id="L111">            currentReport.addFile(currentFile);</span>
+        }
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Parse a {@literal &lt;error/&gt;} tag.
+     *
+     * @param atts must not be {@code null}
+     */
+    private void parseError(final Attributes atts) {
+<span class="fc" id="L121">        Validate.notNull(atts);</span>
+<span class="fc" id="L122">        final CheckstyleViolation currentViolation = new CheckstyleViolation();</span>
+<span class="fc" id="L123">        final String line = atts.getValue(ErrorTagAttribute.LINE.getName());</span>
+
+        try {
+<span class="fc" id="L126">            currentViolation.setLine(Integer.valueOf(line));</span>
+<span class="fc" id="L127">        } catch (final NumberFormatException ex) { //NOPMD</span>
+            // If there is nothing we can format to a number the default of CheckstyleViolation is used.
+<span class="fc" id="L129">        } catch (final IllegalArgumentException ex) { //NOPMD</span>
+            // If there is nothing we can set the default of CheckstyleViolation is used.
+<span class="fc" id="L131">        }</span>
+
+<span class="fc" id="L133">        final String column = atts.getValue(ErrorTagAttribute.COLUMN.getName());</span>
+
+        try {
+<span class="fc" id="L136">            currentViolation.setColumn(Integer.valueOf(column));</span>
+<span class="fc" id="L137">        } catch (final NumberFormatException ex) { //NOPMD</span>
+            // If there is nothing we can format to a number the default of CheckstyleViolation is used.
+<span class="fc" id="L139">        } catch (final IllegalArgumentException ex) { //NOPMD</span>
+            // If there is nothing we can set the default of CheckstyleViolation is used.
+<span class="fc" id="L141">        }</span>
+
+<span class="fc" id="L143">        final String severity = atts.getValue(ErrorTagAttribute.SEVERITY.getName());</span>
+<span class="fc" id="L144">        currentViolation.setSeverity(CheckstyleSeverity.valueOf(severity.toUpperCase()));</span>
+<span class="fc" id="L145">        currentViolation.setMessage(atts.getValue(ErrorTagAttribute.MESSAGE.getName()));</span>
+<span class="fc" id="L146">        currentViolation.setSource(atts.getValue(ErrorTagAttribute.SOURCE.getName()));</span>
+<span class="fc" id="L147">        currentFile.addViolation(currentViolation);</span>
+<span class="fc" id="L148">    }</span>
+
+    /**
+     * Enumerates the report XML tags.
+     */
+<span class="pc" id="L153">    enum ReportTags {</span>
+
+        /**
+         * Tag {@literal &lt;checkstyle&gt;}.
+         */
+<span class="fc" id="L158">        CHECKSTYLE(&quot;checkstyle&quot;),</span>
+        /**
+         * Tag {@literal &lt;file&gt;}.
+         */
+<span class="fc" id="L162">        FILE(&quot;file&quot;),</span>
+        /**
+         * Tag {@literal &lt;error&gt;}.
+         */
+<span class="fc" id="L166">        ERROR(&quot;error&quot;);</span>
+        /**
+         * Lookup of string literal to tag.
+         */
+<span class="fc" id="L170">        private static final Map&lt;String, ReportTags&gt; LOOKUP = Maps.newHashMap();</span>
+
+        static {
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            for (final ReportTags tag : ReportTags.values()) {</span>
+<span class="fc" id="L174">                LOOKUP.put(tag.getTagName().toLowerCase(), tag);</span>
+            }
+<span class="fc" id="L176">        }</span>
+        /**
+         * Literal tag name.
+         */
+        private final String tagName;
+
+        /**
+         * Dedicated constructor.
+         *
+         * @param tagName the string between the angle brackets. Must not be {@code null} or empty.
+         */
+<span class="fc" id="L187">        private ReportTags(final String tagName) {</span>
+<span class="fc" id="L188">            Validate.notEmpty(tagName);</span>
+<span class="fc" id="L189">            this.tagName = tagName;</span>
+<span class="fc" id="L190">        }</span>
+
+        /**
+         * Get the tag name.
+         *
+         * @return the tag name
+         */
+        public String getTagName() {
+<span class="fc" id="L198">            return tagName;</span>
+        }
+
+        /**
+         * Returns the tag enum to a literal tag name.
+         *
+         * @param tagName literal tag name, part between the angle brackets
+         * @return may return null, if tag name is unknown
+         */
+        static ReportTags forTagName(final String tagName) {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            if (LOOKUP.containsKey(tagName.toLowerCase())) {</span>
+<span class="fc" id="L209">                return LOOKUP.get(tagName);</span>
+            }
+
+<span class="fc" id="L212">            return null;</span>
+        }
+    }
+
+    /**
+     * Attributes of the {@literal &lt;checkstyle&gt;} tag.
+     */
+<span class="pc" id="L219">    private enum CheckstyleTagAttribute {</span>
+
+        /**
+         * Version attribute of {@link ReportTags#CHECKSTYLE}.
+         */
+<span class="fc" id="L224">        VERSION(&quot;version&quot;);</span>
+        /**
+         * Name of the attribute.
+         */
+        private final String name;
+
+        /**
+         * Dedicated constructor.
+         *
+         * @param name of the attribute. Must not be {@code null} or empty.
+         */
+<span class="fc" id="L235">        private CheckstyleTagAttribute(final String name) {</span>
+<span class="fc" id="L236">            Validate.notEmpty(name);</span>
+<span class="fc" id="L237">            this.name = name;</span>
+<span class="fc" id="L238">        }</span>
+
+        /**
+         * Get the attribute name.
+         *
+         * @return lower cased attribute name
+         */
+        public String getName() {
+<span class="fc" id="L246">            return name;</span>
+        }
+    }
+
+    /**
+     * Attributes of the {@literal &lt;file&gt;} tag.
+     */
+<span class="pc" id="L253">    private enum FileTagAttribute {</span>
+
+        /**
+         * Name attribute of {@link ReportTags#FILE}.
+         */
+<span class="fc" id="L258">        NAME(&quot;name&quot;);</span>
+        /**
+         * Name of the attribute.
+         */
+        private final String name;
+
+        /**
+         * Dedicated constructor.
+         *
+         * @param name of the attribute. Must not be {@code null} or empty.
+         */
+<span class="fc" id="L269">        private FileTagAttribute(final String name) {</span>
+<span class="fc" id="L270">            Validate.notEmpty(name);</span>
+<span class="fc" id="L271">            this.name = name;</span>
+<span class="fc" id="L272">        }</span>
+
+        /**
+         * Get the attribute name.
+         *
+         * @return lower cased attribute name
+         */
+        public String getName() {
+<span class="fc" id="L280">            return name;</span>
+        }
+    }
+
+    /**
+     * Attributes of the {@literal &lt;error&gt;} tag.
+     */
+<span class="pc" id="L287">    private enum ErrorTagAttribute {</span>
+
+        /**
+         * Line attribute of {@link ReportTags#ERROR}.
+         */
+<span class="fc" id="L292">        LINE(&quot;line&quot;),</span>
+        /**
+         * Column attribute of {@link ReportTags#ERROR}.
+         */
+<span class="fc" id="L296">        COLUMN(&quot;column&quot;),</span>
+        /**
+         * Severity attribute of {@link ReportTags#ERROR}.
+         */
+<span class="fc" id="L300">        SEVERITY(&quot;severity&quot;),</span>
+        /**
+         * Message attribute of {@link ReportTags#ERROR}.
+         */
+<span class="fc" id="L304">        MESSAGE(&quot;message&quot;),</span>
+        /**
+         * Source attribute of {@link ReportTags#ERROR}.
+         */
+<span class="fc" id="L308">        SOURCE(&quot;source&quot;);</span>
+        /**
+         * Name of the attribute.
+         */
+        private final String name;
+
+        /**
+         * Dedicated constructor.
+         *
+         * @param name of the attribute. Must not be {@code null} or empty.
+         */
+<span class="fc" id="L319">        private ErrorTagAttribute(final String name) {</span>
+<span class="fc" id="L320">            Validate.notEmpty(name);</span>
+<span class="fc" id="L321">            this.name = name;</span>
+<span class="fc" id="L322">        }</span>
+
+        /**
+         * Get the attribute name.
+         *
+         * @return lower cased attribute name
+         */
+        public String getName() {
+<span class="fc" id="L330">            return name;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>

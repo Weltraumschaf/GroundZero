@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CommonsImplementation.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ground Zero</a> &gt; <a href="index.html" class="el_package">de.weltraumschaf.groundzero.opt.commons</a> &gt; <span class="el_source">CommonsImplementation.java</span></div><h1>CommonsImplementation.java</h1><pre class="source lang-java linenums">/*
+ *  LICENSE
+ *
+ * &quot;THE BEER-WARE LICENSE&quot; (Revision 43):
+ * &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt; wrote this file.
+ * As long as you retain this notice you can do whatever you want with
+ * this stuff. If we meet some day, and you think this stuff is worth it,
+ * you can buy me a non alcohol-free beer in return.
+ *
+ * Copyright (C) 2012 &quot;Sven Strittmatter&quot; &lt;weltraumschaf@googlemail.com&gt;
+ */
+package de.weltraumschaf.groundzero.opt.commons;
+
+import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.groundzero.ExitCodeImpl;
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
+import de.weltraumschaf.groundzero.opt.CliOptions;
+import de.weltraumschaf.groundzero.opt.CliOptionsImplementation;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.Validate;
+
+/**
+ * Implementation based on Apache Commons CLI.
+ *
+ * @author Sven Strittmatter &lt;weltraumschaf@googlemail.com&gt;
+ */
+public final class CommonsImplementation extends OptionsSetup {
+
+    /**
+     * Holds the options configuration.
+     */
+<span class="fc" id="L35">    private static final OptionsConfiguration CONFIGURATION = new OptionsConfiguration();</span>
+    /**
+     * Formats help and usage.
+     */
+<span class="fc" id="L39">    private static final HelpFormatter HELP_FORMATTER = new HelpFormatter();</span>
+
+    static {
+<span class="fc" id="L42">        HELP_FORMATTER.setOptionComparator(new OptionComparator());</span>
+    }
+    /**
+     * Default parser.
+     */
+<span class="fc" id="L47">    private static final OptionsParser DEFAULT_PARSER = new OptionsParser(CONFIGURATION);</span>
+    /**
+     * Parses the options.
+     */
+    private final OptionsParser parser;
+
+    /**
+     * Initializes {@link #parser} with {@link #DEFAULT_PARSER}.
+     */
+    public CommonsImplementation() {
+<span class="fc" id="L57">        this(DEFAULT_PARSER);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Dedicated constructor.
+     *
+     * @param parser must not be {@code null}
+     */
+    CommonsImplementation(final OptionsParser parser) {
+<span class="fc" id="L66">        super();</span>
+<span class="fc" id="L67">        Validate.notNull(parser);</span>
+<span class="fc" id="L68">        this.parser = parser;</span>
+<span class="fc" id="L69">    }</span>
+
+    @Override
+    public CliOptions parse(final String[] args) throws ApplicationException {
+<span class="fc" id="L73">        Validate.notNull(args);</span>
+<span class="fc" id="L74">        final CliOptionsImplementation options = new CliOptionsImplementation();</span>
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (args.length &gt; 0) {</span>
+            try {
+<span class="fc" id="L78">                parser.parse(args, options);</span>
+<span class="fc" id="L79">            } catch (ParseException ex) {</span>
+<span class="fc" id="L80">                throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);</span>
+<span class="fc" id="L81">            }</span>
+        }
+
+<span class="fc" id="L84">        return options;</span>
+    }
+
+    @Override
+    public String help() {
+<span class="fc" id="L89">        final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="fc" id="L90">        CONFIGURATION.format(HELP_FORMATTER, new PrintStream(out));</span>
+<span class="fc" id="L91">        return out.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>
