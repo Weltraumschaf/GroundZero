@@ -213,6 +213,13 @@ public class SuppressionGeneratorTest {
     }
 
     @Test
+    public void setEncoding() {
+        assertThat(sut.getEncoding(), is(equalTo("UTF-8")));
+        sut.setEncoding("foobar");
+        assertThat(sut.getEncoding(), is(equalTo("foobar")));
+    }
+
+    @Test
     public void setEncoding_throwsExceptionIfNull() {
         thrown.expect(NullPointerException.class);
         sut.setEncoding(null);

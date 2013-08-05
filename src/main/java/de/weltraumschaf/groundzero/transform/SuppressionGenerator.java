@@ -176,6 +176,16 @@ public class SuppressionGenerator {
     }
 
     /**
+     * Get the output encoding.
+     *
+     * @return never {@link null} or empty
+     */
+    String getEncoding() {
+        return encoding;
+    }
+
+
+    /**
      * Set path prefix to strip from file names.
      *
      * @param pathPrefix file must not be {@code null}
