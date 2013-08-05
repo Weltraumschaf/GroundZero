@@ -24,7 +24,7 @@ import org.apache.commons.lang3.Validate;
 public final class PathNormalizer implements Filter<String> {
 
     /**
-     * Single dot dirs to replace.
+     * Single dot directory to replace.
      */
     private static final String SINGLE_DOT_DIR = "/./";
 

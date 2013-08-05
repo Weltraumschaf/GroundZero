@@ -14,7 +14,9 @@ package de.weltraumschaf.groundzero.filter;
 
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;;
+import static org.hamcrest.Matchers.*;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@code PathNormalizer}.
@@ -23,10 +25,20 @@ import static org.hamcrest.Matchers.*;;
  */
 public class PathNormalizerTest {
 
+    //CHECKSTYLE:OFF
+    @Rule public final ExpectedException thrown = ExpectedException.none();
+    //CHECKSTYLE:ON
     private final PathNormalizer sut = new PathNormalizer();
 
     @Test
+    public void process_throwsExceptionifNullPassedIn() {
+        thrown.expect(NullPointerException.class);
+        sut.process(null);
+    }
+
+    @Test
     public void process_singleDotDirs() {
+        assertThat(sut.process(""), is(equalTo("")));
         assertThat(sut.process("/foo/bar/baz"), is(equalTo("/foo/bar/baz")));
         assertThat(sut.process("/foo/.bar/baz"), is(equalTo("/foo/.bar/baz")));
         assertThat(sut.process("/foo/./bar/baz"), is(equalTo("/foo/bar/baz")));
