@@ -63,6 +63,28 @@ public final class CheckstyleFile {
     }
 
     /**
+     * Return violation by index.
+     *
+     * @param index must not be less than 0
+     * @return may be {@code null}, if no violation present at index
+     */
+    public CheckstyleViolation getViolation(final int index) {
+        Validate.isTrue(index >= 0, "Index must not be less than 0!");
+
+        if (violations.isEmpty()) {
+            return null;
+        }
+
+        final CheckstyleViolation[] v = violations.toArray(new CheckstyleViolation[] {});
+
+        if (index < v.length) {
+            return v[index];
+        }
+
+        return null;
+    }
+
+    /**
      * Add violation to file.
      *
      * @param violation must not be {@code null}

@@ -70,6 +70,26 @@ public final class CheckstyleReport {
     }
 
     /**
+     * Get a file by index.
+     *
+     * @param index must not be less than 0
+     * @return may be {@code null}, if no file exists at the index.
+     */
+    public CheckstyleFile getFile(final int index) {
+        Validate.isTrue(index >= 0, "Index must not be less than 0!");
+
+        if (hasFiles()) {
+            final CheckstyleFile[] arr = files.toArray(new CheckstyleFile[] {});
+
+            if (index < arr.length) {
+                return arr[index];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Whether the report has files with violations.
      *
      * @return {@code true} if files {@link #addFile(de.weltraumschaf.groundzero.model.CheckstyleFile) were added}, else
@@ -123,4 +143,5 @@ public final class CheckstyleReport {
                 .add("fileName", fileName)
                 .toString();
     }
+
 }

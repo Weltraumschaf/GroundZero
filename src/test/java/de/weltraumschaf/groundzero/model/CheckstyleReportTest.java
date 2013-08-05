@@ -126,4 +126,24 @@ public class CheckstyleReportTest {
         sut.addFile(new CheckstyleFile("bar"));
         assertThat(sut.hasFiles(), is(true));
     }
+
+    @Test
+    public void getFile_throwsExceptionIfIndexISLessThanZero() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.getFile(-1);
+    }
+
+    @Test
+    public void getFile() {
+        assertThat(sut.hasFiles(), is(false));
+        assertThat(sut.getFile(0), is(nullValue()));
+        final CheckstyleFile file1 = new CheckstyleFile("foo");
+        sut.addFile(file1);
+        assertThat(sut.getFile(0), is(sameInstance(file1)));
+        final CheckstyleFile file2 = new CheckstyleFile("bar");
+        sut.addFile(file2);
+        assertThat(sut.getFile(0), is(sameInstance(file1)));
+        assertThat(sut.getFile(1), is(sameInstance(file2)));
+        assertThat(sut.getFile(5), is(nullValue()));
+    }
 }

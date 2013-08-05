@@ -129,4 +129,20 @@ public class CheckstyleFileTest {
                 + "]}")));
     }
 
+    @Test
+    public void getViolation() {
+        assertThat(sut.getViolations().isEmpty(), is(true));
+        assertThat(sut.getViolation(0), is(nullValue()));
+        final CheckstyleViolation violation1 = new CheckstyleViolation();
+        violation1.setMessage("foo");
+        sut.addViolation(violation1);
+        assertThat(sut.getViolation(0), is(sameInstance(violation1)));
+        final CheckstyleViolation violation2 = new CheckstyleViolation();
+        violation2.setMessage("bar");
+        sut.addViolation(violation2);
+        assertThat(sut.getViolation(0), is(sameInstance(violation1)));
+        assertThat(sut.getViolation(1), is(sameInstance(violation2)));
+        assertThat(sut.getViolation(2), is(nullValue()));
+    }
+
 }

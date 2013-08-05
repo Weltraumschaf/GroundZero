@@ -26,7 +26,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test for {@link CheckstyleSaxHandler}.
@@ -35,6 +36,9 @@ import org.junit.Ignore;
  */
 public class CheckstyleSaxHandlerTest {
 
+    //CHECKSTYLE:OFF
+    @Rule public final ExpectedException thrown = ExpectedException.none();
+    //CHECKSTYLE:ON
     private final CheckstyleSaxHandler sut = new CheckstyleSaxHandler();
     private final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 
@@ -150,21 +154,82 @@ public class CheckstyleSaxHandlerTest {
         assertThat(sut.getReport(), is(equalTo(expectedReport)));
     }
 
-    @Test @Ignore
-    public void parseError_withInvalidLineAttributeValue_throwsNumberFormatException() {}
+    @Test
+    public void parseError_withInvalidLineAttributeValue_useDefaultOnNumberFormatException() throws IOException,
+                                                                                                    SAXException {
+        final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
+                + "    <file name=\"foo/bar.java\">\n"
+                + "        <error line=\"foobar\" column=\"22\" severity=\"error\" "
+                + "message=\"Line contains a tab character.\" "
+                + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
+                + "    </file>\n"
+                + "</checkstyle>\n");
+        xmlReader.parse(new InputSource(reader));
+        final CheckstyleViolation v = sut.getReport().getFile(0).getViolation(0);
+        assertThat(v.getLine(), is(0));
+    }
 
-    @Test @Ignore
-    public void parseError_withInvalidLineAttributeValue_throwsIllegalArgumentException() {}
+    @Test
+    public void parseError_withInvalidLineAttributeValue_useDefaultOnIllegalArgumentException() throws IOException,
+                                                                                                       SAXException {
+        final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
+                + "    <file name=\"foo/bar.java\">\n"
+                + "        <error line=\"-3\" column=\"22\" severity=\"error\" "
+                + "message=\"Line contains a tab character.\" "
+                + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
+                + "    </file>\n"
+                + "</checkstyle>\n");
+        xmlReader.parse(new InputSource(reader));
+        final CheckstyleViolation v = sut.getReport().getFile(0).getViolation(0);
+        assertThat(v.getLine(), is(0));
+    }
 
-    @Test @Ignore
-    public void parseError_withInvalidColumnAttributeValue_throwsNumberFormatException() {}
+    @Test
+    public void parseError_withInvalidColumnAttributeValue_useDefaultOnNumberFormatException() throws IOException,
+                                                                                                      SAXException {
+        final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
+                + "    <file name=\"foo/bar.java\">\n"
+                + "        <error line=\"22\" column=\"foobar\" severity=\"error\" "
+                + "message=\"Line contains a tab character.\" "
+                + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
+                + "    </file>\n"
+                + "</checkstyle>\n");
+        xmlReader.parse(new InputSource(reader));
+        final CheckstyleViolation v = sut.getReport().getFile(0).getViolation(0);
+        assertThat(v.getColumn(), is(0));
+    }
 
-    @Test @Ignore
-    public void parseError_withInvalidColumnAttributeValue_throwsIllegalArgumentException() {}
+    @Test
+    public void parseError_withInvalidColumnAttributeValue_useDefaultOnIllegalArgumentException() throws IOException,
+                                                                                                         SAXException {
+        final StringReader reader = new StringReader("<checkstyle version=\"5.4\">\n"
+                + "    <file name=\"foo/bar.java\">\n"
+                + "        <error line=\"22\" column=\"-3\" severity=\"error\" "
+                + "message=\"Line contains a tab character.\" "
+                + "source=\"com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck\"/>\n"
+                + "    </file>\n"
+                + "</checkstyle>\n");
+        xmlReader.parse(new InputSource(reader));
+        final CheckstyleViolation v = sut.getReport().getFile(0).getViolation(0);
+        assertThat(v.getColumn(), is(0));
+    }
 
-    @Test @Ignore
+    @Test
     public void recognizeTag_throwsExceptionIfNullPassedIn() {
+        thrown.expect(NullPointerException.class);
+        sut.recognizeTag(null);
+    }
 
+    @Test
+    public void recognizeTag_throwsExceptionIfEmptyPassedIn() {
+        thrown.expect(IllegalArgumentException.class);
+        sut.recognizeTag("");
+    }
+
+    @Test
+    public void recognizeTag_throwsExceptionIfUnrecognizedPassedIn() {
+        thrown.expect(IllegalStateException.class);
+        sut.recognizeTag("snafu");
     }
 
     @Test
