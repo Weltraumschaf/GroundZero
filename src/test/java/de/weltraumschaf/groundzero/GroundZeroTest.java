@@ -21,6 +21,7 @@ import java.io.PrintStream;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.*;
@@ -161,4 +162,15 @@ public class GroundZeroTest {
         GroundZero.main(spy);
         verify(spy, times(1)).execute();
     }
+
+    @Test @Ignore
+    public void execute_printStackTraceIfDebugIsOn() {
+
+    }
+
+    @Test @Ignore
+    public void examineCommandLineOptions_chooseRightStrategy() {
+
+    }
+
 }
