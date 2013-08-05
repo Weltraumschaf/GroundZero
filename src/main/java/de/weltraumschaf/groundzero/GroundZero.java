@@ -27,6 +27,10 @@ import org.apache.commons.lang3.Validate;
 public class GroundZero extends InvokableAdapter {
 
     /**
+     * Name of environment variable to choose CLI option parser strategy.
+     */
+    static final String OPTIONS_STRATEGY_ENV = "GROUNDZERO_OPTIONS_STRATEGY";
+    /**
      * JAR relative path to version property file.
      */
     private static final String VERSION_FILE = "/de/weltraumschaf/groundzero/version.properties";
@@ -110,14 +114,14 @@ public class GroundZero extends InvokableAdapter {
      *
      * @throws ApplicationException if command line arguments were not possible to parse
      */
-    private void examineCommandLineOptions() throws ApplicationException {
-        final String envStrategy = System.getenv("GROUNDZERO_OPTIONS_STRATEGY");
+    void examineCommandLineOptions() throws ApplicationException {
+        final String envStrategy = getEnv();
 
         final Strategy strategy;
 
-        if ("commons".equalsIgnoreCase(envStrategy)) {
+        if (Strategy.COMMONS.toString().equalsIgnoreCase(envStrategy)) {
             strategy = Strategy.COMMONS;
-        } else if ("jcommander".equalsIgnoreCase(envStrategy)) {
+        } else if (Strategy.JCOMMANDER.toString().equalsIgnoreCase(envStrategy)) {
             strategy = Strategy.JCOMMANDER;
         } else {
             strategy = Strategy.COMMONS;
@@ -132,6 +136,15 @@ public class GroundZero extends InvokableAdapter {
         if (options.isDebug()) {
             getIoStreams().println(String.format("Used CLI options:\n%s", options));
         }
+    }
+
+    /**
+     * Get the options setup implementation determined and initialized by {@link #examineCommandLineOptions()}.
+     *
+     * @return may be {@code null} if {@link #examineCommandLineOptions()} not one time invoked before.
+     */
+    OptionsSetup getOptionsSetup() {
+        return optionsSetup;
     }
 
     /**
@@ -203,5 +216,15 @@ public class GroundZero extends InvokableAdapter {
     private void processReport(final String reportFile) throws ApplicationException {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
         processor.process(reportFile);
+    }
+
+    /**
+     * Wraps non side effect free method for mocking in tests.
+     *
+     * @return the string value of the variable, or {@code null}
+     *         if the variable is not defined in the system environment
+     */
+    String getEnv() {
+        return System.getenv(OPTIONS_STRATEGY_ENV);
     }
 }

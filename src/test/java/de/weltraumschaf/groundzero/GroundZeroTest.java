@@ -16,6 +16,8 @@ import de.weltraumschaf.groundzero.transform.ReportProcessor;
 import de.weltraumschaf.commons.CapturingOutputStream;
 import de.weltraumschaf.commons.IOStreams;
 import de.weltraumschaf.commons.system.NullExiter;
+import de.weltraumschaf.groundzero.opt.commons.CommonsImplementation;
+import de.weltraumschaf.groundzero.opt.jcommander.JCommanderImplementation;
 import java.io.InputStream;
 import java.io.PrintStream;
 import org.junit.Test;
@@ -157,7 +159,7 @@ public class GroundZeroTest {
 
     @Test
     public void main() throws Exception {
-        // TODO Do not log to STDOUT/STDERR
+        // XXX Do not log to STDOUT/STDERR
         final GroundZero spy = createSut();
         GroundZero.main(spy);
         verify(spy, times(1)).execute();
@@ -168,9 +170,20 @@ public class GroundZeroTest {
 
     }
 
-    @Test @Ignore
-    public void examineCommandLineOptions_chooseRightStrategy() {
+    @Test
+    public void examineCommandLineOptions_chooseCommonsStrategy() throws ApplicationException {
+        final GroundZero spy = createSut();
+        when(spy.getEnv()).thenReturn("commons");
+        spy.examineCommandLineOptions();
+        assertThat(spy.getOptionsSetup(), is(instanceOf(CommonsImplementation.class)));
+    }
 
+    @Test
+    public void examineCommandLineOptions_chooseJCommanderStrategy() throws ApplicationException {
+        final GroundZero spy = createSut();
+        when(spy.getEnv()).thenReturn("jcommander");
+        spy.examineCommandLineOptions();
+        assertThat(spy.getOptionsSetup(), is(instanceOf(JCommanderImplementation.class)));
     }
 
 }
