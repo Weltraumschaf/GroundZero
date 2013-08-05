@@ -15,11 +15,12 @@ import java.util.Collection;
 import org.apache.commons.lang3.Validate;
 import com.beust.jcommander.Parameter;
 import com.google.common.collect.Lists;
+import static de.weltraumschaf.groundzero.opt.CliOptions.DEFAULT_ENCODING;
 
 /**
  * Holds the given command line arguments.
  *
- * Implementation for JComander.
+ * Implementation for Apache Commons CLI and JComander.
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
@@ -238,5 +239,38 @@ public final class CliOptionsImplementation implements CliOptions {
                 + "  reportFiles:    " + reportFiles + "\n"
                 + "  inputEncoding:  " + inputEncoding + "\n"
                 + "  outputEncoding: " + outputEncoding;
+    }
+
+    @Override
+    public boolean hasOnlyDefaultOptions() {
+        if (!DEFAULT_PATH_PREFIX.equals(pathPrefix)) {
+            return false;
+        }
+
+        if (debug != DEFAULT_DEBUG) {
+            return false;
+        }
+
+        if (help != DEFAULT_HELP) {
+            return false;
+        }
+
+        if (version != DEFAULT_VERSION) {
+            return false;
+        }
+
+        if (!DEFAULT_ENCODING.equalsIgnoreCase(inputEncoding)) {
+            return false;
+        }
+
+        if (!DEFAULT_ENCODING.equalsIgnoreCase(outputEncoding)) {
+            return false;
+        }
+
+        if (reportFiles.isEmpty()) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -42,9 +42,31 @@ public final class CommonsImplementation extends OptionsSetup {
         HELP_FORMATTER.setOptionComparator(new OptionComparator());
     }
     /**
+     * Default parser.
+     */
+    private static final OptionsParser DEFAULT_PARSER = new OptionsParser(CONFIGURATION);
+    /**
      * Parses the options.
      */
-    private static final OptionsParser PARSER = new OptionsParser(CONFIGURATION);
+    private final OptionsParser parser;
+
+    /**
+     * Initializes {@link #parser} with {@link #DEFAULT_PARSER}.
+     */
+    public CommonsImplementation() {
+        this(DEFAULT_PARSER);
+    }
+
+    /**
+     * Dedicated constructor.
+     *
+     * @param parser must not be {@code null}
+     */
+    CommonsImplementation(final OptionsParser parser) {
+        super();
+        Validate.notNull(parser);
+        this.parser = parser;
+    }
 
     @Override
     public CliOptions parse(final String[] args) throws ApplicationException {
@@ -53,7 +75,7 @@ public final class CommonsImplementation extends OptionsSetup {
 
         if (args.length > 0) {
             try {
-                PARSER.parse(args, options);
+                parser.parse(args, options);
             } catch (ParseException ex) {
                 throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
             }

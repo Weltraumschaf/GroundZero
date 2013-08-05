@@ -25,6 +25,22 @@ public interface CliOptions {
      */
     String DEFAULT_ENCODING = "UTF-8";
     /**
+     * Default path prefix.
+     */
+    String DEFAULT_PATH_PREFIX = "";
+    /**
+     * Default for debug switch.
+     */
+    boolean DEFAULT_DEBUG = false;
+    /**
+     * Default for help switch.
+     */
+    boolean DEFAULT_HELP = false;
+    /**
+     * Default for version switch.
+     */
+    boolean DEFAULT_VERSION = false;
+    /**
      * URI to issue tracker.
      */
     String ISSUE_TRACKER = "https://github.com/Weltraumschaf/GroundZero/issues";
@@ -159,4 +175,11 @@ public interface CliOptions {
      * @param onOrOff True will shows version, false not.
      */
     void setVersion(final boolean onOrOff);
+
+    /**
+     * Signals if the options object only has default values.
+     *
+     * @return {@code true} if only default values are set, else {@code true}
+     */
+    boolean hasOnlyDefaultOptions();
 }

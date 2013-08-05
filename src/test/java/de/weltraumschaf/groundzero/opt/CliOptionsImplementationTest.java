@@ -12,9 +12,11 @@
 
 package de.weltraumschaf.groundzero.opt;
 
+import java.util.Collection;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for {@link CommonsOptions}.
@@ -35,6 +37,58 @@ public class CliOptionsImplementationTest {
         assertThat(sut.getPathPrefix(), is(equalTo("")));
         assertThat(sut.getInputEncoding(), is(equalTo("UTF-8")));
         assertThat(sut.getOutputEncoding(), is(equalTo("UTF-8")));
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_pathPrefixIsSet() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        sut.setPathPrefix("foobar");
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_debugIsSet() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        sut.setDebug(true);
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_helpIsSet() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        sut.setHelp(true);
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_versionIsSet() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        sut.setVersion(true);
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_reportFilesNotEmpty() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        @SuppressWarnings("unchecked") final Collection<String> files = mock(Collection.class);
+        when(files.isEmpty()).thenReturn(Boolean.FALSE);
+        sut.setReportFiles(files);
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_inputEncodingIsSet() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        sut.setInputEncoding("foobar");
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
+    }
+
+    @Test
+    public void hasOnlyDefaultOptions_outputEncodingIsSet() {
+        assertThat(sut.hasOnlyDefaultOptions(), is(true));
+        sut.setOutputEncoding("foobar");
+        assertThat(sut.hasOnlyDefaultOptions(), is(false));
     }
 
 }

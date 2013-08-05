@@ -24,7 +24,7 @@ import static de.weltraumschaf.groundzero.opt.OptionDescriptor.*;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-final class OptionsParser {
+class OptionsParser {
 
     /**
      * The parsed and found options.
