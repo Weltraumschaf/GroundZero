@@ -31,6 +31,9 @@ public class PathNormalizerTest {
     private final PathNormalizer sut = new PathNormalizer();
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void process_throwsExceptionifNullPassedIn() {
         thrown.expect(NullPointerException.class);
         sut.process(null);

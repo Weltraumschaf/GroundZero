@@ -51,16 +51,22 @@ public class HelpReformatterTest {
     private final HelpReformatter sut = new HelpReformatter();
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void setInput_throwsExceptionIfStringIsNull() {
         thrown.expect(NullPointerException.class);
-        final String input = null;
+        final String input = null; // Variable necessary for type inference of method dispatching.
         sut.setInput(input);
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void setInput_throwsExceptionIfStringBuilderIsNull() {
         thrown.expect(NullPointerException.class);
-        final StringBuilder input = null;
+        final StringBuilder input = null; // Variable necessary for type inference of method dispatching.
         sut.setInput(input);
     }
 

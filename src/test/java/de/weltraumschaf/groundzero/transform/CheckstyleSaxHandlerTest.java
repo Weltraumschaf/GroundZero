@@ -215,6 +215,9 @@ public class CheckstyleSaxHandlerTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+            value = "NP_NULL_PARAM_DEREF",
+            justification = "I want to test NPE.")
     public void recognizeTag_throwsExceptionIfNullPassedIn() {
         thrown.expect(NullPointerException.class);
         sut.recognizeTag(null);
