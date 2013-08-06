@@ -17,8 +17,6 @@ import de.weltraumschaf.commons.Version;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.Strategy;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang3.Validate;
 
 /**
