@@ -108,10 +108,16 @@ public class ReportProcessor {
      * Process the report given as file name.
      *
      * @param reportFileName file name of the report, must not be {@code null} or empty
-     * @throws ApplicationException if file I/O or XML parse errors occurs
+     * @throws UnsupportedInputEncodingException if unsupported encoding is used
+     * @throws XmlInputParseException if SAX handler throws a parse exception
+     * @throws XmlInputFileReadException if input file can't be read
+     * @throws XmlOutputFileWriteException if output file can't be written
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final String reportFileName) throws ApplicationException, UnsupportedInputEncodingException, XmlInputParseException, XmlInputFileReadException, XmlOutputFileWriteException {
+    public CheckstyleReport process(final String reportFileName) throws UnsupportedInputEncodingException,
+            XmlInputParseException,
+            XmlInputFileReadException,
+            XmlOutputFileWriteException {
         Validate.notEmpty(reportFileName);
         return process(new File(reportFileName));
     }
@@ -120,7 +126,10 @@ public class ReportProcessor {
      * Process the report given as file.
      *
      * @param input file name of the report, must not be {@code null}
-     * @throws ApplicationException if file I/O or XML parse errors occurs
+     * @throws UnsupportedInputEncodingException if unsupported encoding is used
+     * @throws XmlInputParseException if SAX handler throws a parse exception
+     * @throws XmlInputFileReadException if input file can't be read
+     * @throws XmlOutputFileWriteException if output file can't be written
      * @return always new instance, never {@code null}
      */
     public CheckstyleReport process(final File input) throws UnsupportedInputEncodingException, XmlInputParseException, XmlInputFileReadException, XmlOutputFileWriteException {
