@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class JCommanderImplementation extends OptionsSetup {
+public class JCommanderImplementation implements OptionsSetup {
 
     /**
      * Used to parse arguments and create help message.

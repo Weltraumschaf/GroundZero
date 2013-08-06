@@ -26,7 +26,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public abstract class OptionsSetup {
+public interface OptionsSetup {
 
     /**
      * Parse the given command line arguments.
@@ -35,31 +35,12 @@ public abstract class OptionsSetup {
      * @return new object initialized with recognized options
      * @throws ApplicationException if parse error occurs
      */
-    public abstract CliOptions parse(String[] args) throws ApplicationException;
+    CliOptions parse(String[] args) throws ApplicationException;
     /**
      * Creates and returns the help message string.
      *
      * @return constant string
      */
-    public abstract String help();
-
-    /**
-     * Factory method to create concrete implementation.
-     *
-     * @param strategy must not be {@code null}
-     * @return always new instance
-     */
-    public static OptionsSetup create(final Strategy strategy) {
-        Validate.notNull(strategy, "Strategy must not be null!");
-
-        switch (strategy) {
-            case COMMONS:
-                return new CommonsImplementation();
-            case JCOMMANDER:
-                return new JCommanderImplementation();
-            default:
-                throw new IllegalArgumentException(String.format("Unsupported strategy: '%s'!", strategy));
-        }
-    }
+    String help();
 
 }

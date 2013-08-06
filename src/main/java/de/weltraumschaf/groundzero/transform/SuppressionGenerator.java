@@ -27,7 +27,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class SuppressionGenerator {
+class SuppressionGenerator {
 
     /**
      * Used to extend the report file name to generate the suppressions file name.

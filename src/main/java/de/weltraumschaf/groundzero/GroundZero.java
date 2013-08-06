@@ -135,7 +135,7 @@ public class GroundZero extends InvokableAdapter {
                     envStrategy, strategy));
         }
 
-        optionsSetup = OptionsSetup.create(strategy);
+        optionsSetup = OptionsSetups.create(strategy);
         options = optionsSetup.parse(getArgs());
 
         if (options.isDebug()) {

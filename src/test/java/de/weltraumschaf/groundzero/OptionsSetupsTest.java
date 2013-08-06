@@ -10,8 +10,10 @@
  * Copyright (C) 2012 "Sven Strittmatter" <weltraumschaf@googlemail.com>
  */
 
-package de.weltraumschaf.groundzero.opt;
+package de.weltraumschaf.groundzero;
 
+import de.weltraumschaf.groundzero.opt.OptionsSetup;
+import de.weltraumschaf.groundzero.opt.Strategy;
 import de.weltraumschaf.groundzero.opt.commons.CommonsImplementation;
 import de.weltraumschaf.groundzero.opt.jcommander.JCommanderImplementation;
 import org.junit.Test;
@@ -23,18 +25,18 @@ import static org.hamcrest.Matchers.*;;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class OptionsSetupTest {
+public class OptionsSetupsTest {
 
     @Test
     public void create_CommonsImplementation() {
-        final OptionsSetup opts = OptionsSetup.create(Strategy.COMMONS);
+        final OptionsSetup opts = OptionsSetups.create(Strategy.COMMONS);
         assertThat(opts, is(not(nullValue())));
         assertThat(opts, is(instanceOf(CommonsImplementation.class)));
     }
 
     @Test
     public void create_jCommanderImplementation() {
-        final OptionsSetup opts = OptionsSetup.create(Strategy.JCOMMANDER);
+        final OptionsSetup opts = OptionsSetups.create(Strategy.JCOMMANDER);
         assertThat(opts, is(not(nullValue())));
         assertThat(opts, is(instanceOf(JCommanderImplementation.class)));
     }

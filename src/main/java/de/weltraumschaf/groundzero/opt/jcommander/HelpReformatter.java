@@ -25,7 +25,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public class HelpReformatter {
+class HelpReformatter {
 
     /**
      * Used as line break in output strings.

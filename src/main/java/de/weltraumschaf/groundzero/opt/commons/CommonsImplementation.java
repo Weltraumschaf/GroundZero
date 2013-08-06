@@ -27,7 +27,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public final class CommonsImplementation extends OptionsSetup {
+public final class CommonsImplementation implements OptionsSetup {
 
     /**
      * Holds the options configuration.
