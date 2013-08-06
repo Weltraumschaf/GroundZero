@@ -185,19 +185,7 @@ public class ReportProcessor {
     private void saveSuppressionFile(final CheckstyleSuppressions suppression) throws XmlOutputFileWriteException {
         Validate.notNull(suppression);
         io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
-
-        try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, suppression.getEncoding()))) {
-                br.write(suppression.getXmlContent());
-                br.flush();
-            }
-            fos.flush();
-        } catch (final IOException ex) {
-            throw new XmlOutputFileWriteException(
-                    String.format("ERROR: Excpetion thrown while writing suppresions file '%s'!",
-                    suppression.getFileName()),
-                    ex);
-        }
+        new SuppressionsWriter().write(suppression);
     }
 
     /**
