@@ -11,7 +11,6 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
-import de.weltraumschaf.groundzero.ExitCodeImpl;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import java.io.BufferedWriter;
@@ -75,9 +74,9 @@ public class ReportProcessor {
      * Initializes {@link #handler} with {@link #DEFAULT_HANDLER}.
      *
      * @param inputEncoding must not be {@code null} or empty
-     * @throws ApplicationException if creation of XML reader fails
+     * @throws CreateXmlReaderException if creation of XML reader fails
      */
-    public ReportProcessor(final String inputEncoding) throws ApplicationException {
+    public ReportProcessor(final String inputEncoding) throws CreateXmlReaderException {
         this(inputEncoding, DEFAULT_HANDLER);
     }
 
@@ -88,9 +87,9 @@ public class ReportProcessor {
      *
      * @param inputEncoding must not be {@code null} or empty
      * @param handler must not be {@code null}
-     * @throws ApplicationException if creation of XML reader fails
+     * @throws CreateXmlReaderException if creation of XML reader fails
      */
-    ReportProcessor(final String inputEncoding, final CheckstyleSaxHandler handler) throws ApplicationException {
+    ReportProcessor(final String inputEncoding, final CheckstyleSaxHandler handler) throws CreateXmlReaderException {
         super();
         Validate.notEmpty(inputEncoding, "Parameter handler must not be null or empty!");
         this.inputEncoding = inputEncoding;
@@ -100,7 +99,7 @@ public class ReportProcessor {
         try {
             xmlReader = XMLReaderFactory.createXMLReader();
         } catch (final SAXException ex) {
-            throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, "", ex);
+            throw new CreateXmlReaderException(ex.getMessage(), ex);
         }
 
         xmlReader.setContentHandler(handler);
@@ -115,7 +114,7 @@ public class ReportProcessor {
      * @throws ApplicationException if file I/O or XML parse errors occurs
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final String reportFileName) throws ApplicationException {
+    public CheckstyleReport process(final String reportFileName) throws ApplicationException, UnsupportedInputEncodingException, XmlInputParseException, XmlInputFileReadException, XmlOutputFileWriteException {
         Validate.notEmpty(reportFileName);
         return process(new File(reportFileName));
     }
@@ -127,27 +126,24 @@ public class ReportProcessor {
      * @throws ApplicationException if file I/O or XML parse errors occurs
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final File input) throws ApplicationException {
+    public CheckstyleReport process(final File input) throws UnsupportedInputEncodingException, XmlInputParseException, XmlInputFileReadException, XmlOutputFileWriteException {
         Validate.notNull(input);
 
         try (final InputStream inputStream = new FileInputStream(input)) {
             final Reader reader = new InputStreamReader(inputStream, inputEncoding);
             xmlReader.parse(new InputSource(reader));
         } catch (final UnsupportedEncodingException ex) {
-            throw new ApplicationException(
-                    ExitCodeImpl.UNSUPPORTED_INPUT_ENCODING,
+            throw new UnsupportedInputEncodingException(
                     String.format("ERROR: Unsuported input encoding '%s'!", inputEncoding),
                     ex);
-        } catch (final IOException ex) {
-            throw new ApplicationException(
-                    ExitCodeImpl.XML_INPUT_PARSE_ERROR,
+        } catch (final SAXException ex) {
+            throw new XmlInputParseException(
                     String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
                         input.getAbsolutePath(),
                         ex.getMessage()),
                     ex);
-        } catch (final SAXException ex) {
-            throw new ApplicationException(
-                    ExitCodeImpl.XML_INPUT_FILE_READ_ERROR,
+        } catch (final IOException ex) {
+            throw new XmlInputFileReadException(
                     String.format("ERROR: Excpetion thrown while reading input file '%s'! %s",
                         input.getAbsolutePath(),
                         ex.getMessage()),
@@ -176,9 +172,9 @@ public class ReportProcessor {
      * Save suppressions configuration to file.
      *
      * @param suppression must not be {@code null}
-     * @throws ApplicationException if an error occurs while writing suppressions configuration to file
+     * @throws XmlOutputFileWriteException if an error occurs while writing suppressions configuration to file
      */
-    private void saveSuppressionFile(final CheckstyleSuppressions suppression) throws ApplicationException {
+    private void saveSuppressionFile(final CheckstyleSuppressions suppression) throws XmlOutputFileWriteException {
         Validate.notNull(suppression);
         io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
@@ -189,8 +185,7 @@ public class ReportProcessor {
             }
             fos.flush();
         } catch (final IOException ex) {
-            throw new ApplicationException(
-                    ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR,
+            throw new XmlOutputFileWriteException(
                     String.format("ERROR: Excpetion thrown while writing suppresions file '%s'!",
                     suppression.getFileName()),
                     ex);
@@ -237,4 +232,43 @@ public class ReportProcessor {
         this.generator.setEncoding(encoding);
     }
 
+    public static final class CreateXmlReaderException extends Exception {
+
+        public CreateXmlReaderException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
+
+    public static final class XmlInputParseException extends Exception {
+
+        public XmlInputParseException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
+
+    public static final class XmlInputFileReadException extends Exception {
+
+        public XmlInputFileReadException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
+
+    public static final class XmlOutputFileWriteException extends Exception {
+
+        public XmlOutputFileWriteException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
+
+    public static final class UnsupportedInputEncodingException extends Exception {
+
+        public UnsupportedInputEncodingException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
 }

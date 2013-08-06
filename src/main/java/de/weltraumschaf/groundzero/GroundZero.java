@@ -17,6 +17,8 @@ import de.weltraumschaf.commons.Version;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.Strategy;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -59,7 +61,11 @@ public class GroundZero extends InvokableAdapter {
      */
     public GroundZero(final String[] args) throws ApplicationException {
         super(args);
-        processor = new ReportProcessor(CliOptions.DEFAULT_ENCODING);
+        try {
+            processor = new ReportProcessor(CliOptions.DEFAULT_ENCODING);
+        } catch (final ReportProcessor.CreateXmlReaderException ex) {
+            throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, ex.getMessage(), ex.getCause());
+        }
     }
 
     /**
@@ -215,7 +221,17 @@ public class GroundZero extends InvokableAdapter {
      */
     private void processReport(final String reportFile) throws ApplicationException {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
-        processor.process(reportFile);
+        try {
+            processor.process(reportFile);
+        } catch (final ReportProcessor.UnsupportedInputEncodingException ex) {
+            throw new ApplicationException(ExitCodeImpl.UNSUPPORTED_INPUT_ENCODING, ex.getMessage(), ex.getCause());
+        } catch (final ReportProcessor.XmlInputParseException ex) {
+            throw new ApplicationException(ExitCodeImpl.XML_INPUT_PARSE_ERROR, ex.getMessage(), ex.getCause());
+        } catch (final ReportProcessor.XmlInputFileReadException ex) {
+            throw new ApplicationException(ExitCodeImpl.XML_INPUT_FILE_READ_ERROR, ex.getMessage(), ex.getCause());
+        } catch (final ReportProcessor.XmlOutputFileWriteException ex) {
+            throw new ApplicationException(ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR, ex.getMessage(), ex.getCause());
+        }
     }
 
     /**
