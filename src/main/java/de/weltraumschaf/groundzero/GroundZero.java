@@ -136,7 +136,12 @@ public class GroundZero extends InvokableAdapter {
         }
 
         optionsSetup = OptionsSetups.create(strategy);
-        options = optionsSetup.parse(getArgs());
+
+        try {
+            options = optionsSetup.parse(getArgs());
+        } catch (Exception ex) {
+            throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex.getCause());
+        }
 
         if (options.isDebug()) {
             getIoStreams().println(String.format("Used CLI options:\n%s", options));

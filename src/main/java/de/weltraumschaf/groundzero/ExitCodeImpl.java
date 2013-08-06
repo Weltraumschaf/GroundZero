@@ -18,7 +18,7 @@ import de.weltraumschaf.commons.system.ExitCode;
  *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
-public enum ExitCodeImpl implements ExitCode {
+enum ExitCodeImpl implements ExitCode {
 
     /**
      * No errors.

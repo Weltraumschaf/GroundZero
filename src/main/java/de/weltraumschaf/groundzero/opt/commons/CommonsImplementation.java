@@ -11,8 +11,6 @@
  */
 package de.weltraumschaf.groundzero.opt.commons;
 
-import de.weltraumschaf.commons.ApplicationException;
-import de.weltraumschaf.groundzero.ExitCodeImpl;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.CliOptions;
 import de.weltraumschaf.groundzero.opt.CliOptionsImplementation;
@@ -69,7 +67,7 @@ public final class CommonsImplementation implements OptionsSetup {
     }
 
     @Override
-    public CliOptions parse(final String[] args) throws ApplicationException {
+    public CliOptions parse(final String[] args) throws BadArgumentsException  {
         Validate.notNull(args);
         final CliOptionsImplementation options = new CliOptionsImplementation();
 
@@ -77,7 +75,7 @@ public final class CommonsImplementation implements OptionsSetup {
             try {
                 parser.parse(args, options);
             } catch (ParseException ex) {
-                throw new ApplicationException(ExitCodeImpl.BAD_ARGUMENTS, ex.getMessage(), ex);
+                throw new BadArgumentsException(ex.getMessage(), ex);
             }
         }
 

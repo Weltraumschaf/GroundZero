@@ -13,11 +13,6 @@
 package de.weltraumschaf.groundzero.opt;
 
 import de.weltraumschaf.commons.ApplicationException;
-import static de.weltraumschaf.groundzero.opt.Strategy.COMMONS;
-import static de.weltraumschaf.groundzero.opt.Strategy.JCOMMANDER;
-import de.weltraumschaf.groundzero.opt.commons.CommonsImplementation;
-import de.weltraumschaf.groundzero.opt.jcommander.JCommanderImplementation;
-import org.apache.commons.lang3.Validate;
 
 /**
  * Abstract base setup for command line option parsing.
@@ -35,7 +30,7 @@ public interface OptionsSetup {
      * @return new object initialized with recognized options
      * @throws ApplicationException if parse error occurs
      */
-    CliOptions parse(String[] args) throws ApplicationException;
+    CliOptions parse(String[] args) throws Exception;
     /**
      * Creates and returns the help message string.
      *

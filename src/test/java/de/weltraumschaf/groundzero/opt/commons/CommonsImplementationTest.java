@@ -11,15 +11,11 @@
  */
 package de.weltraumschaf.groundzero.opt.commons;
 
-import de.weltraumschaf.commons.ApplicationException;
-import de.weltraumschaf.commons.system.ExitCode;
-import de.weltraumschaf.groundzero.ExitCodeImpl;
 import de.weltraumschaf.groundzero.opt.CliOptions;
 import org.apache.commons.cli.ParseException;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
@@ -191,25 +187,19 @@ public class CommonsImplementationTest {
     }
 
     @Test
-    public void parse_rethrowParseExceptionAsApplicationException() throws ParseException {
+    public void parse_rethrowParseExceptionAsApplicationException() throws ParseException, BadArgumentsException {
         final OptionsParser parser = mock(OptionsParser.class);
         final String[] args = new String[] {"-d"};
         final ParseException innerException = new ParseException("foobar");
         doThrow(innerException).when(parser).parse(eq(args), Mockito.<CliOptions>anyObject());
         final CommonsImplementation sutWithMockedParser = new CommonsImplementation(parser);
 
-        try {
-            sutWithMockedParser.parse(args);
-            fail("Expected exception not thrown!");
-        } catch (final ApplicationException ex) {
-            assertThat(ex.getExitCode(), is((ExitCode) ExitCodeImpl.BAD_ARGUMENTS));
-            assertThat(ex.getMessage(), is(equalTo(innerException.getMessage())));
-            assertThat(ex.getCause(), is(sameInstance((Throwable) innerException)));
-        }
+        thrown.expect(BadArgumentsException.class);
+        sutWithMockedParser.parse(args);
     }
 
     @Test
-    public void parse_returnDefaultIfEmptyArgs() throws ApplicationException {
+    public void parse_returnDefaultIfEmptyArgs() throws BadArgumentsException {
         final CliOptions opts = sut.parse(new String[] {});
         assertThat(opts.hasOnlyDefaultOptions(), is(true));
     }
