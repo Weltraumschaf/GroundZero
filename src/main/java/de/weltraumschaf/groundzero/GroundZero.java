@@ -16,6 +16,11 @@ import de.weltraumschaf.commons.InvokableAdapter;
 import de.weltraumschaf.commons.Version;
 import de.weltraumschaf.groundzero.opt.OptionsSetup;
 import de.weltraumschaf.groundzero.opt.Strategy;
+import de.weltraumschaf.groundzero.transform.CreateXmlReaderException;
+import de.weltraumschaf.groundzero.transform.UnsupportedInputEncodingException;
+import de.weltraumschaf.groundzero.transform.XmlInputFileReadException;
+import de.weltraumschaf.groundzero.transform.XmlInputParseException;
+import de.weltraumschaf.groundzero.transform.XmlOutputFileWriteException;
 import java.io.IOException;
 import org.apache.commons.lang3.Validate;
 
@@ -61,7 +66,7 @@ public class GroundZero extends InvokableAdapter {
         super(args);
         try {
             processor = new ReportProcessor(CliOptions.DEFAULT_ENCODING);
-        } catch (final ReportProcessor.CreateXmlReaderException ex) {
+        } catch (final CreateXmlReaderException ex) {
             throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, ex.getMessage(), ex.getCause());
         }
     }
@@ -219,15 +224,16 @@ public class GroundZero extends InvokableAdapter {
      */
     private void processReport(final String reportFile) throws ApplicationException {
         getIoStreams().println(String.format("Process report %s ...", reportFile));
+
         try {
             processor.process(reportFile);
-        } catch (final ReportProcessor.UnsupportedInputEncodingException ex) {
+        } catch (final UnsupportedInputEncodingException ex) {
             throw new ApplicationException(ExitCodeImpl.UNSUPPORTED_INPUT_ENCODING, ex.getMessage(), ex.getCause());
-        } catch (final ReportProcessor.XmlInputParseException ex) {
+        } catch (final XmlInputParseException ex) {
             throw new ApplicationException(ExitCodeImpl.XML_INPUT_PARSE_ERROR, ex.getMessage(), ex.getCause());
-        } catch (final ReportProcessor.XmlInputFileReadException ex) {
+        } catch (final XmlInputFileReadException ex) {
             throw new ApplicationException(ExitCodeImpl.XML_INPUT_FILE_READ_ERROR, ex.getMessage(), ex.getCause());
-        } catch (final ReportProcessor.XmlOutputFileWriteException ex) {
+        } catch (final XmlOutputFileWriteException ex) {
             throw new ApplicationException(ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR, ex.getMessage(), ex.getCause());
         }
     }

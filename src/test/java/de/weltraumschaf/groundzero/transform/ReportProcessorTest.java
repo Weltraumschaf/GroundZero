@@ -33,7 +33,7 @@ public class ReportProcessorTest {
 
     private final ReportProcessor sut = new ReportProcessor("UTF-8");
 
-    public ReportProcessorTest() throws ReportProcessor.CreateXmlReaderException {
+    public ReportProcessorTest() throws CreateXmlReaderException {
         super();
         sut.setIo(mock(IO.class));
     }
