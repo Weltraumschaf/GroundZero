@@ -47,11 +47,14 @@ public class ReportProcessor {
      * TODO Use from CliOptions.
      */
     private static final String DEFAULT_ENCODING = "UTF-8";
-
+    /**
+     * Default dependency.
+     */
+    private static final CheckstyleSaxHandler DEFAULT_HANDLER = new CheckstyleSaxHandler();
     /**
      * Handler to intercept SAX parser events.
      */
-    private final CheckstyleSaxHandler handler = new CheckstyleSaxHandler();
+    private final CheckstyleSaxHandler handler;
     /**
      * Used to generate suppressions configuration.
      */
@@ -70,19 +73,31 @@ public class ReportProcessor {
      */
     private String inputEncoding = DEFAULT_ENCODING;
     /**
-     * PAth prefix to strip from reported file names.
+     * Path prefix to strip from reported file names.
      */
     private String pathPrefix = "";
+
+    /**
+     * Initializes {@link #handler} with {@link #DEFAULT_HANDLER}.
+     *
+     * @throws ApplicationException if creation of XML reader fails
+     */
+    public ReportProcessor() throws ApplicationException {
+        this(DEFAULT_HANDLER);
+    }
 
     /**
      * Dedicated constructor.
      *
      * Set up the XML reader with the SAX handler.
      *
+     * @param handler must not be {@code null}
      * @throws ApplicationException if creation of XML reader fails
      */
-    public ReportProcessor() throws ApplicationException {
+    ReportProcessor(final CheckstyleSaxHandler handler) throws ApplicationException {
         super();
+        Validate.notNull(handler, "Parameter handler must not be null!");
+        this.handler = handler;
 
         try {
             xmlReader = XMLReaderFactory.createXMLReader();
