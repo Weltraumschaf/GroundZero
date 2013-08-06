@@ -23,7 +23,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import org.apache.commons.lang3.Validate;
-import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.commons.IO;
 import java.io.UnsupportedEncodingException;
 import org.xml.sax.InputSource;
