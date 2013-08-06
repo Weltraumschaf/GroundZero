@@ -17,12 +17,10 @@ import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSeverity;
 import de.weltraumschaf.groundzero.model.CheckstyleViolation;
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-import de.weltraumschaf.commons.ApplicationException;
 import de.weltraumschaf.commons.IO;
 import static org.mockito.Mockito.*;
 
@@ -35,13 +33,13 @@ public class ReportProcessorTest {
 
     private final ReportProcessor sut = new ReportProcessor("UTF-8");
 
-    public ReportProcessorTest() throws ApplicationException {
+    public ReportProcessorTest() throws ReportProcessor.CreateXmlReaderException {
         super();
         sut.setIo(mock(IO.class));
     }
 
     @Test
-    public void process() throws ApplicationException, URISyntaxException {
+    public void process() throws Exception {
         final CheckstyleReport expected = new CheckstyleReport("5.4");
         expected.setFileName("foo.xml");
         final CheckstyleFile file = new CheckstyleFile("foo/Bar.java");

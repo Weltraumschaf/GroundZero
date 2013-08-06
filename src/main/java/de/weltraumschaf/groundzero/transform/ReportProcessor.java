@@ -60,7 +60,6 @@ public class ReportProcessor {
      * Used to print to STDOUT.
      */
     private IO io;
-
     /**
      * Input encoding of report files.
      */
@@ -139,14 +138,14 @@ public class ReportProcessor {
         } catch (final SAXException ex) {
             throw new XmlInputParseException(
                     String.format("ERROR: Excpetion thrown while parsing input file '%s'! %s",
-                        input.getAbsolutePath(),
-                        ex.getMessage()),
+                    input.getAbsolutePath(),
+                    ex.getMessage()),
                     ex);
         } catch (final IOException ex) {
             throw new XmlInputFileReadException(
                     String.format("ERROR: Excpetion thrown while reading input file '%s'! %s",
-                        input.getAbsolutePath(),
-                        ex.getMessage()),
+                    input.getAbsolutePath(),
+                    ex.getMessage()),
                     ex);
         }
 
@@ -179,7 +178,7 @@ public class ReportProcessor {
         io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, inputEncoding))) {
+            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, inputEncoding))) { // FIXME: Use output encoding.
                 br.write(suppression.getXmlContent());
                 br.flush();
             }
@@ -232,43 +231,88 @@ public class ReportProcessor {
         this.generator.setEncoding(encoding);
     }
 
+    /**
+     * Will be thrown, if XML reader can't be created.
+     */
     public static final class CreateXmlReaderException extends Exception {
 
-        public CreateXmlReaderException(String message, Throwable cause) {
+        /**
+         * Dedicated constructor.
+         *
+         * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+         * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method). (A
+         * <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
+         */
+        public CreateXmlReaderException(final String message, final Throwable cause) {
             super(message, cause);
         }
-
     }
 
+    /**
+     * Will be thrown, if a parse exception occurs during XML parsing.
+     */
     public static final class XmlInputParseException extends Exception {
 
+        /**
+         * Dedicated constructor.
+         *
+         * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+         * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method). (A
+         * <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
+         */
         public XmlInputParseException(String message, Throwable cause) {
             super(message, cause);
         }
-
     }
 
+    /**
+     * Will be thrown, if XML report file can not be read.
+     */
     public static final class XmlInputFileReadException extends Exception {
 
+        /**
+         * Dedicated constructor.
+         *
+         * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+         * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method). (A
+         * <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
+         */
         public XmlInputFileReadException(String message, Throwable cause) {
             super(message, cause);
         }
-
     }
 
+    /**
+     * Will be thrown, if suppression XML file can not be written.
+     */
     public static final class XmlOutputFileWriteException extends Exception {
 
+        /**
+         * Dedicated constructor.
+         *
+         * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+         * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method). (A
+         * <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
+         */
         public XmlOutputFileWriteException(String message, Throwable cause) {
             super(message, cause);
         }
-
     }
 
+    /**
+     * Will be thrown, if an unsupported input encoding was given.
+     */
     public static final class UnsupportedInputEncodingException extends Exception {
 
+        /**
+         * Dedicated constructor.
+         *
+         * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+         * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method). (A
+         * <tt>null</tt> value is permitted, and indicates that the cause is nonexistent or unknown.)
+         */
         public UnsupportedInputEncodingException(String message, Throwable cause) {
             super(message, cause);
         }
-
     }
 }
