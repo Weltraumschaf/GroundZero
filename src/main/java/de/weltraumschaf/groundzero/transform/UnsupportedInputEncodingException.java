@@ -13,6 +13,8 @@ package de.weltraumschaf.groundzero.transform;
 
 /**
  * Will be thrown, if an unsupported input encoding was given.
+ *
+ * @author Sven Strittmatter <ich@weltraumschaf.de>
  */
 public class UnsupportedInputEncodingException extends Exception {
 
