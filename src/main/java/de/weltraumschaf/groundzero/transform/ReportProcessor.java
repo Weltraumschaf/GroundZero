@@ -35,12 +35,16 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * Process a single Checkstyle report file.
  *
+ * TODO Remove dependency to import de.weltraumschaf.groundzero.ExitCodeImpl
+ *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class ReportProcessor {
 
     /**
      * Encoding of the generated suppressions file.
+     *
+     * TODO Use from CliOptions.
      */
     private static final String DEFAULT_ENCODING = "UTF-8";
 
