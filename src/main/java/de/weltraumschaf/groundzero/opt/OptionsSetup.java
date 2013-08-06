@@ -12,8 +12,6 @@
 
 package de.weltraumschaf.groundzero.opt;
 
-import de.weltraumschaf.commons.ApplicationException;
-
 /**
  * Abstract base setup for command line option parsing.
  *
@@ -28,7 +26,7 @@ public interface OptionsSetup {
      *
      * @param args must not be {@code null}
      * @return new object initialized with recognized options
-     * @throws ApplicationException if parse error occurs
+     * @throws Exception if any error occurs during argument parsing
      */
     CliOptions parse(String[] args) throws Exception;
     /**
