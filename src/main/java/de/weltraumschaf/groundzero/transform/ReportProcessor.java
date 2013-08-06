@@ -131,7 +131,10 @@ public class ReportProcessor {
      * @throws XmlOutputFileWriteException if output file can't be written
      * @return always new instance, never {@code null}
      */
-    public CheckstyleReport process(final File input) throws UnsupportedInputEncodingException, XmlInputParseException, XmlInputFileReadException, XmlOutputFileWriteException {
+    public CheckstyleReport process(final File input) throws UnsupportedInputEncodingException,
+            XmlInputParseException,
+            XmlInputFileReadException,
+            XmlOutputFileWriteException {
         Validate.notNull(input);
 
         try (final InputStream inputStream = new FileInputStream(input)) {
