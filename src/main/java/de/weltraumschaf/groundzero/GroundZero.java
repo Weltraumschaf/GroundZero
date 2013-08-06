@@ -64,11 +64,7 @@ public class GroundZero extends InvokableAdapter {
      */
     public GroundZero(final String[] args) throws ApplicationException {
         super(args);
-        try {
-            processor = new ReportProcessor(CliOptions.DEFAULT_ENCODING);
-        } catch (final CreateXmlReaderException ex) {
-            throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, ex.getMessage(), ex.getCause());
-        }
+        processor = new ReportProcessor(CliOptions.DEFAULT_ENCODING);
     }
 
     /**
@@ -235,14 +231,16 @@ public class GroundZero extends InvokableAdapter {
             throw new ApplicationException(ExitCodeImpl.XML_INPUT_FILE_READ_ERROR, ex.getMessage(), ex.getCause());
         } catch (final XmlOutputFileWriteException ex) {
             throw new ApplicationException(ExitCodeImpl.XML_OUTOUT_FILE_WRITE_ERROR, ex.getMessage(), ex.getCause());
+        } catch (CreateXmlReaderException ex) {
+            throw new ApplicationException(ExitCodeImpl.XML_CANT_CREATE_READER, ex.getMessage(), ex.getCause());
         }
     }
 
     /**
      * Wraps non side effect free method for mocking in tests.
      *
-     * @return the string value of the variable, or {@code null}
-     *         if the variable is not defined in the system environment
+     * @return the string value of the variable, or {@code null} if the variable is not defined in the system
+     * environment
      */
     String getEnv() {
         return System.getenv(OPTIONS_STRATEGY_ENV);
