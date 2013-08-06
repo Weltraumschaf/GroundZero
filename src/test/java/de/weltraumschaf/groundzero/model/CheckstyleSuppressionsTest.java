@@ -25,9 +25,9 @@ public class CheckstyleSuppressionsTest {
 
     @Test
     public void testHashCode() {
-        final CheckstyleSuppressions sut1 = new  CheckstyleSuppressions("foo1", "bar1");
-        final CheckstyleSuppressions sut2 = new  CheckstyleSuppressions("foo1", "bar1");
-        final CheckstyleSuppressions sut3 = new  CheckstyleSuppressions("foo2", "bar1");
+        final CheckstyleSuppressions sut1 = new  CheckstyleSuppressions("foo1", "bar1", "UTF-8");
+        final CheckstyleSuppressions sut2 = new  CheckstyleSuppressions("foo1", "bar1", "UTF-8");
+        final CheckstyleSuppressions sut3 = new  CheckstyleSuppressions("foo2", "bar1", "UTF-8");
 
         assertThat(sut1.hashCode(), is(sut1.hashCode()));
         assertThat(sut1.hashCode(), is(sut2.hashCode()));
@@ -44,9 +44,9 @@ public class CheckstyleSuppressionsTest {
             value = "NP_NULL_PARAM_DEREF",
             justification = "I want to test equals null.")
     public void testEquals() {
-        final CheckstyleSuppressions sut1 = new  CheckstyleSuppressions("foo1", "bar1");
-        final CheckstyleSuppressions sut2 = new  CheckstyleSuppressions("foo1", "bar1");
-        final CheckstyleSuppressions sut3 = new  CheckstyleSuppressions("foo2", "bar1");
+        final CheckstyleSuppressions sut1 = new  CheckstyleSuppressions("foo1", "bar1", "UTF-8");
+        final CheckstyleSuppressions sut2 = new  CheckstyleSuppressions("foo1", "bar1", "UTF-8");
+        final CheckstyleSuppressions sut3 = new  CheckstyleSuppressions("foo2", "bar1", "UTF-8");
 
         //CHECKSTYLE:OFF
         assertThat(sut1.equals(null), is(false));
@@ -65,8 +65,8 @@ public class CheckstyleSuppressionsTest {
 
     @Test
     public void testToString() {
-        final CheckstyleSuppressions sut = new  CheckstyleSuppressions("foo", "bar");
-        assertThat(sut.toString(), is(equalTo("CheckstyleSuppressions{xmlContent=foo, fileName=bar}")));
+        final CheckstyleSuppressions sut = new  CheckstyleSuppressions("foo", "bar", "UTF-8");
+        assertThat(sut.toString(), is(equalTo("CheckstyleSuppressions{xmlContent=foo, fileName=bar, encoding=UTF-8}")));
     }
 
 }

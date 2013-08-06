@@ -116,7 +116,7 @@ public class SuppressionGenerator {
         }
 
         final String targetFileName = extender.process(report.getFileName());
-        return new CheckstyleSuppressions(buffer.toString(), targetFileName);
+        return new CheckstyleSuppressions(buffer.toString(), targetFileName, encoding);
     }
 
     /**

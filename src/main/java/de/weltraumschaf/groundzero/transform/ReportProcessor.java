@@ -178,7 +178,7 @@ public class ReportProcessor {
         io.println(String.format("Save suppressions configuration %s ...", suppression.getFileName()));
 
         try (FileOutputStream fos = new FileOutputStream(new File(suppression.getFileName()), false)) {
-            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, inputEncoding))) { // FIXME: Use output encoding.
+            try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(fos, suppression.getEncoding()))) {
                 br.write(suppression.getXmlContent());
                 br.flush();
             }

@@ -29,19 +29,28 @@ public final class CheckstyleSuppressions {
      * File name of the suppression configuration.
      */
     private final String fileName;
+    /**
+     * Encoding of the XML content.
+     */
+    private final String encoding;
 
     /**
      * Dedicated constructor.
      *
+     * The parameter encoding must math the encoding in the preamble of the the parameter xmlContent.
+     *
      * @param xmlContent must not be {@code null} or empty
      * @param fileName must not be {@code null} or empty
+     * @param encoding must not be {@code null} or empty
      */
-    public CheckstyleSuppressions(final String xmlContent, final String fileName) {
+    public CheckstyleSuppressions(final String xmlContent, final String fileName, final String encoding) {
         super();
-        Validate.notEmpty(xmlContent);
-        Validate.notEmpty(fileName);
+        Validate.notEmpty(xmlContent, "Parameter xmlContent must not be nul or empty!");
         this.xmlContent = xmlContent;
+        Validate.notEmpty(fileName, "Parameter fileName must not be nul or empty!");
         this.fileName = fileName;
+        Validate.notEmpty(encoding, "Parameter encoding must not be nul or empty!");
+        this.encoding = encoding;
     }
 
     /**
@@ -62,9 +71,18 @@ public final class CheckstyleSuppressions {
         return fileName;
     }
 
+    /**
+     * Get the encoding of the the XML content.
+     *
+     * @return never {@code null} or empty
+     */
+    public String getEncoding() {
+        return encoding;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(xmlContent, fileName);
+        return Objects.hashCode(xmlContent, fileName, encoding);
     }
 
     @Override
@@ -74,7 +92,9 @@ public final class CheckstyleSuppressions {
         }
 
         final CheckstyleSuppressions other = (CheckstyleSuppressions) obj;
-        return Objects.equal(xmlContent, other.xmlContent) && Objects.equal(fileName, other.fileName);
+        return Objects.equal(xmlContent, other.xmlContent)
+                && Objects.equal(fileName, other.fileName)
+                && Objects.equal(encoding, other.encoding);
     }
 
     @Override
@@ -82,7 +102,7 @@ public final class CheckstyleSuppressions {
         return Objects.toStringHelper(this)
                 .add("xmlContent", xmlContent)
                 .add("fileName", fileName)
+                .add("encoding", encoding)
                 .toString();
     }
-
 }
