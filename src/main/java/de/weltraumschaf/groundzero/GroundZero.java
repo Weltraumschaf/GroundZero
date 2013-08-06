@@ -59,7 +59,7 @@ public class GroundZero extends InvokableAdapter {
      */
     public GroundZero(final String[] args) throws ApplicationException {
         super(args);
-        processor = new ReportProcessor();
+        processor = new ReportProcessor(CliOptions.DEFAULT_ENCODING);
     }
 
     /**

@@ -42,12 +42,6 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class ReportProcessor {
 
     /**
-     * Encoding of the generated suppressions file.
-     *
-     * TODO Use from CliOptions.
-     */
-    private static final String DEFAULT_ENCODING = "UTF-8";
-    /**
      * Default dependency.
      */
     private static final CheckstyleSaxHandler DEFAULT_HANDLER = new CheckstyleSaxHandler();
@@ -71,7 +65,7 @@ public class ReportProcessor {
     /**
      * Input encoding of report files.
      */
-    private String inputEncoding = DEFAULT_ENCODING;
+    private String inputEncoding;
     /**
      * Path prefix to strip from reported file names.
      */
@@ -80,10 +74,11 @@ public class ReportProcessor {
     /**
      * Initializes {@link #handler} with {@link #DEFAULT_HANDLER}.
      *
+     * @param inputEncoding must not be {@code null} or empty
      * @throws ApplicationException if creation of XML reader fails
      */
-    public ReportProcessor() throws ApplicationException {
-        this(DEFAULT_HANDLER);
+    public ReportProcessor(final String inputEncoding) throws ApplicationException {
+        this(inputEncoding, DEFAULT_HANDLER);
     }
 
     /**
@@ -91,11 +86,14 @@ public class ReportProcessor {
      *
      * Set up the XML reader with the SAX handler.
      *
+     * @param inputEncoding must not be {@code null} or empty
      * @param handler must not be {@code null}
      * @throws ApplicationException if creation of XML reader fails
      */
-    ReportProcessor(final CheckstyleSaxHandler handler) throws ApplicationException {
+    ReportProcessor(final String inputEncoding, final CheckstyleSaxHandler handler) throws ApplicationException {
         super();
+        Validate.notEmpty(inputEncoding, "Parameter handler must not be null or empty!");
+        this.inputEncoding = inputEncoding;
         Validate.notNull(handler, "Parameter handler must not be null!");
         this.handler = handler;
 
@@ -107,7 +105,7 @@ public class ReportProcessor {
 
         xmlReader.setContentHandler(handler);
         xmlReader.setErrorHandler(handler);
-        generator = new SuppressionGenerator(DEFAULT_ENCODING);
+        generator = new SuppressionGenerator(inputEncoding);
     }
 
     /**
