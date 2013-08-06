@@ -43,7 +43,7 @@ public class ReportProcessor {
     private String pathPrefix = "";
 
     /**
-     * Initializes {@link #handler} with {@link #DEFAULT_HANDLER}.
+     * Dedicated constructor.
      *
      * @param inputEncoding must not be {@code null} or empty
      */

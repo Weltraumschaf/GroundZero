@@ -49,7 +49,6 @@ class ReportReader {
     /**
      * Initializes {@link #handler} with {@link #DEFAULT_HANDLER}.
      *
-     * @param inputEncoding must not be {@code null} or empty
      * @throws CreateXmlReaderException if creation of XML reader fails
      */
     ReportReader() throws CreateXmlReaderException {
