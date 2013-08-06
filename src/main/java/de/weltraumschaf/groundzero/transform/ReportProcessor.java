@@ -34,8 +34,6 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * Process a single Checkstyle report file.
  *
- * TODO Remove dependency to import de.weltraumschaf.groundzero.ExitCodeImpl
- *
  * @author Sven Strittmatter <weltraumschaf@googlemail.com>
  */
 public class ReportProcessor {
