@@ -73,6 +73,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.version.source>1.7</project.build.version.source>
         <project.build.version.target>1.7</project.build.version.target>
+        <project.build.mainClass>de.weltraumschaf.groundzero.GroundZero</project.build.mainClass>
         <maven.pmd.rulesetfiles>${project.basedir}/src/main/config/pmd.xml</maven.pmd.rulesetfiles>
         <maven.pmd.cpd-excludes>${project.basedir}/src/main/config/exclude-cpd.properties</maven.pmd.cpd-excludes>
         <maven.pmd.pmd-excludes>${project.basedir}/src/main/config/exclude-pmd.properties</maven.pmd.pmd-excludes>
@@ -97,7 +98,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>15.0</version>
+            <version>13.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -305,10 +306,38 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.1</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.2.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>runner</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <!-- automatically creates the classpath using all project dependencies,
+                        also adding the project build directory -->
+                        <classpath/>
+                        <argument>${project.build.mainClass}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+
             <!--
                 Build plugins.
             -->
@@ -338,7 +367,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.weltraumschaf.groundzero.GroundZero</mainClass>
+                            <mainClass>${project.build.mainClass}</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
