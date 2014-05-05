@@ -93,17 +93,17 @@
         <dependency>
             <groupId>de.weltraumschaf</groupId>
             <artifactId>commons</artifactId>
-            <version>0.3.2</version>
+            <version>0.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>13.0.1</version>
+            <version>17.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
+            <version>3.3.2</version>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
-            <version>1.32</version>
+            <version>1.35</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.findbugs</groupId>
@@ -497,7 +497,7 @@
                     <dependency>
                         <groupId>org.apache.maven.doxia</groupId>
                         <artifactId>doxia-module-markdown</artifactId>
-                        <version>1.4</version>
+                        <version>1.5</version>
                     </dependency>
                 </dependencies>
 
