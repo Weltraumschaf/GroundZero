@@ -12,6 +12,7 @@
 
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.commons.application.IO;
 import de.weltraumschaf.groundzero.model.CheckstyleFile;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSeverity;
@@ -21,7 +22,6 @@ import java.net.URL;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-import de.weltraumschaf.commons.IO;
 import static org.mockito.Mockito.*;
 
 /**

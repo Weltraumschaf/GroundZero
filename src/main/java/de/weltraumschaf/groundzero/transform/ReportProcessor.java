@@ -11,11 +11,11 @@
  */
 package de.weltraumschaf.groundzero.transform;
 
+import de.weltraumschaf.commons.application.IO;
 import de.weltraumschaf.groundzero.model.CheckstyleReport;
 import de.weltraumschaf.groundzero.model.CheckstyleSuppressions;
 import java.io.File;
 import org.apache.commons.lang3.Validate;
-import de.weltraumschaf.commons.IO;
 
 /**
  * Process a single Checkstyle report file.

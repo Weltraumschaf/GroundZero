@@ -11,15 +11,15 @@
  */
 package de.weltraumschaf.groundzero;
 
-import de.weltraumschaf.commons.ApplicationException;
+import de.weltraumschaf.commons.application.ApplicationException;
+import de.weltraumschaf.commons.application.IOStreams;
 import de.weltraumschaf.groundzero.transform.ReportProcessor;
-import de.weltraumschaf.commons.CapturingOutputStream;
-import de.weltraumschaf.commons.IOStreams;
 import de.weltraumschaf.commons.system.NullExiter;
+import de.weltraumschaf.commons.testing.CapturingPrintStream;
 import de.weltraumschaf.groundzero.opt.commons.CommonsImplementation;
 import de.weltraumschaf.groundzero.opt.jcommander.JCommanderImplementation;
 import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -40,13 +40,13 @@ public class GroundZeroTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
     //CHECKSTYLE:ON
-    private final CapturingOutputStream out = new CapturingOutputStream();
-    private final CapturingOutputStream err = new CapturingOutputStream();
+    private final CapturingPrintStream out = new CapturingPrintStream();
+    private final CapturingPrintStream err = new CapturingPrintStream();
     private final InputStream in = mock(InputStream.class);
-    private final IOStreams io = new IOStreams(in, new PrintStream(out), new PrintStream(err));
+    private final IOStreams io = new IOStreams(in, out, err);
     private final ReportProcessor processor = mock(ReportProcessor.class);
 
-    public GroundZeroTest() throws SAXException {
+    public GroundZeroTest() throws SAXException, UnsupportedEncodingException {
         super();
     }
 
